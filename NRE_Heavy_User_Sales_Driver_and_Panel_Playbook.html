@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NRE & Heavy User Sales Driver Analysis + Panel Research Playbook</title>
+<style>
+:root{
+  --bg:#f6f7f2;
+  --paper:#fffdf7;
+  --ink:#202124;
+  --muted:#667085;
+  --red:#bd1f2d;
+  --gold:#ffbc0d;
+  --green:#1b7f5a;
+  --blue:#2457a6;
+  --navy:#122033;
+  --soft-red:#fff0f1;
+  --soft-gold:#fff8df;
+  --soft-green:#eefaf5;
+  --soft-blue:#eef4ff;
+  --line:#e4e7ec;
+  --shadow:0 12px 30px rgba(18,32,51,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;line-height:1.66;font-size:15px}
+.hero{background:linear-gradient(135deg,#bd1f2d 0%,#7d1721 45%,#122033 100%);color:white;padding:46px 48px 36px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-120px;top:-100px;width:360px;height:360px;border-radius:50%;background:rgba(255,188,13,.24)}
+.hero h1{margin:0 0 12px;font-size:36px;line-height:1.18;letter-spacing:.01em;position:relative;z-index:1}
+.hero p{margin:8px 0;max-width:1080px;color:#fff3f4;font-size:17px;position:relative;z-index:1}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;position:relative;z-index:1}.badge{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.13);padding:7px 12px;border-radius:999px;font-size:13px;color:#fff}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 28px 60px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;margin:18px 0;padding:24px 26px;box-shadow:var(--shadow)}
+.card.compact{padding:18px 20px}
+h2{margin:0 0 16px;font-size:25px;color:var(--navy)}h3{margin:18px 0 10px;font-size:18px;color:#303642}h4{margin:14px 0 6px;font-size:15px;color:#303642}.eyebrow{display:inline-block;background:var(--navy);color:white;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;margin-bottom:10px;letter-spacing:.04em}.eyebrow.red{background:var(--red)}.eyebrow.green{background:var(--green)}.eyebrow.blue{background:var(--blue)}.eyebrow.gold{background:#9a6b00;color:white}
+.grid{display:grid;gap:14px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.box{border:1px solid var(--line);border-radius:16px;padding:16px;background:white}.box.red{background:var(--soft-red);border-color:#ffd6d9}.box.gold{background:var(--soft-gold);border-color:#ffeaa3}.box.green{background:var(--soft-green);border-color:#c7f0dd}.box.blue{background:var(--soft-blue);border-color:#cfe0ff}.box h4{margin-top:0;color:var(--navy)}.muted{color:var(--muted)}
+.formula{font-family:Consolas,"SFMono-Regular",Menlo,monospace;background:#101828;color:#f9fafb;border-radius:12px;padding:14px 16px;margin:10px 0;white-space:pre-wrap;overflow:auto}.formula.light{background:#f8fafc;color:#101828;border:1px dashed #cbd5e1}.formula .yellow{color:#ffdf5d}.formula .green{color:#7ee2a8}.formula .blue{color:#93c5fd}.formula .red{color:#ff9aa2}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:12px 0;background:white;border:1px solid var(--line);border-radius:14px;overflow:hidden}th,td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f8fafc;text-align:left;color:#344054;font-weight:700}tr:last-child td{border-bottom:none}.num{text-align:right;font-variant-numeric:tabular-nums}.tag{display:inline-block;border-radius:6px;padding:2px 7px;font-size:12px;font-weight:700}.tag.red{background:#ffe4e6;color:#a5131f}.tag.green{background:#dcfce7;color:#166534}.tag.blue{background:#dbeafe;color:#1d4ed8}.tag.gold{background:#fef3c7;color:#92400e}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0}.node{background:white;border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:130px;text-align:center;box-shadow:0 4px 10px rgba(18,32,51,.05)}.node strong{display:block;color:var(--navy);font-size:16px}.arrow{font-weight:800;color:var(--red);font-size:22px}.driver-tree{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px}.tree-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}.tree-item .big{font-size:22px;font-weight:800;color:var(--red)}.tree-item .sub{font-size:13px;color:var(--muted)}
+.waterfall{display:flex;align-items:flex-end;gap:10px;height:240px;border-left:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 10px;margin:12px 0;background:#fff;border-radius:12px}.bar{width:76px;border-radius:8px 8px 0 0;display:flex;align-items:flex-start;justify-content:center;color:white;font-size:12px;font-weight:700;padding-top:8px;text-align:center}.bar.pos{background:var(--green)}.bar.neg{background:var(--red)}.bar.neutral{background:var(--blue)}.bar small{display:block;color:#475467;position:relative;top:100%;margin-top:6px;font-weight:600;width:90px}
+.callout{border-left:5px solid var(--red);background:#fff8f8;padding:14px 16px;border-radius:12px;margin:14px 0}.callout.green{border-left-color:var(--green);background:#f5fffa}.callout.blue{border-left-color:var(--blue);background:#f5f8ff}.callout.gold{border-left-color:#d69a00;background:#fffaf0}.quote{font-size:19px;font-weight:800;color:var(--navy);margin:6px 0}.small{font-size:13px;color:var(--muted)}
+.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.toc a{text-decoration:none;color:var(--navy);background:white;border:1px solid var(--line);border-radius:14px;padding:13px 14px;display:block}.toc a:hover{border-color:var(--red)}
+.print-note{font-size:13px;color:var(--muted);margin-top:18px}.footer{color:#667085;font-size:13px;text-align:center;margin-top:24px}
+@media(max-width:980px){.hero{padding:34px 24px}.wrap{padding:18px}.grid-2,.grid-3,.grid-4,.toc,.driver-tree{grid-template-columns:1fr}.waterfall{overflow:auto}.bar{min-width:70px}}
+@media print{body{background:white}.hero{border-radius:0}.wrap{max-width:none;padding:16px}.card{box-shadow:none;break-inside:avoid}.toc{display:none}.no-print{display:none}.waterfall{break-inside:avoid}}
+</style>
+</head>
+<body>
+<section class="hero">
+  <h1>NRE & Heavy User Sales Driver Analysis<br/>+ Heavy User Panel Research Playbook</h1>
+  <p>目的：把“NRE用户、Heavy用户、频次变化与Sales涨跌”从口径讨论，转成可量化、可归因、可行动的分析框架；并在量化Heavy影响之后，设计100人Heavy User Panel，解释为什么Heavy频次掉、如何把洞察转成增长动作。</p>
+  <div class="badges">
+    <span class="badge">Sales = User × Freq × AC</span>
+    <span class="badge">NRE Driver Decomposition</span>
+    <span class="badge">Heavy User Deep Dive</span>
+    <span class="badge">Mix vs Behavior</span>
+    <span class="badge">Elasticity</span>
+    <span class="badge">100人Panel Study</span>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="card no-print">
+    <span class="eyebrow">HOW TO USE</span>
+    <h2>使用方式</h2>
+    <div class="toc">
+      <a href="#s0"><b>0. 核心问题</b><br/><span class="small">先定义管理层问题</span></a>
+      <a href="#s1"><b>1. Sales Driver</b><br/><span class="small">User × Freq × AC</span></a>
+      <a href="#s2"><b>2. NRE拆解</b><br/><span class="small">NRE总体到Segment</span></a>
+      <a href="#s3"><b>3. Heavy深挖</b><br/><span class="small">Heavy对Sales影响</span></a>
+      <a href="#s4"><b>4. Heavy频次漏损</b><br/><span class="small">Mix / Behavior / Occasion</span></a>
+      <a href="#s5"><b>5. Elasticity与Scenario</b><br/><span class="small">量化1%变化影响</span></a>
+      <a href="#s6"><b>6. 100人Panel</b><br/><span class="small">用户研究case设计</span></a>
+      <a href="#s7"><b>7. Action Playbook</b><br/><span class="small">从诊断到行动</span></a>
+    </div>
+    <p class="print-note">可直接浏览器打开；如需放PPT，可逐个Section截图。打印为PDF时，卡片会尽量避免跨页断开。</p>
+  </section>
+
+  <section class="card" id="s0">
+    <span class="eyebrow red">STEP 0</span>
+    <h2>先明确：我们到底要回答什么业务问题？</h2>
+    <div class="grid grid-3">
+      <div class="box red"><h4>问题1：NRE增长但Sales不涨</h4><p>NRE User变多，是不是被Freq下降抵消了？如果是，抵消了多少？</p></div>
+      <div class="box gold"><h4>问题2：Heavy用户对Sales有多重要</h4><p>Heavy User是Base生意的核心。如果Heavy Freq下降，是否足以解释整体Sales下滑？</p></div>
+      <div class="box blue"><h4>问题3：量化之后如何行动</h4><p>如果模型证明Heavy Freq是核心问题，需要进一步用Panel研究解释“为什么掉”。</p></div>
+    </div>
+    <div class="callout">
+      <div class="quote">核心故事线：先量化Heavy影响，再用Panel解释Heavy为什么变化，最后转成可测试的增长动作。</div>
+      <p class="muted">不要只看相关性，而要做Driver Decomposition：Sales变化来自User、Freq、AC哪一个；Heavy的变化又来自Heavy人数、Heavy频次、Heavy客单中的哪一个。</p>
+    </div>
+  </section>
+
+  <section class="card" id="s1">
+    <span class="eyebrow blue">STEP 1</span>
+    <h2>Sales本质拆解：所有销售变化最终回到三个变量</h2>
+    <div class="formula">Sales = User × Freq × AC
+
+其中：
+User = 购买用户数 / 下单用户数
+Freq = 人均购买频次 / 人均GC
+AC = Average Check / 客单价</div>
+    <div class="flow">
+      <div class="node"><strong>User</strong><span class="small">多少人买</span></div><div class="arrow">×</div>
+      <div class="node"><strong>Freq</strong><span class="small">每人买几次</span></div><div class="arrow">×</div>
+      <div class="node"><strong>AC</strong><span class="small">每次买多少钱</span></div><div class="arrow">=</div>
+      <div class="node"><strong>Sales</strong><span class="small">最终销售额</span></div>
+    </div>
+    <div class="callout blue"><b>管理层语言：</b>Sales涨跌不是一个黑箱。我们可以拆成“人变多/少了”“人买得更频繁/更少了”“每单客单变高/低了”。</div>
+  </section>
+
+  <section class="card" id="s2">
+    <span class="eyebrow green">STEP 2</span>
+    <h2>NRE Sales Decomposition：先拆NRE总体影响</h2>
+    <div class="formula">NRE Sales = NRE User × NRE Freq × NRE AC
+
+ΔNRE Sales = User Impact + Freq Impact + AC Impact</div>
+    <div class="grid grid-3">
+      <div class="box"><h4>User Impact</h4><div class="formula light">(User_TY - User_LY) × Freq_LY × AC_LY</div><p>只改变用户数，频次和客单保持LY水平。</p></div>
+      <div class="box"><h4>Freq Impact</h4><div class="formula light">User_TY × (Freq_TY - Freq_LY) × AC_LY</div><p>在TY用户规模下，看频次变化带来的增减。</p></div>
+      <div class="box"><h4>AC Impact</h4><div class="formula light">User_TY × Freq_TY × (AC_TY - AC_LY)</div><p>在TY用户与频次下，看客单变化影响。</p></div>
+    </div>
+    <h3>示例输出：NRE Sales Waterfall</h3>
+    <table>
+      <tr><th>Driver</th><th class="num">Impact</th><th>解释</th></tr>
+      <tr><td>New / Reactive User Growth</td><td class="num"><span class="tag green">+100M</span></td><td>人数增长贡献正向Sales。</td></tr>
+      <tr><td>NRE Freq Decline</td><td class="num"><span class="tag red">-70M</span></td><td>新增用户质量或复购不足，抵消User增长。</td></tr>
+      <tr><td>AC Increase</td><td class="num"><span class="tag green">+20M</span></td><td>客单上涨带来部分补偿。</td></tr>
+      <tr><td><b>Total NRE Sales Change</b></td><td class="num"><b>+50M</b></td><td>最终得到NRE净贡献。</td></tr>
+    </table>
+    <div class="callout green"><b>一句话结论模板：</b>NRE Sales增长主要来自User扩张，但Freq下降正在侵蚀增长质量；下一步需要拆NRE内部结构，特别是Heavy用户是否在掉频次。</div>
+  </section>
+
+  <section class="card" id="s3">
+    <span class="eyebrow gold">STEP 3</span>
+    <h2>Heavy User Deep Dive：如果只研究Heavy与Sales涨跌的关系</h2>
+    <p>Heavy User建议作为NRE框架下的独立深挖模块。原因是Heavy通常代表高频、高价值、稳定Base生意，Heavy频次的轻微变化可能比New User增长更影响Sales。</p>
+    <div class="grid grid-2">
+      <div class="box gold">
+        <h4>3.1 先算Heavy Sales Share</h4>
+        <div class="formula light">Heavy Sales Share = Heavy Sales ÷ Total Sales</div>
+        <p>判断Heavy是不是总Sales的核心贡献池。如果Heavy贡献占比高，Heavy Freq变化就必须单独追踪。</p>
+      </div>
+      <div class="box gold">
+        <h4>3.2 再算Heavy对Sales变化贡献</h4>
+        <div class="formula light">Heavy Contribution to ΔSales = ΔHeavy Sales ÷ ΔTotal Sales</div>
+        <p>判断整体Sales涨跌有多少来自Heavy变化。</p>
+      </div>
+    </div>
+
+    <h3>Heavy Sales Driver Tree</h3>
+    <div class="formula">Heavy Sales = Heavy User × Heavy Freq × Heavy AC
+
+ΔHeavy Sales = Heavy User Effect + Heavy Freq Effect + Heavy AC Effect</div>
+    <div class="driver-tree">
+      <div class="tree-item"><div class="big">User</div><div class="sub">Heavy人数变多还是变少</div></div>
+      <div class="tree-item"><div class="big">Freq</div><div class="sub">Heavy每人买几次是否下降</div></div>
+      <div class="tree-item"><div class="big">AC</div><div class="sub">Heavy每单金额是否变化</div></div>
+    </div>
+    <h3>Heavy Sales Decomposition公式</h3>
+    <div class="grid grid-3">
+      <div class="box"><h4>Heavy User Effect</h4><div class="formula light">(HeavyUser_TY - HeavyUser_LY) × HeavyFreq_LY × HeavyAC_LY</div></div>
+      <div class="box"><h4>Heavy Freq Effect</h4><div class="formula light">HeavyUser_TY × (HeavyFreq_TY - HeavyFreq_LY) × HeavyAC_LY</div></div>
+      <div class="box"><h4>Heavy AC Effect</h4><div class="formula light">HeavyUser_TY × HeavyFreq_TY × (HeavyAC_TY - HeavyAC_LY)</div></div>
+    </div>
+
+    <h3>示例：为什么Heavy User增长也可能Sales下降</h3>
+    <table>
+      <tr><th>Metric</th><th class="num">LY</th><th class="num">TY</th><th>变化含义</th></tr>
+      <tr><td>Heavy User</td><td class="num">10M</td><td class="num">11M</td><td><span class="tag green">+10%</span> 人数变多</td></tr>
+      <tr><td>Heavy Freq</td><td class="num">27</td><td class="num">23</td><td><span class="tag red">-15%</span> 频次明显下降</td></tr>
+      <tr><td>Heavy AC</td><td class="num">25</td><td class="num">26</td><td><span class="tag green">+4%</span> 客单上升</td></tr>
+      <tr><td><b>Heavy Sales</b></td><td class="num"><b>6,750</b></td><td class="num"><b>6,578</b></td><td><span class="tag red">-3%</span> 用户增长被频次下降抵消</td></tr>
+    </table>
+    <div class="callout gold"><b>管理层结论模板：</b>Heavy人数并不是问题，真正问题是Heavy Frequency Collapse。即使Heavy用户数增长，频次下降也可能拖累Heavy Sales和整体Sales。</div>
+  </section>
+
+  <section class="card" id="s4">
+    <span class="eyebrow red">STEP 4</span>
+    <h2>Heavy Frequency Leakage：量化之后要继续拆“为什么掉”</h2>
+    <p>Heavy Freq下降不能只停留在一个数字。建议拆成三层：结构变化、行为变化、场景/机制变化。</p>
+    <div class="grid grid-3">
+      <div class="box red"><h4>Layer 1：Heavy数量变化</h4><p>Heavy User本身是新增、保持、还是流失？是否有Heavy降级为Medium/Light？</p></div>
+      <div class="box blue"><h4>Layer 2：Heavy行为变化</h4><p>同一批Heavy是否买得更少？是全场景下滑，还是某些occasion/菜单/渠道下滑？</p></div>
+      <div class="box green"><h4>Layer 3：Heavy结构变化</h4><p>Heavy内部是否从高价值Heavy变成低价值Heavy？例如高频早餐Heavy减少，促销型Heavy增加。</p></div>
+    </div>
+    <h3>Heavy Freq拆解公式：Mix vs Behavior</h3>
+    <div class="formula">Heavy Overall Freq = Σ(Heavy Segment Share_i × Heavy Segment Freq_i)
+
+ΔHeavy Freq = Mix Effect + Behavior Effect</div>
+    <table>
+      <tr><th>拆解方向</th><th>计算思路</th><th>业务解释</th></tr>
+      <tr><td>Mix Effect</td><td>固定各segment频次，只改变用户结构占比</td><td>Heavy内部结构是否变差，例如高频Heavy占比下降。</td></tr>
+      <tr><td>Behavior Effect</td><td>固定用户结构，只改变各segment频次</td><td>同类型Heavy是否真的买少了。</td></tr>
+      <tr><td>Interaction / Residual</td><td>结构和行为同时变化带来的交叉项</td><td>如需更严谨，可单独列出或按规则分摊。</td></tr>
+    </table>
+
+    <h3>建议继续拆的业务维度</h3>
+    <table>
+      <tr><th>维度</th><th>为什么拆</th><th>典型问题</th></tr>
+      <tr><td>Occasion / Daypart</td><td>判断Heavy少买发生在哪个消费场景</td><td>Breakfast、Lunch、PM、Dinner哪个拖累最大？</td></tr>
+      <tr><td>Channel</td><td>判断是否发生渠道迁移或流失</td><td>APP、WMP、3PO之间是否迁移？</td></tr>
+      <tr><td>Menu / Category</td><td>判断是否由核心品类吸引力下降导致</td><td>主餐、小食、咖啡、甜品哪个影响频次？</td></tr>
+      <tr><td>Offer / Program</td><td>判断促销、权益、积分、CRM是否影响复购</td><td>WD、Points、CRM触达是否影响Heavy回购？</td></tr>
+      <tr><td>Tenure / Cohort</td><td>判断是老Heavy疲劳还是新Heavy质量不足</td><td>长期Heavy下降，还是新晋Heavy留不住？</td></tr>
+    </table>
+    <div class="callout"><b>关键提醒：</b>Heavy深挖的最终目的不是证明Heavy重要，而是找出Heavy少买的具体场景与原因，从而设计能恢复频次的动作。</div>
+  </section>
+
+  <section class="card" id="s5">
+    <span class="eyebrow blue">STEP 5</span>
+    <h2>Elasticity & Scenario：把Heavy影响转成“1%变化影响多少Sales”</h2>
+    <h3>5.1 Heavy Elasticity Model</h3>
+    <div class="formula">ln(Total Sales) = β0 + β1 ln(Heavy User) + β2 ln(Heavy Freq) + β3 ln(Heavy AC) + Controls + ε</div>
+    <table>
+      <tr><th>变量</th><th>含义</th><th>解释方式</th></tr>
+      <tr><td>β1 Heavy User Elasticity</td><td>Heavy人数弹性</td><td>Heavy User +1%，Total Sales变化β1%。</td></tr>
+      <tr><td>β2 Heavy Freq Elasticity</td><td>Heavy频次弹性</td><td>Heavy Freq +1%，Total Sales变化β2%。如果β2最大，说明频次是核心杠杆。</td></tr>
+      <tr><td>β3 Heavy AC Elasticity</td><td>Heavy客单弹性</td><td>Heavy AC +1%，Total Sales变化β3%。</td></tr>
+    </table>
+
+    <h3>5.2 Scenario Simulation</h3>
+    <div class="formula">Incremental Sales from Heavy Freq Recovery
+= Heavy User × ΔHeavy Freq × Heavy AC</div>
+    <table>
+      <tr><th>Scenario</th><th>假设</th><th>计算</th><th>业务解释</th></tr>
+      <tr><td>Base</td><td>Heavy Freq不变</td><td>无增量</td><td>维持现状。</td></tr>
+      <tr><td>Recovery 1</td><td>Heavy Freq恢复0.2次</td><td>Heavy User × 0.2 × Heavy AC</td><td>小幅拉回频次的Sales潜力。</td></tr>
+      <tr><td>Recovery 2</td><td>Heavy Freq恢复0.5次</td><td>Heavy User × 0.5 × Heavy AC</td><td>中等改善场景。</td></tr>
+      <tr><td>Recovery 3</td><td>Heavy Freq恢复1.0次</td><td>Heavy User × 1.0 × Heavy AC</td><td>强干预场景，可用于目标设定。</td></tr>
+    </table>
+    <div class="callout blue"><b>输出给管理层：</b>如果Heavy Freq能恢复0.5次，对Sales的理论增量是多少？这能帮助判断是否值得投入CRM、权益、内容、菜单或渠道资源。</div>
+  </section>
+
+  <section class="card" id="s6">
+    <span class="eyebrow green">STEP 6</span>
+    <h2>Heavy User Panel Research：量化Heavy影响之后，如何做100人用户研究Case</h2>
+    <p>Driver模型回答“Heavy影响多大”，但不能完整回答“Heavy为什么少买”。所以建议在量化之后做Heavy User Panel，把100个Heavy用户锁定下来，结合行为数据、问卷、访谈和消费日记，解释频次变化背后的真实原因。</p>
+
+    <div class="callout green">
+      <div class="quote">Panel的定位：不是用来证明因果，而是用来解释机制、生成假设、设计后续可测试动作。</div>
+      <p class="muted">Panel研究适合回答“为什么”；最终动作效果仍需要用A/B test、matched control、DID或固定control来验证。</p>
+    </div>
+
+    <h3>6.1 Case Objective：这个研究要解决什么</h3>
+    <div class="grid grid-3">
+      <div class="box green"><h4>解释Heavy Freq下降原因</h4><p>是价格、菜单、优惠疲劳、渠道迁移、生活场景变化，还是App体验/权益机制问题？</p></div>
+      <div class="box blue"><h4>识别可干预场景</h4><p>找出最可能被CRM、Points、WD、菜单内容、社群或场景营销拉回的Heavy场景。</p></div>
+      <div class="box gold"><h4>设计增长实验</h4><p>把Panel洞察转化成Heavy Retention / Frequency Recovery pilot，并设计control测量uplift。</p></div>
+    </div>
+
+    <h3>6.2 Sample Design：100个Heavy怎么选</h3>
+    <p>建议不要随机抓100个Heavy，而是做<strong>分层Panel</strong>。核心是覆盖不同Heavy状态，避免只听到单一类型用户的声音。</p>
+    <table>
+      <tr><th>Panel Cell</th><th>建议样本数</th><th>定义建议</th><th>研究目的</th></tr>
+      <tr><td>Stable Heavy</td><td class="num">25</td><td>近期仍保持高频</td><td>理解为什么这些用户仍然稳定购买，提炼可复制的留存机制。</td></tr>
+      <tr><td>Declining Heavy</td><td class="num">25</td><td>过去是Heavy，近期频次明显下降</td><td>核心研究对象，解释Heavy Freq下滑原因。</td></tr>
+      <tr><td>At-risk Heavy</td><td class="num">25</td><td>仍是Heavy，但频次/间隔已出现恶化信号</td><td>提前识别流失预警和可挽回触点。</td></tr>
+      <tr><td>Recovered Heavy</td><td class="num">25</td><td>曾经下滑，近期恢复频次</td><td>看什么机制让用户回来，反推有效动作。</td></tr>
+    </table>
+    <div class="callout gold"><b>口径建议：</b>Heavy定义要和你们OC/NRE报表一致，例如按P90D GC、月均频次或季度频次分层。不要在Panel里另起一套口径，否则量化结果和研究对象无法对齐。</div>
+
+    <h3>6.3 Data Pack：每个Panel用户需要准备哪些数据</h3>
+    <table>
+      <tr><th>数据模块</th><th>字段示例</th><th>用途</th></tr>
+      <tr><td>基础行为</td><td>P90D / P180D / P12M orders, sales, freq, AC</td><td>确认用户分层和行为变化。</td></tr>
+      <tr><td>Occasion</td><td>早餐、午餐、下午茶、晚餐、夜宵</td><td>定位Heavy少买发生在哪个场景。</td></tr>
+      <tr><td>Channel</td><td>APP、WMP、3PO、堂食/外送等</td><td>判断是否发生渠道迁移。</td></tr>
+      <tr><td>Offer / Program</td><td>WD、Points、CRM触达、券核销、积分换购</td><td>判断权益和触达是否影响复购。</td></tr>
+      <tr><td>Menu</td><td>核心品类、价格带、套餐、单品</td><td>判断菜单吸引力与客单变化。</td></tr>
+      <tr><td>Recency</td><td>最近一次购买距今天数、购买间隔变化</td><td>识别流失风险和触达窗口。</td></tr>
+    </table>
+
+    <h3>6.4 Research Design：100人Panel怎么跑</h3>
+    <div class="grid grid-4">
+      <div class="box"><h4>1. 行为数据预分析</h4><p>先给每个用户生成行为画像：买什么、何时买、通过什么渠道买、频次从哪里掉。</p></div>
+      <div class="box"><h4>2. 短问卷筛查</h4><p>快速捕捉近期购买变化原因、价格感知、菜单偏好、竞品替代、优惠敏感度。</p></div>
+      <div class="box"><h4>3. 深访/Diary</h4><p>对重点用户做访谈或消费日记，记录真实决策路径和触发/阻碍因素。</p></div>
+      <div class="box"><h4>4. 假设归纳</h4><p>把用户原话和行为数据合并，形成可测试的Heavy frequency recovery hypotheses。</p></div>
+    </div>
+
+    <h3>6.5 Interview Guide：建议访谈问题框架</h3>
+    <table>
+      <tr><th>模块</th><th>核心问题</th><th>要产出的洞察</th></tr>
+      <tr><td>消费场景</td><td>过去高频购买通常发生在什么场景？现在这些场景是否变化？</td><td>找出场景流失。</td></tr>
+      <tr><td>替代选择</td><td>最近少买时，改去了哪里？为什么？</td><td>识别竞品/3PO/便利店/咖啡等替代。</td></tr>
+      <tr><td>价格与价值</td><td>对当前价格、套餐、优惠、积分价值的感知如何？</td><td>判断价值感是否下降。</td></tr>
+      <tr><td>菜单吸引力</td><td>哪些产品让用户愿意回来？哪些产品已经疲劳？</td><td>定位菜单和新品机会。</td></tr>
+      <tr><td>触达与权益</td><td>用户是否看到CRM/券/积分提醒？是否觉得有用？</td><td>判断触达是否有效。</td></tr>
+      <tr><td>恢复机制</td><td>什么变化会让用户从每月少买变回高频？</td><td>生成增长动作假设。</td></tr>
+    </table>
+
+    <h3>6.6 Analysis Output：Panel最后要交付什么</h3>
+    <div class="grid grid-3">
+      <div class="box blue"><h4>Heavy Frequency Leakage Map</h4><p>展示Heavy少买发生在哪些occasion、channel、menu和program。</p></div>
+      <div class="box green"><h4>Heavy User Personas</h4><p>例如：价值敏感Heavy、场景流失Heavy、菜单疲劳Heavy、渠道迁移Heavy。</p></div>
+      <div class="box gold"><h4>Action Hypothesis Bank</h4><p>把洞察转成可测试动作，例如早餐回流券、Heavy专属权益、菜单组合、CRM触达窗口。</p></div>
+    </div>
+
+    <h3>6.7 从Panel到Pilot：如何避免只做“用户访谈”没有业务结果</h3>
+    <div class="formula">Panel Insight → Action Hypothesis → Pilot Design → Test / Control → Uplift Measurement → Scale Decision</div>
+    <table>
+      <tr><th>Panel发现</th><th>动作假设</th><th>实验设计</th><th>主KPI</th></tr>
+      <tr><td>Heavy早餐频次下降</td><td>早餐场景专属触达和组合权益</td><td>Heavy用户随机分test/control，固定周期观察</td><td>Breakfast Freq, GC, Sales, iROI</td></tr>
+      <tr><td>Heavy觉得权益价值弱</td><td>更直接的Heavy专属权益或积分加速</td><td>对高价值Heavy做差异化权益test</td><td>Redemption, Freq, 2nd/3rd order rate</td></tr>
+      <tr><td>Heavy转向其他渠道</td><td>APP回流场景、渠道专属内容或券</td><td>识别流失渠道后做回流实验</td><td>APP Frequency, Channel Retention</td></tr>
+      <tr><td>菜单疲劳</td><td>新品/组合/内容种草唤醒</td><td>菜单内容触达与权益组合测试</td><td>Category Penetration, Incremental Sales</td></tr>
+    </table>
+    <div class="callout"><b>Measurement Guardrail：</b>Panel本身不是control group。Panel用于解释原因和生成假设，真正claim incremental sales必须另设test/control，避免把自然回升、季节性或其他活动误认为Panel动作效果。</div>
+  </section>
+
+  <section class="card" id="s7">
+    <span class="eyebrow red">STEP 7</span>
+    <h2>最终Action Playbook：从量化诊断到业务动作</h2>
+    <table>
+      <tr><th>诊断结果</th><th>业务含义</th><th>建议动作</th><th>后续测量</th></tr>
+      <tr><td>User Effect为负</td><td>Heavy人数减少</td><td>Heavy保留、流失预警、专属召回</td><td>Heavy Count, Retention, Reactivation</td></tr>
+      <tr><td>Freq Effect为负且最大</td><td>Heavy买得更少，是Sales核心拖累</td><td>提升2nd/3rd order、场景回流、CRM触达、权益优化</td><td>Heavy Freq, GC, Incremental Sales</td></tr>
+      <tr><td>AC Effect为正但Sales仍跌</td><td>客单上涨无法抵消频次流失</td><td>不要只做trade-up，要优先恢复频次</td><td>Freq recovery, Net Sales, iROI</td></tr>
+      <tr><td>Mix Effect为负</td><td>Heavy内部结构变差</td><td>保高价值Heavy，提升中低Heavy向高频迁移</td><td>Heavy mix, migration matrix</td></tr>
+      <tr><td>Panel发现具体场景流失</td><td>已经找到可干预场景</td><td>设计对应pilot并用control测uplift</td><td>Test-control uplift, scalability</td></tr>
+    </table>
+    <div class="callout green">
+      <div class="quote">最终汇报一句话</div>
+      <p><b>Heavy User是Base Sales的核心资产；如果Heavy Freq下降是Sales下滑主因，下一步不是继续泛拉新，而是用Panel找出Heavy少买的真实原因，并将洞察转化为可测试的Heavy Frequency Recovery Pilot。</b></p>
+    </div>
+  </section>
+
+  <section class="card compact">
+    <span class="eyebrow">APPENDIX</span>
+    <h2>建议数据表结构</h2>
+    <table>
+      <tr><th>Level</th><th>必备字段</th><th>说明</th></tr>
+      <tr><td>Period</td><td>TY / LY / Pre / Post / Week / Month</td><td>决定YOY、WOW、pre-post或DID分析口径。</td></tr>
+      <tr><td>User Segment</td><td>NRE, New, Reactive, Existing, Heavy, Medium, Light</td><td>所有分层必须和正式报表口径一致。</td></tr>
+      <tr><td>Metrics</td><td>User, Orders/GC, Freq, AC, Sales</td><td>Sales拆解核心字段。</td></tr>
+      <tr><td>Behavior</td><td>Occasion, Channel, Menu, Offer, CRM touched/redeemed</td><td>Heavy frequency leakage归因字段。</td></tr>
+      <tr><td>Panel</td><td>Panel cell, survey response, interview code, diary note</td><td>把定性洞察和定量行为打通。</td></tr>
+    </table>
+  </section>
+
+  <div class="footer">NRE & Heavy User Sales Driver Analysis + Panel Research Playbook | Built for OC Review / CRM / APP / Frequency Recovery Analysis</div>
+</div>
+</body>
+</html>
