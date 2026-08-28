@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《崔玉涛育儿百科》重点框架</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #faf8f5;
+            color: #2d2a2c;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            padding: 32px 30px 40px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #efe8e0;
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #7a6a5a;
+            margin-left: auto;
+        }
+        .intro {
+            background: #f6f2ec;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            border-left: 5px solid #b8a898;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #4d3a2a;
+        }
+        .part {
+            margin-bottom: 30px;
+        }
+        .part-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #3d2a1a;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e6ddd4;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .part-title .badge {
+            font-size: 14px;
+            background: #d6cbc0;
+            padding: 0 16px;
+            border-radius: 30px;
+            color: #3d2a1a;
+            font-weight: 500;
+        }
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        .chapter-card {
+            background: #fcfaf7;
+            border-radius: 14px;
+            padding: 16px 18px;
+            border: 1px solid #ece4dc;
+            transition: box-shadow 0.2s;
+        }
+        .chapter-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .chapter-card .ch-number {
+            font-size: 13px;
+            font-weight: 600;
+            color: #b8a898;
+            letter-spacing: 0.5px;
+        }
+        .chapter-card .ch-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #2d1f12;
+            margin: 4px 0 6px 0;
+        }
+        .chapter-card .ch-desc {
+            font-size: 14px;
+            color: #6a5a4a;
+            line-height: 1.5;
+        }
+        .chapter-card .ch-tags {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .chapter-card .ch-tags span {
+            background: #ede6de;
+            font-size: 12px;
+            padding: 0 10px;
+            border-radius: 30px;
+            color: #4d3a2a;
+        }
+        .special-section {
+            background: #f0ebe4;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin: 20px 0 10px;
+            border-left: 5px solid #b8a898;
+        }
+        .special-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #3d2a1a;
+            margin-bottom: 6px;
+        }
+        .special-section p {
+            font-size: 14px;
+            color: #4d3a2a;
+            line-height: 1.6;
+        }
+        .appendix {
+            margin-top: 24px;
+            border-top: 2px solid #efe8e0;
+            padding-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+        .appendix-item {
+            background: #fcfaf7;
+            border-radius: 12px;
+            padding: 12px 18px;
+            border: 1px solid #ece4dc;
+            flex: 1 1 200px;
+        }
+        .appendix-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d1f12;
+        }
+        .appendix-item p {
+            font-size: 14px;
+            color: #6a5a4a;
+            margin-top: 4px;
+        }
+        .footnote {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #9a8a7a;
+            text-align: center;
+            border-top: 1px solid #efe8e0;
+            padding-top: 20px;
+        }
+        @media (max-width: 640px) {
+            .container { padding: 20px 16px; }
+            h1 { font-size: 22px; flex-wrap: wrap; }
+            .chapter-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        📘 崔玉涛育儿百科 · 重点框架
+        <small>0~6岁科学养育指南</small>
+    </h1>
+    <div class="intro">
+        <strong>核心理念：</strong> 自然养育 · 尊重孩子天性 · 科学原则不变。<br>
+        <strong>聚焦“生命早期1000天”</strong>（孕期至2岁），强调喂养、护理、发育与早期教育。
+    </div>
+
+    <!-- ===== 第一部分 ===== -->
+    <div class="part">
+        <div class="part-title">
+            <span>🧩 第一部分 · 迎接宝宝的到来</span>
+            <span class="badge">孕晚期 · 分娩 · 产后</span>
+        </div>
+        <div class="chapter-grid">
+            <div class="chapter-card">
+                <div class="ch-number">第1章</div>
+                <div class="ch-name">准备好做妈妈</div>
+                <div class="ch-desc">临产征兆、分娩方式（自然/剖宫产）、拉玛泽呼吸法、无痛分娩、母乳喂养准备、待产包、婴儿房布置</div>
+                <div class="ch-tags"><span>分娩</span><span>母乳</span><span>待产</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">第2章</div>
+                <div class="ch-name">宝宝出生之后</div>
+                <div class="ch-desc">产后24小时护理、月子护理、产后情绪与运动、新生儿阿普加评分、乙肝疫苗/卡介苗、足跟血采集</div>
+                <div class="ch-tags"><span>产后</span><span>疫苗</span><span>筛查</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 第二部分 ===== -->
+    <div class="part">
+        <div class="part-title">
+            <span>🌱 第二部分 · 和宝宝一起长大</span>
+            <span class="badge">0~6岁分月龄/年龄</span>
+        </div>
+        <div style="margin-bottom: 12px; font-size: 14px; color: #6a5a4a;">
+            每章内容均涵盖 <strong>了解宝宝</strong>（发育指标）、<strong>喂养常识</strong>、<strong>日常护理</strong>、<strong>早教建议</strong> 四个方面。
+        </div>
+        <div class="chapter-grid">
+            <div class="chapter-card">
+                <div class="ch-number">1~2周</div>
+                <div class="ch-name">新生宝宝</div>
+                <div class="ch-desc">外观特点、反射、生长曲线、黄疸、便便、母乳喂养、脐带护理、抚触、睡姿</div>
+                <div class="ch-tags"><span>黄疸</span><span>母乳</span><span>抚触</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">3~4周</div>
+                <div class="ch-name">趴卧 · 配方粉</div>
+                <div class="ch-desc">大运动趴卧、囟门、胎记、尿布疹、肠绞痛、斜颈、偏头、鹅口疮</div>
+                <div class="ch-tags"><span>肠绞痛</span><span>尿布疹</span><span>配方粉</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">1~2个月</div>
+                <div class="ch-name">满月 · 42天体检</div>
+                <div class="ch-desc">满月发育、42天体检、枕秃、吃手、O型腿、外出哺乳、髋关节发育</div>
+                <div class="ch-tags"><span>体检</span><span>髋关节</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">2~3个月</div>
+                <div class="ch-name">睡眠 · 互动</div>
+                <div class="ch-desc">减少夜奶、作息规律、抬头、精细运动、与宝宝互动</div>
+                <div class="ch-tags"><span>睡眠</span><span>早教</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">3~4个月</div>
+                <div class="ch-name">出牙 · 翻身</div>
+                <div class="ch-desc">出牙顺序、翻身、偏头矫正、口腔清洁、背奶准备</div>
+                <div class="ch-tags"><span>出牙</span><span>背奶</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">4~5个月</div>
+                <div class="ch-name">坐 · 辅食信号</div>
+                <div class="ch-desc">坐的练习、出牙不适、辅食添加信号、培养专注力</div>
+                <div class="ch-tags"><span>辅食</span><span>坐</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">5~6个月</div>
+                <div class="ch-name">辅食添加</div>
+                <div class="ch-desc">添加辅食原则、工具、转奶、断夜奶、幼儿急疹</div>
+                <div class="ch-tags"><span>辅食</span><span>转奶</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">6~7个月</div>
+                <div class="ch-name">爬行 · 咀嚼</div>
+                <div class="ch-desc">爬行、辅食进阶、咀嚼训练、餐椅习惯、幼儿急疹护理</div>
+                <div class="ch-tags"><span>爬行</span><span>咀嚼</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">7~8个月</div>
+                <div class="ch-name">乳牙 · 挑食</div>
+                <div class="ch-desc">乳牙保护、辅食质地变化、应对挑食、培养进食习惯</div>
+                <div class="ch-tags"><span>乳牙</span><span>挑食</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">8~9个月</div>
+                <div class="ch-name">爬行进阶 · 杯子</div>
+                <div class="ch-desc">爬行安全、让宝宝用杯子、预防踢被子、引导探索</div>
+                <div class="ch-tags"><span>杯子</span><span>安全</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">9~10个月</div>
+                <div class="ch-name">扶站 · 手指食物</div>
+                <div class="ch-desc">扶站、扁平足、头发护理、选鞋、屏气发作</div>
+                <div class="ch-tags"><span>扶站</span><span>鞋</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">10~11个月</div>
+                <div class="ch-name">贫血 · 技能倒退</div>
+                <div class="ch-desc">应对贫血、进食坏习惯、隐私保护、语言引导</div>
+                <div class="ch-tags"><span>贫血</span><span>语言</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">11~12个月</div>
+                <div class="ch-name">学步 · 断母乳</div>
+                <div class="ch-desc">学步步态、断母乳时机、助步工具、远途旅行、生日会</div>
+                <div class="ch-tags"><span>断奶</span><span>学步</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">12~14个月</div>
+                <div class="ch-name">1岁体检 · 自我意识</div>
+                <div class="ch-desc">1岁体检、走路问题、注意力涣散、否定意识、鼓励自己吃饭</div>
+                <div class="ch-tags"><span>1岁</span><span>自我</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">15~17个月</div>
+                <div class="ch-name">走路 · 情绪管理</div>
+                <div class="ch-desc">走路练习、吃饭问题、补钙、睡眠问题、陌生人焦虑、电子产品</div>
+                <div class="ch-tags"><span>情绪</span><span>电子产品</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">18~20个月</div>
+                <div class="ch-name">如厕训练 · 刷牙</div>
+                <div class="ch-desc">如厕训练、刷牙、七步洗手法、好动与多动症、性别意识</div>
+                <div class="ch-tags"><span>如厕</span><span>刷牙</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">21~23个月</div>
+                <div class="ch-name">逆反 · 习惯</div>
+                <div class="ch-desc">拒绝变化、探索私处、健康饮食习惯、夜醒、如厕倒退</div>
+                <div class="ch-tags"><span>逆反</span><span>习惯</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">2~2.5岁</div>
+                <div class="ch-name">口吃 · 可怕的两岁</div>
+                <div class="ch-desc">口吃、叛逆期、外出就餐、饮食特点</div>
+                <div class="ch-tags"><span>口吃</span><span>叛逆</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">2.5~3岁</div>
+                <div class="ch-name">叛逆 · 入园准备</div>
+                <div class="ch-desc">叛逆期、想象中的朋友、入园准备、分享、说谎、角色扮演</div>
+                <div class="ch-tags"><span>入园</span><span>社交</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">3~4岁</div>
+                <div class="ch-name">分房 · 幼儿园</div>
+                <div class="ch-desc">分房睡、独立如厕、幼儿园适应、合作意识、性教育</div>
+                <div class="ch-tags"><span>分房</span><span>幼儿园</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">4~5岁</div>
+                <div class="ch-name">社交 · 家务</div>
+                <div class="ch-desc">社交引导、家务活动、控制甜食、正面管教</div>
+                <div class="ch-tags"><span>社交</span><span>家务</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">5~6岁</div>
+                <div class="ch-name">入学准备</div>
+                <div class="ch-desc">成人化饮食、餐桌礼仪、珍视表达欲、合理期望</div>
+                <div class="ch-tags"><span>入学</span><span>礼仪</span></div>
+            </div>
+        </div>
+        <!-- 早产宝宝专题 -->
+        <div class="special-section">
+            <h3>👶 第23章 · 关于早产宝宝</h3>
+            <p>早产儿特征、NICU住院、母乳强化剂、生长发育监测（矫正月龄）、常见健康问题（呼吸、心脏、脑、视力、听力、贫血、黄疸、胃食管反流、肠绞痛、佝偻病、牙齿、疝气等）</p>
+            <div style="margin-top:6px; display:flex; flex-wrap:wrap; gap:6px;">
+                <span style="background:#ede6de; padding:0 10px; border-radius:30px; font-size:12px;">早产护理</span>
+                <span style="background:#ede6de; padding:0 10px; border-radius:30px; font-size:12px;">矫正月龄</span>
+                <span style="background:#ede6de; padding:0 10px; border-radius:30px; font-size:12px;">母乳强化剂</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 第三部分 ===== -->
+    <div class="part">
+        <div class="part-title">
+            <span>🛡️ 第三部分 · 孩子的健康与安全</span>
+            <span class="badge">保健 · 疾病 · 意外</span>
+        </div>
+        <div class="chapter-grid">
+            <div class="chapter-card">
+                <div class="ch-number">第1章</div>
+                <div class="ch-name">保健常识</div>
+                <div class="ch-desc">免疫力、肠道菌群、抗生素、益生菌、疫苗（一类/二类、联合/单独）</div>
+                <div class="ch-tags"><span>免疫力</span><span>疫苗</span><span>抗生素</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">第2章</div>
+                <div class="ch-name">常见症状和疾病</div>
+                <div class="ch-desc">发热、咳嗽、流鼻涕、呕吐、腹泻、便血、变色牙、喉咙痛；感冒、哮喘、热性惊厥、水痘、荨麻疹、中耳炎、肺炎、手足口病等</div>
+                <div class="ch-tags"><span>发热</span><span>咳嗽</span><span>腹泻</span><span>肺炎</span></div>
+            </div>
+            <div class="chapter-card">
+                <div class="ch-number">第3章</div>
+                <div class="ch-name">意外伤害处理常识</div>
+                <div class="ch-desc">磕碰、眼睛/耳朵/鼻子/嘴巴受伤、脱臼、骨折、动物咬伤、烧烫伤、中暑、异物梗住呼吸道、心肺复苏、降温/温敷等</div>
+                <div class="ch-tags"><span>急救</span><span>心肺复苏</span><span>烫伤</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 附录 ===== -->
+    <div class="appendix">
+        <div class="appendix-item">
+            <h4>📊 附录1</h4>
+            <p>常见疫苗简介及推荐注射时间</p>
+        </div>
+        <div class="appendix-item">
+            <h4>📈 附录2</h4>
+            <p>0~5岁宝宝生长曲线图（身长、体重、头围、BMI）</p>
+        </div>
+        <div class="appendix-item">
+            <h4>📱 育学园App联动</h4>
+            <p>记录生长、测评、疫苗提醒、知识推送</p>
+        </div>
+    </div>
+
+    <div class="footnote">
+        💡 本书特点：文字 + 图解 + 视频（扫码） + App联动 · 崔玉涛医生30余年儿科经验<br>
+        聚焦“自然养育”，尊重个体差异，强调科学喂养、护理与早期发展。
+    </div>
+</div>
+</body>
+</html>
