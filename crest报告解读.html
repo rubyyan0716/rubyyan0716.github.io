@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREST月度报告 · 结构拆解</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f3f7fb;
+            color: #1a2a44;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 10, 30, 0.08);
+            padding: 32px 30px 40px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 3px solid #e6edf4;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5b6f8c;
+            margin-left: auto;
+        }
+        .subtitle {
+            background: #f0f6fe;
+            padding: 14px 20px;
+            border-radius: 16px;
+            border-left: 5px solid #3b6b9b;
+            margin-bottom: 28px;
+            font-size: 16px;
+            color: #2c405a;
+        }
+        .structure-overview {
+            display: flex;
+            justify-content: space-around;
+            gap: 16px;
+            margin: 24px 0 30px;
+            flex-wrap: wrap;
+        }
+        .structure-item {
+            background: #f8faff;
+            border-radius: 18px;
+            padding: 16px 20px;
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            border: 1px solid #e6edf4;
+        }
+        .structure-item .num {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3b6b9b;
+            display: block;
+        }
+        .structure-item .label {
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .structure-item .desc {
+            font-size: 14px;
+            color: #5b6f8c;
+            margin-top: 6px;
+        }
+
+        .section {
+            margin: 32px 0 20px;
+            border-left: 4px solid #3b6b9b;
+            padding-left: 20px;
+        }
+        .section h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section .tag {
+            background: #dce5f0;
+            padding: 0 14px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d4a6b;
+            white-space: nowrap;
+        }
+        .section .purpose {
+            color: #5b6f8c;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .sub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 16px 0;
+        }
+        .sub-card {
+            background: #f9fbff;
+            border-radius: 16px;
+            padding: 18px 20px;
+            border: 1px solid #e6edf4;
+        }
+        .sub-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a2a44;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sub-card .highlight {
+            background: #eaf1fa;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        .sub-card ul {
+            padding-left: 18px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .sub-card ul li {
+            margin-bottom: 2px;
+        }
+        .sub-card .key-finding {
+            background: #f0f5fe;
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-top: 10px;
+            font-size: 14px;
+            border-left: 3px solid #3b6b9b;
+        }
+
+        .indicator-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .indicator-table th {
+            background: #eaf1fa;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #cbd8e8;
+        }
+        .indicator-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e6edf4;
+            vertical-align: top;
+        }
+        .indicator-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .footnote {
+            margin-top: 30px;
+            border-top: 1px solid #e6edf4;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #5b6f8c;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .sub-grid {
+                grid-template-columns: 1fr;
+            }
+            .structure-overview {
+                flex-direction: column;
+            }
+            .container {
+                padding: 18px 16px;
+            }
+            h1 {
+                font-size: 22px;
+                flex-wrap: wrap;
+            }
+            h1 small {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            🗂️ CREST月度报告 · 结构拆解
+            <small>麦当劳 vs 肯德基 · 市场监测框架</small>
+        </h1>
+        <div class="subtitle">
+            <strong>📌 分析逻辑</strong>：宏观市场 → 中观场景/品类 → 微观品牌竞争，层层递进，以数据驱动决策。
+        </div>
+
+        <!-- 三层结构概览 -->
+        <div class="structure-overview">
+            <div class="structure-item">
+                <span class="num">1</span>
+                <div class="label">📊 宏观大盘</div>
+                <div class="desc">IEO / WQSR 整体表现<br>客流、消费、客单价</div>
+            </div>
+            <div class="structure-item">
+                <span class="num">2</span>
+                <div class="label">🍽️ 中观赛道</div>
+                <div class="desc">早餐场景 · 蛋白质品类<br>鸡肉 / 牛肉 / 咖啡</div>
+            </div>
+            <div class="structure-item">
+                <span class="num">3</span>
+                <div class="label">⚔️ 微观竞争</div>
+                <div class="desc">MCD vs KFC<br>流量份额 · 品类份额 · 品牌形象</div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 板块一：宏观大盘 -->
+        <div class="section">
+            <h2>
+                📊 板块一：宏观大盘
+                <span class="tag">P3–P8</span>
+            </h2>
+            <div class="purpose">先看大盘冷暖，为品牌分析提供背景。</div>
+            <div class="sub-grid">
+                <div class="sub-card">
+                    <h3>🎯 分析思路</h3>
+                    <ul>
+                        <li><strong>IEO</strong>（外出就餐）整体客流、消费额、客单价及同比增速</li>
+                        <li><strong>WQSR</strong>（西式快餐）赛道单独拆分对比</li>
+                        <li>双雄（MCD & KFC）的流量份额及增速</li>
+                        <li><strong>份额/门店指数</strong>：衡量单店效率</li>
+                    </ul>
+                </div>
+                <div class="sub-card">
+                    <h3>📌 核心结论</h3>
+                    <div class="key-finding">
+                        <strong>• IEO +9.3%客流</strong>，增长来自正餐（FSR），高收入贡献80%增量
+                    </div>
+                    <div class="key-finding">
+                        <strong>• WQSR +4.7%</strong>，增速低于大盘，受去年高基数影响
+                    </div>
+                    <div class="key-finding">
+                        <strong>• MCD增速略快于KFC</strong>（+6.9% vs +3.1%），份额稳定
+                    </div>
+                    <div class="key-finding">
+                        <strong>• Share/Store Index = 105</strong> → MCD单店效率高于KFC
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 板块二：中观赛道 -->
+        <div class="section">
+            <h2>
+                🍽️ 板块二：中观赛道
+                <span class="tag">P9–P17</span>
+            </h2>
+            <div class="purpose">深入早餐场景和蛋白质品类，拆解竞争格局。</div>
+
+            <!-- 早餐 -->
+            <div style="margin: 16px 0 12px;">
+                <h3 style="font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    ☕ 早餐场景 <span style="font-size: 14px; font-weight: 400; color: #5b6f8c;">P9–P11</span>
+                </h3>
+                <div class="sub-grid">
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">分析要点</h4>
+                        <ul>
+                            <li>早餐IEO整体增长，但WQSR偏软</li>
+                            <li>增长驱动：便利店、咖啡/饮品站</li>
+                            <li>MCD & KFC 均推新品，但份额微降</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">核心结论</h4>
+                        <div class="key-finding">
+                            早餐市场被咖啡/饮品品牌分流，双雄早餐份额下滑
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 蛋白质品类 -->
+            <div style="margin: 20px 0 12px;">
+                <h3 style="font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    🍗 蛋白质品类 <span style="font-size: 14px; font-weight: 400; color: #5b6f8c;">P12–P17</span>
+                </h3>
+                <div class="sub-grid">
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">🐔 鸡肉</h4>
+                        <ul>
+                            <li><strong>份额</strong>：MCD 11.7% vs KFC 21.3% (R3M)</li>
+                            <li><strong>趋势</strong>：KFC +2.0% vs MCD +1.2%</li>
+                            <li><strong>认知</strong>：MCD“美味炸鸡”已追平KFC（Q1起）</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">🐮 牛肉</h4>
+                        <ul>
+                            <li><strong>份额</strong>：MCD 50.1% (统治级)</li>
+                            <li><strong>趋势</strong>：MCD +2.8% vs KFC -2.1%</li>
+                            <li><strong>认知</strong>：MCD“美味牛肉汉堡”保持领先</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card" style="grid-column: 1 / -1;">
+                        <h4 style="font-weight: 600; font-size: 15px;">☕ 咖啡</h4>
+                        <ul>
+                            <li><strong>份额</strong>：MCD微增，但远低于瑞幸(+4.3%)、星巴克(+1.0%)</li>
+                            <li><strong>认知</strong>：MCD“美味咖啡”落后于星巴克和瑞幸</li>
+                        </ul>
+                        <div class="key-finding" style="margin-top:6px;">
+                            <strong>结论</strong>：牛肉是MCD绝对优势；鸡肉是KFC护城河；咖啡是MCD明显短板。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 板块三：微观竞争 -->
+        <div class="section">
+            <h2>
+                ⚔️ 板块三：微观竞争
+                <span class="tag">隐含在全篇</span>
+            </h2>
+            <div class="purpose">聚焦MCD vs KFC的流量、份额、认知差距。</div>
+            <div class="sub-grid">
+                <div class="sub-card">
+                    <h3>📊 竞争指标</h3>
+                    <ul>
+                        <li><strong>流量份额</strong>：客流量占比</li>
+                        <li><strong>份额/门店指数</strong>：单店效率（MCD=105）</li>
+                        <li><strong>品类份额</strong>：鸡肉/牛肉细分市场占有率</li>
+                        <li><strong>品牌形象</strong>：消费者认知（美味、性价比等）</li>
+                    </ul>
+                </div>
+                <div class="sub-card">
+                    <h3>📌 核心结论</h3>
+                    <div class="key-finding">
+                        <strong>流量</strong>：双雄份额稳定，MCD增速略快
+                    </div>
+                    <div class="key-finding">
+                        <strong>单店效率</strong>：MCD > KFC（Index 105）
+                    </div>
+                    <div class="key-finding">
+                        <strong>牛肉</strong>：MCD统治级（50.1%）
+                    </div>
+                    <div class="key-finding">
+                        <strong>鸡肉</strong>：KFC领先，MCD认知追平
+                    </div>
+                    <div class="key-finding">
+                        <strong>咖啡</strong>：MCD明显落后
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 关键指标字典 -->
+        <div style="margin-top: 32px; border-top: 2px solid #e6edf4; padding-top: 24px;">
+            <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 12px;">📖 关键指标字典</h2>
+            <table class="indicator-table">
+                <thead>
+                    <tr>
+                        <th style="width:22%;">指标</th>
+                        <th style="width:45%;">含义</th>
+                        <th style="width:33%;">本次数据</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Share/Store Index</strong></td>
+                        <td>MCD与KFC份额比 ÷ 门店数比 × 100，>100说明MCD单店效率更高</td>
+                        <td><strong>105</strong> → MCD单店效率优于KFC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>R3M (Rolling 3 Months)</strong></td>
+                        <td>滚动三个月数据，平滑月度波动，反映趋势</td>
+                        <td>用于鸡肉/牛肉份额分析</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Serving Share</strong></td>
+                        <td>在特定品类（如鸡肉汉堡）中的销量/客流量份额</td>
+                        <td>MCD牛肉50.1% / KFC鸡肉21.3%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Traffic Share</strong></td>
+                        <td>在IEO/WQSR市场中的客流量占比</td>
+                        <td>双雄流量份额稳定，MCD增速略快</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Brand Image (Perception)</strong></td>
+                        <td>消费者对品牌属性的认知（如“美味”、“性价比”）</td>
+                        <td>MCD“美味炸鸡”追平KFC；“美味咖啡”落后</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 整体分析逻辑图 -->
+        <div style="margin-top: 28px; background: #f0f5fe; border-radius: 16px; padding: 16px 20px; border: 1px solid #dce5f0;">
+            <p style="font-weight: 700; margin-bottom: 6px;">🔍 整体分析逻辑链条</p>
+            <p style="font-size: 15px; line-height: 1.7; color: #2c405a;">
+                <strong>宏观市场</strong>（IEO/WQSR增长趋势） → 
+                <strong>中观赛道</strong>（早餐/品类表现） → 
+                <strong>微观竞争</strong>（MCD vs KFC 流量/份额/认知） → 
+                <strong>机会识别</strong>（牛肉巩固、鸡肉追赶、咖啡补强）
+            </p>
+        </div>
+
+        <div class="footnote">
+            📌 本结构拆解基于 CREST Apr 2026 月度报告，聚焦 MCD 与 KFC 竞争分析。数据来源：CREST 22城市监测。
+        </div>
+    </div>
+</body>
+</html>

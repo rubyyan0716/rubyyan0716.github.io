@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BOSS SQL口径与取数方法｜数据类型讲解版</title>
+<style>
+:root{--bg:#f6f7fb;--paper:#fff;--ink:#1f2937;--muted:#667085;--line:#e5e7eb;--red:#bd1f2d;--gold:#ffbc0d;--blue:#2457a6;--green:#13845c;--navy:#111827;--soft-red:#fff1f2;--soft-yellow:#fffbeb;--soft-blue:#eff6ff;--soft-green:#ecfdf3;--shadow:0 10px 28px rgba(16,24,40,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;line-height:1.68;font-size:15px}.hero{background:linear-gradient(135deg,#bd1f2d 0%,#6f1620 48%,#111827 100%);color:white;padding:48px 54px 40px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:-120px;top:-150px;width:420px;height:420px;border-radius:50%;background:rgba(255,188,13,.25)}.hero h1{margin:0 0 12px;font-size:36px;line-height:1.18;position:relative;z-index:1}.hero p{margin:7px 0;max-width:1120px;color:#fff5f5;font-size:17px;position:relative;z-index:1}.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;position:relative;z-index:1}.badge{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);padding:7px 12px;border-radius:999px;font-size:13px}.wrap{max-width:1320px;margin:0 auto;padding:28px 28px 70px}.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;margin:18px 0;padding:24px 27px;box-shadow:var(--shadow)}.card.compact{padding:18px 22px}.eyebrow{display:inline-block;border-radius:999px;background:var(--navy);color:white;font-size:12px;font-weight:800;padding:4px 10px;margin-bottom:10px;letter-spacing:.05em}.eyebrow.red{background:var(--red)}.eyebrow.blue{background:var(--blue)}.eyebrow.green{background:var(--green)}.eyebrow.gold{background:#a46f00}h2{margin:0 0 16px;font-size:25px;color:var(--navy)}h3{margin:22px 0 10px;font-size:19px;color:#202939}h4{margin:0 0 8px;font-size:16px;color:#202939}.muted{color:var(--muted)}.grid{display:grid;gap:14px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}.box{background:white;border:1px solid var(--line);border-radius:16px;padding:16px}.box.red{background:var(--soft-red);border-color:#fecdd3}.box.gold{background:var(--soft-yellow);border-color:#fde68a}.box.blue{background:var(--soft-blue);border-color:#bfdbfe}.box.green{background:var(--soft-green);border-color:#bbf7d0}.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.toc a{display:block;text-decoration:none;color:var(--navy);background:white;border:1px solid var(--line);border-radius:14px;padding:13px 14px}.toc a:hover{border-color:var(--red)}table{width:100%;border-collapse:separate;border-spacing:0;background:white;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:12px 0}th,td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f9fafb;text-align:left;color:#344054;font-weight:800}tr:last-child td{border-bottom:none}.formula,.sql{font-family:Consolas,"SFMono-Regular",Menlo,monospace;background:#101828;color:#f9fafb;border-radius:12px;padding:14px 16px;margin:10px 0;white-space:pre-wrap;overflow:auto}.sql{font-size:13px}.formula.light,.sql.light{background:#f8fafc;color:#101828;border:1px dashed #cbd5e1}.tag{display:inline-block;border-radius:6px;padding:2px 7px;font-size:12px;font-weight:800}.tag.red{background:#ffe4e6;color:#a5131f}.tag.blue{background:#dbeafe;color:#1d4ed8}.tag.green{background:#dcfce7;color:#166534}.tag.gold{background:#fef3c7;color:#92400e}.callout{border-left:5px solid var(--red);background:#fff8f8;border-radius:12px;padding:14px 16px;margin:14px 0}.callout.blue{border-left-color:var(--blue);background:#f5f8ff}.callout.green{border-left-color:var(--green);background:#f5fffa}.callout.gold{border-left-color:#d69a00;background:#fffaf0}.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.node{border:1px solid var(--line);background:white;border-radius:13px;padding:12px 14px;text-align:center;min-width:128px}.node strong{display:block;color:var(--navy)}.arrow{font-size:22px;color:var(--red);font-weight:900}.checklist li{margin:7px 0}.small{font-size:13px;color:var(--muted)}.footer{text-align:center;color:#667085;font-size:13px;margin-top:24px}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 9px;margin:3px;background:#fff;font-size:12px}.section-title{display:flex;align-items:center;gap:12px}.section-title .num{width:34px;height:34px;border-radius:50%;background:var(--red);color:white;display:flex;align-items:center;justify-content:center;font-weight:900}.kbd{font-family:Consolas,monospace;background:#f2f4f7;border:1px solid #d0d5dd;border-radius:6px;padding:1px 5px}.priority{font-weight:800;color:var(--red)}
+@media(max-width:980px){.hero{padding:34px 24px}.wrap{padding:18px}.grid-2,.grid-3,.grid-4,.toc{grid-template-columns:1fr}}
+@media print{body{background:white}.wrap{max-width:none;padding:14px}.card{box-shadow:none;break-inside:avoid}.toc{display:none}.hero{break-after:avoid}.no-print{display:none}}
+</style>
+</head>
+<body>
+<section class="hero">
+  <h1>BOSS SQL口径与取数方法<br/>数据类型讲解版</h1>
+  <p>基于《BOSS SQL口径与取数方法梳理 v2.0 全量版》整理，用于快速判断不同业务问题应该用哪类数据、取哪张表、带哪些过滤条件、注意哪些口径风险。</p>
+  <div class="badges">
+    <span class="badge">OC Sales</span><span class="badge">NRE / Heavy</span><span class="badge">PMIX</span><span class="badge">DAU / Funnel</span><span class="badge">Download / Retention</span><span class="badge">Coupon / Points</span><span class="badge">AARR</span><span class="badge">BDB Price</span><span class="badge">Douyin</span><span class="badge">口径陷阱清单</span>
+  </div>
+</section>
+<div class="wrap">
+
+<section class="card no-print">
+  <span class="eyebrow">READ ME</span>
+  <h2>这份HTML怎么用</h2>
+  <div class="toc">
+    <a href="#principle"><b>0. 取数总原则</b><br/><span class="small">先定口径，再取数</span></a>
+    <a href="#sales"><b>1. Sales / GC / Freq</b><br/><span class="small">OC正式口径</span></a>
+    <a href="#nre"><b>2. NRE / Heavy</b><br/><span class="small">用户分层与价值</span></a>
+    <a href="#pmix"><b>3. PMIX品类</b><br/><span class="small">一级/二级/自建归因</span></a>
+    <a href="#traffic"><b>4. DAU / 流量漏斗</b><br/><span class="small">官方表与埋点表</span></a>
+    <a href="#download"><b>5. 下载与留存</b><br/><span class="small">cohort与T+N</span></a>
+    <a href="#promo"><b>6. 券/积分/会员/OMM</b><br/><span class="small">核销、兑换、卡</span></a>
+    <a href="#aarr"><b>7. AARR私域</b><br/><span class="small">触达、核销、halo</span></a>
+    <a href="#bdb"><b>8. BDB价格</b><br/><span class="small">量价、折扣、平台</span></a>
+    <a href="#douyin"><b>9. 抖音/直播间</b><br/><span class="small">五表链路</span></a>
+    <a href="#tables"><b>10. 底表字典</b><br/><span class="small">官方表与sandbox</span></a>
+    <a href="#pitfalls"><b>11. 高危陷阱</b><br/><span class="small">复用SQL前必查</span></a>
+    <a href="#template"><b>12. 复用模板</b><br/><span class="small">取数brief格式</span></a>
+  </div>
+</section>
+
+<section class="card" id="principle">
+  <div class="section-title"><span class="num">0</span><h2>取数总原则：不要先找表，先回答四个口径问题</h2></div>
+  <div class="grid grid-4">
+    <div class="box red"><h4>1. 业务对象</h4><p>是订单、用户、流量、券、积分、AARR触达、价格，还是抖音链路？不同对象对应不同事实表。</p></div>
+    <div class="box gold"><h4>2. 分析口径</h4><p>是否需要Comp、是否剔EC、是否剔黑产、是否按APP/WMP/AMP/3PO拆分？</p></div>
+    <div class="box blue"><h4>3. 时间窗口</h4><p>同比、MTD、QTD、Rolling 90D、T+30/T+90留存窗口，不同写法会直接改变结果。</p></div>
+    <div class="box green"><h4>4. 输出指标</h4><p>Sales、GC、User、Freq、AC、DAU、Order UV、Redeem、Retention等不能混用分母。</p></div>
+  </div>
+  <div class="callout gold"><b>优先级建议：</b>全量口径以v2.0为主；其中new_01/new_02是APP PMIX一级/二级分类的最新权威；重复口径按编号更小的文件为准，编号越小代表查询越新。</div>
+</section>
+
+<section class="card" id="sales">
+  <div class="section-title"><span class="num">1</span><h2>Sales / GC / User / Freq / AC：OC分渠道生意怎么取</h2></div>
+  <p>适用问题：APP/WMP/AMP各渠道Sales、GC、User、Freq、AC的同比、MTD、QTD、Comp表现，以及FC-/MDS/EC拆分。</p>
+  <h3>1.1 首选底表与口径</h3>
+  <table>
+    <tr><th>用途</th><th>首选表</th><th>关键字段</th><th>备注</th></tr>
+    <tr><td>品类/券/渠道拆分Sales</td><td><span class="kbd">hive.dws_order.t_order_pmix_for_analysis_d</span></td><td>order_channel, be_type, top_receive_channel, top_net_amount, is_gc_count, item_pmix_type</td><td>top-item级pmix宽表，是品类/券归因/渠道拆分主力表。</td></tr>
+    <tr><td>订单主事实/NRE/留存</td><td><span class="kbd">hive.ads_order.t_order_apply_d</span></td><td>mid, order_id, is_gc_count, order_net_amount, order_channel, order_type, is_new_customer</td><td>适合用户分层、GC、留存、渠道行为分析。</td></tr>
+    <tr><td>OC正式分渠道月报</td><td>pmix表 + comp flag + calendar</td><td>is_comp_monthly, date mapping</td><td>正式口径使用官方月comp flag和日历映射去年同自然日。</td></tr>
+  </table>
+  <h3>1.2 通用公式</h3>
+  <div class="formula">GC = COUNT(DISTINCT order_id) WHERE is_gc_count = 1
+Freq = GC ÷ COUNT(DISTINCT mid)
+AC = SUM(Sales) ÷ SUM(GC)
+Sales字段：pmix表 top_net_amount；订单表 order_net_amount</div>
+  <div class="callout"><b>注意：</b>AC是Sales/GC，人均销售是Sales/Usercount，两者不能混用。</div>
+  <h3>1.3 渠道与FC-/MDS/EC拆分</h3>
+  <table>
+    <tr><th>渠道/归因</th><th>判定条件</th><th>使用场景</th></tr>
+    <tr><td>APP</td><td>order_channel = 'New APP'</td><td>APP channel生意。</td></tr>
+    <tr><td>WMP</td><td>order_channel = 'Wechat MP'</td><td>微信小程序生意。</td></tr>
+    <tr><td>AMP</td><td>order_channel = 'AliPay MP'</td><td>支付宝小程序生意。</td></tr>
+    <tr><td>3PO</td><td>order_type='MDS' AND order_channel IN ('MeiTuan','Eleme','JD')</td><td>分析层3PO通常含JD；但ej_order_ana底表is_3po不含JD，复用需对齐。</td></tr>
+    <tr><td>FC-</td><td>order_channel='New APP' AND be_type&lt;&gt;'MDS' AND top_receive_channel NOT IN EC八渠道</td><td>堂食剔EC APP生意。</td></tr>
+    <tr><td>EC</td><td>top_receive_channel IN EC八渠道，或订单级is_ec_order=1</td><td>受券渠道/电商归因。</td></tr>
+  </table>
+  <h3>1.4 取数步骤</h3>
+  <div class="flow"><div class="node"><strong>定渠道</strong><span class="small">APP/WMP/AMP</span></div><div class="arrow">→</div><div class="node"><strong>定归因</strong><span class="small">EC/MDS/FC-</span></div><div class="arrow">→</div><div class="node"><strong>定Comp</strong><span class="small">官方flag或手工窗口</span></div><div class="arrow">→</div><div class="node"><strong>取指标</strong><span class="small">Sales/GC/User/Freq/AC</span></div></div>
+  <div class="sql light">-- SQL骨架，仅用于提醒口径字段，日期/comp需按项目补齐
+SELECT
+  month,
+  order_channel,
+  if_ec,
+  SUM(top_net_amount) AS sales,
+  COUNT(DISTINCT CASE WHEN is_gc_count=1 THEN order_id END) AS gc,
+  COUNT(DISTINCT mid) AS usercount,
+  COUNT(DISTINCT CASE WHEN is_gc_count=1 THEN order_id END) * 1.0 / COUNT(DISTINCT mid) AS freq,
+  SUM(top_net_amount) * 1.0 / COUNT(DISTINCT CASE WHEN is_gc_count=1 THEN order_id END) AS ac
+FROM hive.dws_order.t_order_pmix_for_analysis_d
+WHERE item_pmix_type IN ('Sold','Discount')
+  AND order_channel IN ('New APP','Wechat MP','AliPay MP')
+GROUP BY 1,2,3;</div>
+</section>
+
+<section class="card" id="nre">
+  <div class="section-title"><span class="num">2</span><h2>NRE / Heavy / 用户价值：用户分层数据怎么取</h2></div>
+  <p>适用问题：New、Reactive、Existing Light/Medium/Heavy结构变化，Heavy用户频次/Sales贡献，FC/MDS/Dual用户迁移，红绿灯与雪球分析。</p>
+  <h3>2.1 标准NRE分层</h3>
+  <table>
+    <tr><th>档位</th><th>标准判定</th><th>备注</th></tr>
+    <tr><td>5-New</td><td>关注期内 max(is_new_customer)=1</td><td>New用户。</td></tr>
+    <tr><td>4-Reactive</td><td>关注期起点前90天无任何订单</td><td>Reactive用户。</td></tr>
+    <tr><td>3-E-light</td><td>期末往前Rolling 90天GC 1-2单</td><td>Existing Light。</td></tr>
+    <tr><td>2-E-Medium</td><td>期末往前Rolling 90天GC 3-12单</td><td>Existing Medium。</td></tr>
+    <tr><td>1-E-Heavy</td><td>期末往前Rolling 90天GC ≥13单</td><td>Existing Heavy。</td></tr>
+    <tr><td>6-Renew 扩展档</td><td>过去270天无单但270天前有单</td><td>Reactive 270天扩展版本。</td></tr>
+    <tr><td>高价值用户</td><td>过去90天GC≥3 AND 消费金额SPD≥60</td><td>用于价值分布/召回场景。</td></tr>
+  </table>
+  <h3>2.2 可直接复用的底表</h3>
+  <table>
+    <tr><th>表族</th><th>内容</th><th>使用建议</th></tr>
+    <tr><td>ej_nre_* 月度/季度系列</td><td>mon × mid × user_seg的NRE分层表</td><td>月度、季度NRE结构和留存首选。</td></tr>
+    <tr><td>app_nre_user</td><td>APP季度NRE人群表，如Existing Heavy</td><td>APP专用NRE分析。</td></tr>
+    <tr><td>ej_order_ana_* 系列</td><td>订单+门店属性宽表，含is_3po/is_app_wmp</td><td>红绿灯、FC/MDS/Dual、迁移和留存底座。</td></tr>
+    <tr><td>FC_Churn_user / mid_user_tags</td><td>FC流失/召回人群标签</td><td>流失召回专题。</td></tr>
+  </table>
+  <h3>2.3 Heavy User与Sales关系怎么取</h3>
+  <div class="formula">Heavy Sales = Heavy User × Heavy Freq × Heavy AC
+Heavy Sales Share = Heavy Sales ÷ Total Sales
+Heavy Contribution to ΔSales = ΔHeavy Sales ÷ ΔTotal Sales</div>
+  <div class="sql light">-- Heavy生意拆解骨架
+WITH heavy_base AS (
+  SELECT mid, user_seg
+  FROM sandbox_cbi.ej_nre_xxx
+  WHERE user_seg = '1-E-Heavy'
+), orders AS (
+  SELECT mid, order_id, order_net_amount, is_gc_count, bi_dt
+  FROM hive.ads_order.t_order_apply_d
+  WHERE bi_dt BETWEEN '${start_dt}' AND '${end_dt}'
+)
+SELECT
+  COUNT(DISTINCT h.mid) AS heavy_user,
+  COUNT(DISTINCT CASE WHEN o.is_gc_count=1 THEN o.order_id END) AS heavy_gc,
+  SUM(o.order_net_amount) AS heavy_sales,
+  COUNT(DISTINCT CASE WHEN o.is_gc_count=1 THEN o.order_id END) * 1.0 / COUNT(DISTINCT h.mid) AS heavy_freq,
+  SUM(o.order_net_amount) * 1.0 / COUNT(DISTINCT CASE WHEN o.is_gc_count=1 THEN o.order_id END) AS heavy_ac
+FROM heavy_base h
+LEFT JOIN orders o ON h.mid=o.mid;</div>
+  <div class="callout green"><b>建议输出：</b>Heavy User变化、Heavy Freq变化、Heavy AC变化，以及三者分别对Heavy Sales和Total Sales的贡献。这样能回答“Sales下跌是不是Heavy频次拖累”。</div>
+</section>
+
+<section class="card" id="pmix">
+  <div class="section-title"><span class="num">3</span><h2>PMIX / 品类 / 菜单归因：产品结构数据怎么取</h2></div>
+  <p>适用问题：APP FC-品类拆解、Value/Campaign/Base贡献、WD/BA/BBM/OMM/mcWeekend表现、Other Promotion打开、Heavy pmix表现。</p>
+  <h3>3.1 首选表与前置过滤</h3>
+  <div class="formula">主表：hive.dws_order.t_order_pmix_for_analysis_d
+统一前置过滤：item_pmix_type IN ('Sold','Discount')
+核心字段：ocp_top_category_level_1~5, daypart, item_top_code, top_coupon_id, top_net_amount, is_gc_count</div>
+  <h3>3.2 最新APP PMIX分类体系</h3>
+  <table>
+    <tr><th>分类层级</th><th>权威来源</th><th>核心逻辑</th></tr>
+    <tr><td>一级分类</td><td>new_01</td><td>Breakfast优先；WD新口径归Value；BA/BBM/leading offer/2nd layer归Campaign+BABBM；剩余Promotional Menu归Other Promotion；Everyday Core归Base Menu。</td></tr>
+    <tr><td>二级分类</td><td>new_02</td><td>Breakfast优先；再拆BA、BBM、OMM、mcWeekend、Weekly Destination、leading offer、2nd layer、Base ALC/EVM/Dessert/Snack等。</td></tr>
+    <tr><td>自建三级归因</td><td>45/80/100</td><td>0-黑产 &gt; 1-EC &gt; 2-VALUE &gt; 3-Campaign &gt; 4-Promotion &gt; 5-Base menu &gt; 6-Non food &gt; others。</td></tr>
+  </table>
+  <h3>3.3 WD / mcWeekend / Other Promotion关键条件</h3>
+  <table>
+    <tr><th>类型</th><th>判定逻辑</th><th>注意</th></tr>
+    <tr><td>WD新口径</td><td>level_4='Weekly destination' OR 命中wd_coupon_list_2026 OR item_top_code IN 我就喜欢码</td><td>08/10存在OR括号优先级风险，复用时要把OR放进统一括号。</td></tr>
+    <tr><td>mcWeekend</td><td>level_3='Mcweekend' OR item_top_code补码</td><td>历史版本有码表补充。</td></tr>
+    <tr><td>Other Promotion</td><td>Promotional Menu中排除NLP/LTO、Mcweekend、2nd layer、WD、OMM、BA、BBM</td><td>适合做Other Promotion明细打开。</td></tr>
+  </table>
+  <div class="sql light">-- APP PMIX取数骨架
+SELECT
+  month,
+  pmix_l1,
+  pmix_l2,
+  SUM(top_net_amount) AS sales,
+  COUNT(DISTINCT CASE WHEN is_gc_count=1 THEN order_id END) AS gc,
+  COUNT(DISTINCT mid) AS usercount
+FROM hive.dws_order.t_order_pmix_for_analysis_d
+WHERE item_pmix_type IN ('Sold','Discount')
+  AND order_channel='New APP'
+  AND be_type&lt;&gt;'MDS'
+GROUP BY 1,2,3;</div>
+</section>
+
+<section class="card" id="traffic">
+  <div class="section-title"><span class="num">4</span><h2>DAU / 流量 / 漏斗：访问和转化数据怎么取</h2></div>
+  <p>适用问题：APP/WMP/AMP DAU变化、下载到访问、菜单页/加购/确认/提交/下单漏斗、DAU lever拆解、品类下单用户日量。</p>
+  <h3>4.1 三类DAU口径</h3>
+  <table>
+    <tr><th>口径</th><th>表/条件</th><th>适用场景</th></tr>
+    <tr><td>APP DAU mid口径</td><td>t_traffic_events_detail_d：source_table='app' AND platform='CMA'有记录；严口径可限event_name='$AppStart'</td><td>登录用户/下单用户关联分析。</td></tr>
+    <tr><td>官方DAU统计表</td><td>t_cstm_traffic_nob_dau_statistic_d：date_period='daily', module_name='Overview', platform IN ('CMA','OC Online','WMP','AMP')</td><td>OC常规DAU报表。</td></tr>
+    <tr><td>官方报表DAU uid口径</td><td>t_nob_traffic_top_scenario_d：含未登录；Own Channel为APP+WMP+AMP加总去重</td><td>高层报表或未登录流量观察。</td></tr>
+  </table>
+  <h3>4.2 漏斗口径</h3>
+  <table>
+    <tr><th>类型</th><th>表</th><th>关键字段/条件</th></tr>
+    <tr><td>聚合漏斗</td><td>t_cstm_traffic_nob_order_funnel_d</td><td>page_name='ALL'或'MDS'，platform，date_period='daily'，字段open/menu/addon/order_confirm/order_submit/order_uv。</td></tr>
+    <tr><td>明细自建漏斗</td><td>t_traffic_merchandise_event_d + 订单表</td><td>启动→菜单页→加购→订单确认页→submitOrder→支付。</td></tr>
+    <tr><td>DAU lever底表</td><td>ej_app_dau_ana_base_* 或 app_user_tag_daily</td><td>mid × 日 × tag × is_dau，用于EC/MDS/CARD/campaign/WD/下载量等lever拆解。</td></tr>
+  </table>
+  <div class="callout blue"><b>建议：</b>如果只是看DAU趋势，用官方DAU表；如果要和订单/用户分层关联，用mid口径埋点明细；如果要拆“DAU由什么抓手贡献”，用lever底表。</div>
+</section>
+
+<section class="card" id="download">
+  <div class="section-title"><span class="num">5</span><h2>下载 / 留存 / Cohort：新下载与持续表现怎么取</h2></div>
+  <h3>5.1 下载口径</h3>
+  <table>
+    <tr><th>类型</th><th>条件/表</th><th>用途</th></tr>
+    <tr><td>APP下载</td><td>event_name='$AppInstall' AND source_table='app'；严格版加platform='CMA'</td><td>APP安装/下载量。</td></tr>
+    <tr><td>私域下载来源</td><td>utm_source白名单：95/121/85/100/90/99/96/98/103/124</td><td>私域来源归因。</td></tr>
+    <tr><td>地推下载</td><td>utm_source IN ('95','121')</td><td>地推专题。</td></tr>
+    <tr><td>官方线下下载</td><td>t_cstm_traffic_nob_app_offline_download_d</td><td>地推市场分布，关联门店主档取do_city。</td></tr>
+  </table>
+  <h3>5.2 留存窗口</h3>
+  <div class="formula">T+N 留存窗口 = b.bi_dt ∈ [a.bi_dt + 1, a.bi_dt + N]
+30天留存 = T+1 到 T+30
+90天窗口 = 期末 - 89 到 期末</div>
+  <div class="callout"><b>高危点：</b>留存b表的数据窗口下界必须覆盖a全期+1天，否则早期cohort会被截断，多个历史文件存在这个问题。</div>
+  <h3>5.3 常见输出</h3>
+  <table>
+    <tr><th>研究问题</th><th>推荐口径</th><th>输出指标</th></tr>
+    <tr><td>下载当日是否转化</td><td>下载cohort + 当日订单</td><td>download / visit / login / first order / NR结构。</td></tr>
+    <tr><td>下载后30/90天质量</td><td>T+30/T+90留存模板</td><td>留存率、下单率、GC、Sales、Freq。</td></tr>
+    <tr><td>下载长期贡献</td><td>首启时间表 + 跨年访问/下单</td><td>后续DAU、订单、APP占比。</td></tr>
+  </table>
+</section>
+
+<section class="card" id="promo">
+  <div class="section-title"><span class="num">6</span><h2>券 / 积分 / 会员 / OMM：权益相关数据怎么取</h2></div>
+  <h3>6.1 积分</h3>
+  <table>
+    <tr><th>口径</th><th>条件</th><th>备注</th></tr>
+    <tr><td>积分兑换标准</td><td>point_direction='负向交易' AND operation='积分兑换'</td><td>积分兑换×生意、DAU渗透。</td></tr>
+    <tr><td>积分使用宽口径</td><td>currency='1001' AND point_direction='负向交易' AND operation NOT IN ('积分过期')</td><td>Used/Never Points季度规模。</td></tr>
+    <tr><td>券式积分兑换单</td><td>length(coupon_id)&gt;2 AND length(redeem_order_id)&gt;2，按redeem_order_id回关订单</td><td>券式兑换单Sales。</td></tr>
+  </table>
+  <h3>6.2 券核销 / 0元券 addon</h3>
+  <table>
+    <tr><th>业务</th><th>取数方法</th><th>注意</th></tr>
+    <tr><td>券核销回关订单</td><td>t_coupon_coupon_redeem_d.order_id_pos = order_id AND LENGTH(order_id_pos)&gt;5；领取人取receive表click_mid</td><td>核销和领取分别取不同表。</td></tr>
+    <tr><td>0元券addon</td><td>核销单同mid、30分钟内后续订单；件数限is_top_equal_base=1；金额=item_product_net_amount+item_non_product_net_amount</td><td>常用30min窗模板。</td></tr>
+    <tr><td>下载礼</td><td>固定coupon_id清单</td><td>需要区分领取、核销、领核合并。</td></tr>
+  </table>
+  <h3>6.3 OMM与会员</h3>
+  <table>
+    <tr><th>口径</th><th>取法</th><th>使用场景</th></tr>
+    <tr><td>会员单</td><td>is_member_order=1</td><td>会员生意、会员频次。</td></tr>
+    <tr><td>OMM消费</td><td>pmix level_4='OMM'</td><td>OMM购买/消费人群。</td></tr>
+    <tr><td>OMM卡权益核销</td><td>t_dim_promotion_td card_type='OMM'/'早餐卡' AND promotion_category_type='商品'</td><td>卡权益核销。</td></tr>
+    <tr><td>OMM售卡</td><td>operate_reason IN ('购买','好友转赠','兑换码兑换')，周期换算15天0.5/30天1/90天3/150天5/365天12</td><td>售卡量、等效周期、售卡金额。</td></tr>
+  </table>
+</section>
+
+<section class="card" id="aarr">
+  <div class="section-title"><span class="num">7</span><h2>AARR私域：触达、核销、halo、场景分层怎么取</h2></div>
+  <p>适用问题：AARR触达规模、成功触达、塞券、核销、未核销halo、journey迁移、场景分层、control/uplift相关底表。</p>
+  <h3>7.1 主表和基础过滤</h3>
+  <table>
+    <tr><th>数据对象</th><th>表/条件</th><th>说明</th></tr>
+    <tr><td>AARR触达明细</td><td>t_spp_cnn_result_detail_d，strategy_final='sending'</td><td>journey J01-J13；表按bi_dt取单日快照；实际触达日=list_date+1。</td></tr>
+    <tr><td>成功触达</td><td>app/sms/wechat_service/rgm/wechat五类push_flag任一=1</td><td>可剔SMS+公众号：channel_id NOT IN (9,2)。</td></tr>
+    <tr><td>塞券</td><td>is_aarr_coupon=1 AND coupon_push_flag=1 AND channel_id IN (1,3,4)</td><td>wmp塞券专属计划在私域统计中剔除。</td></tr>
+    <tr><td>核销last-click</td><td>is_aarr_coupon=1 AND redeem_flag=1 AND coupon_push_sequence=1</td><td>取redeem_gc/redeem_sales；redeem_date需LENGTH=10剔脏数据。</td></tr>
+    <tr><td>未核销halo</td><td>anymessage_receive_flag=1 AND push_sequence=1 AND redeem_flag=0</td><td>取tracking_period_ec_sales / tracking_period_lc_sales。</td></tr>
+  </table>
+  <h3>7.2 AARR取数顺序</h3>
+  <div class="flow"><div class="node"><strong>可触达盘</strong><span class="small">reachable条件</span></div><div class="arrow">→</div><div class="node"><strong>计划发送</strong><span class="small">strategy_final</span></div><div class="arrow">→</div><div class="node"><strong>成功触达</strong><span class="small">push flags</span></div><div class="arrow">→</div><div class="node"><strong>塞券/通知</strong><span class="small">coupon flag</span></div><div class="arrow">→</div><div class="node"><strong>核销/halo</strong><span class="small">redeem/LC/EC</span></div></div>
+  <div class="callout blue"><b>建议：</b>AARR结果页不要只报redeem sales，最好同时报last-click核销、未核销halo、触达漏斗和control/uplift口径，否则容易高估或重复claim贡献。</div>
+</section>
+
+<section class="card" id="bdb">
+  <div class="section-title"><span class="num">8</span><h2>BDB / 价格分析：量价、折扣和平台归因怎么取</h2></div>
+  <p>适用问题：BDB价格、折扣、ALC/EVM/Combo、平台折扣归因、campaign档期、主力品类价格变化。</p>
+  <h3>8.1 主事实表与标准过滤</h3>
+  <div class="formula">主表：hive.tmp.t_order_pmix_sales_apportion_dtl_20240710
+标准过滤：item_pmix_type IN ('Sold','Discount')
+AND status IN ('refund','completed')
+AND oms_order_id IS NOT NULL
+AND base_qty &lt;&gt; 0</div>
+  <h3>8.2 核心计算</h3>
+  <table>
+    <tr><th>指标</th><th>计算/定义</th><th>注意</th></tr>
+    <tr><td>unit_qty</td><td>base_qty × COALESCE(cast(pieces as int),1)</td><td>个别历史文件未除pieces，复用需检查。</td></tr>
+    <tr><td>price</td><td>item_restructure_amount / unit_qty</td><td>价格系列核心单价。</td></tr>
+    <tr><td>原价销售</td><td>original_price × base_qty</td><td>下游计算BDB折扣。</td></tr>
+    <tr><td>原价成交</td><td>original_price = item_restructure_amount → alc</td><td>用于区分折扣/原价。</td></tr>
+  </table>
+  <h3>8.3 折扣平台归类优先级</h3>
+  <div class="formula">douyin-ec &gt; meituan-ec &gt; tmall-ec/alipay &gt; omm &gt; target_promote &gt; eleme &gt; 3po-meituan &gt; BA &gt; EVM/Combo &gt; member_day &gt; alc &gt; others</div>
+  <div class="callout"><b>高危点：</b>BDB多个文件comp子查询是LEFT JOIN但未过滤，导致comp实际未生效；需要区分内连接/有效过滤版本。</div>
+</section>
+
+<section class="card" id="douyin">
+  <div class="section-title"><span class="num">9</span><h2>抖音 / 直播间：成交到核销链路怎么取</h2></div>
+  <p>适用问题：直播间成交、POI成交、抖金店、抖音券核销、抖音only、GMV与订单回关。</p>
+  <h3>9.1 五表标准链路</h3>
+  <div class="flow"><div class="node"><strong>外部抖音订单</strong><span class="small">t_external_douyin_order_d</span></div><div class="arrow">→</div><div class="node"><strong>ECS订单主表</strong><span class="small">trade_id/order_id</span></div><div class="arrow">→</div><div class="node"><strong>ECS券码表</strong><span class="small">coupon_code</span></div><div class="arrow">→</div><div class="node"><strong>券核销表</strong><span class="small">user_coupon_code</span></div><div class="arrow">→</div><div class="node"><strong>订单主表</strong><span class="small">order_id_pos</span></div></div>
+  <h3>9.2 人群划分</h3>
+  <table>
+    <tr><th>类型</th><th>判定</th><th>说明</th></tr>
+    <tr><td>直播成交</td><td>role='商家' AND transaction_channel='直播'</td><td>直播间成交人群。</td></tr>
+    <tr><td>POI</td><td>transaction_channel&lt;&gt;'直播'</td><td>非直播渠道。</td></tr>
+    <tr><td>抖金店</td><td>liveroom_id='麦当劳抖金店'</td><td>特定直播间。</td></tr>
+    <tr><td>订单级抖音归因</td><td>订单LEFT JOIN核销表，receive_channel IN ('DouYinLocal','Tiktok')</td><td>可判断抖音only。</td></tr>
+  </table>
+  <div class="callout gold"><b>注意：</b>抖音链路通常涉及外部excel导入、ECS订单、券码、核销、订单回关，必须做去重。主表/券码表历史口径使用ROW_NUMBER按modified_time DESC取rn=1。</div>
+</section>
+
+<section class="card" id="tables">
+  <div class="section-title"><span class="num">10</span><h2>核心底表字典：不同问题优先找哪张表</h2></div>
+  <h3>10.1 官方数仓表</h3>
+  <table>
+    <tr><th>表</th><th>用途</th><th>高频字段/说明</th></tr>
+    <tr><td>t_order_pmix_for_analysis_d</td><td>订单top-item级pmix宽表</td><td>渠道、品类、券归因、top_net_amount、is_gc_count。</td></tr>
+    <tr><td>t_order_apply_d</td><td>订单主表</td><td>NRE、GC、留存、渠道、is_new_customer、is_member_order。</td></tr>
+    <tr><td>t_traffic_events_detail_d</td><td>埋点明细</td><td>下载、DAU、访问、页面事件、utm。</td></tr>
+    <tr><td>t_dim_store_master_td</td><td>门店主档</td><td>comp过滤、市场归属do_city。</td></tr>
+    <tr><td>t_dim_comp_str_flag / t_dim_calendar_td</td><td>官方月comp与日历</td><td>OC正式comp、同比映射。</td></tr>
+    <tr><td>t_cstm_traffic_nob_order_funnel_d</td><td>官方流量漏斗聚合表</td><td>open/menu/addon/order_confirm/order_submit/order_uv。</td></tr>
+    <tr><td>t_customer_wide_table_ed</td><td>客户风险/AARR可触达</td><td>黑产标志、reachable、会员来源等。</td></tr>
+    <tr><td>t_member_point_record_d</td><td>积分流水</td><td>point_direction、operation、redeem_order_id、currency。</td></tr>
+    <tr><td>t_coupon_coupon_redeem_d / receive_d</td><td>券核销/领取</td><td>coupon_id、order_id_pos、click_mid、redeem_mid。</td></tr>
+    <tr><td>t_spp_cnn_result_detail_d</td><td>AARR私域触达核销</td><td>strategy_final、push flags、redeem_flag、tracking sales。</td></tr>
+    <tr><td>t_order_pmix_sales_apportion_dtl_20240710</td><td>BDB价格分摊明细</td><td>item_restructure_amount、base_qty、pieces、original_price。</td></tr>
+  </table>
+  <h3>10.2 Sandbox / 自建表族</h3>
+  <table>
+    <tr><th>表族</th><th>内容</th><th>适合场景</th></tr>
+    <tr><td>ej_order_ana_* 系列</td><td>订单+门店属性宽表，逐月UNION增量</td><td>红绿灯、FC/MDS/Dual、迁移和留存。</td></tr>
+    <tr><td>ej_nre_* / app_nre_user</td><td>NRE分层表</td><td>NRE结构、Heavy/Medium/Light分析。</td></tr>
+    <tr><td>ej_app_dau_ana_base_* / app_user_tag_daily</td><td>APP DAU lever底表</td><td>DAU抓手、无交易杠杆、交易×产品。</td></tr>
+    <tr><td>wd_coupon_list_2026</td><td>WD券清单</td><td>WD新口径判定。</td></tr>
+    <tr><td>order_pmix_for_analysis_ej_*快照</td><td>自建pmix分类快照</td><td>cate1/2/3归因、历史pmix复盘。</td></tr>
+    <tr><td>ry_dau_check_* / black_users_ry_*</td><td>黑产标记</td><td>无DAU黑产、grey-heavy分析。</td></tr>
+    <tr><td>FC_Churn_user / mid_user_tags</td><td>FC流失召回标签</td><td>流失、召回、留存去向。</td></tr>
+    <tr><td>ry_aarr_2025_base / ry_user_case_mapping</td><td>AARR漏斗/倾向特征</td><td>AARR归因、转化、propensity。</td></tr>
+  </table>
+</section>
+
+<section class="card" id="pitfalls">
+  <div class="section-title"><span class="num">11</span><h2>复用SQL前必查：高危口径陷阱</h2></div>
+  <ul class="checklist">
+    <li><span class="priority">3PO含不含JD：</span>分析层3PO常含JD，但ej_order_ana底表is_3po只含MeiTuan/Eleme；BDB部分3PO也不含JD。</li>
+    <li><span class="priority">FC两种写法：</span>order_type&lt;&gt;'MDS'与order_type='FC'并存，总量可能不同。</li>
+    <li><span class="priority">AC口径：</span>AC=Sales/GC，人均销售=Sales/Usercount，不能混。</li>
+    <li><span class="priority">WD OR括号：</span>历史08/10中我就喜欢码OR可能脱离日期/pmix约束，复用时必须重写括号。</li>
+    <li><span class="priority">DAU窗口：</span>82-85品类下单用户日量中DAU匹配窗口只写单日，不能直接复用为长窗。</li>
+    <li><span class="priority">留存窗口截断：</span>b表窗口下界必须覆盖a全期+1天，否则cohort前段被截断。</li>
+    <li><span class="priority">BDB comp：</span>多个文件comp为LEFT JOIN但未过滤，comp实际未生效。</li>
+    <li><span class="priority">日期格式：</span>bi_dt是yyyymmdd字符串，不能与带连字符日期串直接比较。</li>
+    <li><span class="priority">标题不等于SQL：</span>部分文件标题写APP但实际是WMP，或标题写FC但page_name是MDS。</li>
+    <li><span class="priority">损坏/草稿文件：</span>部分SQL存在字段缺失、全角符号、分号断链、空WITH等，不可直接执行。</li>
+  </ul>
+  <div class="callout"><b>建议：</b>所有复用SQL都先过一遍“渠道、时间、comp、去重、分母、表粒度、优先级归因、黑产/EC处理”八项检查。</div>
+</section>
+
+<section class="card" id="template">
+  <div class="section-title"><span class="num">12</span><h2>取数需求Brief模板：以后每次开查前先填这个</h2></div>
+  <div class="sql light">1. Business Question：这次要回答什么问题？
+2. Data Object：订单 / 用户 / 流量 / 下载 / 券 / 积分 / AARR / 价格 / 抖音？
+3. Time Window：MTD / QTD / YOY / Rolling 90D / T+30 / T+90？
+4. Channel Scope：APP / WMP / AMP / MDS / FC / 3PO / Own Channel？
+5. Store Scope：Comp or Total？用官方flag还是手工窗口？
+6. User Scope：Total / NRE / Heavy / Medium / New / Reactive / High Value？
+7. Business Attribution：EC / MDS / FC- / 黑产 / PMIX / AARR / Coupon如何归因？
+8. Metrics：Sales / GC / User / Freq / AC / DAU / Funnel / Redeem / Retention？
+9. Table Choice：官方表 or sandbox已建底表？
+10. Risk Check：是否存在已知陷阱？</div>
+  <div class="grid grid-3">
+    <div class="box green"><h4>如果是OC生意</h4><p>优先pmix表 + comp flag + channel/if_ec，输出Sales/GC/User/Freq/AC。</p></div>
+    <div class="box blue"><h4>如果是用户分层</h4><p>优先ej_nre_*或app_nre_user，再回关订单事实表。</p></div>
+    <div class="box gold"><h4>如果是流量/漏斗</h4><p>趋势用官方DAU/漏斗表，用户级关联用埋点明细或自建lever底表。</p></div>
+  </div>
+</section>
+
+<div class="footer">BOSS SQL口径与取数方法｜HTML讲解版｜基于v2.0全量版和v1.0整理版提炼</div>
+</div>
+</body>
+</html>

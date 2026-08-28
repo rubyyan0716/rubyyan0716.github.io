@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>积分增量测算方法论 · 一页纸</title>
+<style>
+  :root{
+    --ink:#1a2233; --sub:#5b6577; --line:#e4e8ef; --bg:#f5f7fa;
+    --brand:#c8102e; --brand2:#0a5ad1; --gold:#e0a500;
+    --green:#0f9d58; --card:#ffffff; --soft:#eef3fb;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5;
+    padding:22px; font-size:12.5px;
+  }
+  .page{
+    max-width:1180px; margin:0 auto; background:var(--card);
+    border-radius:14px; overflow:hidden;
+    box-shadow:0 8px 30px rgba(20,30,50,.10);
+  }
+  /* header */
+  .hero{
+    background:linear-gradient(120deg,#c8102e 0%,#9c0f2e 55%,#5c1030 100%);
+    color:#fff; padding:20px 28px; position:relative;
+  }
+  .hero h1{font-size:22px; letter-spacing:.5px; font-weight:700;}
+  .hero p{opacity:.9; font-size:12px; margin-top:5px;}
+  .hero .tag{
+    position:absolute; top:20px; right:26px; background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.35); padding:5px 12px; border-radius:20px;
+    font-size:11px; font-weight:600;
+  }
+  /* body grid */
+  .wrap{padding:20px 24px 26px;}
+  .row{display:grid; gap:16px;}
+  .r1{grid-template-columns:1.15fr 1fr; margin-bottom:16px;}
+  .r2{grid-template-columns:1fr 1fr; margin-bottom:16px;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:11px;
+    padding:15px 17px;
+  }
+  .card h2{
+    font-size:13.5px; color:var(--ink); margin-bottom:11px; display:flex;
+    align-items:center; gap:8px; font-weight:700;
+  }
+  .num{
+    background:var(--brand); color:#fff; width:20px; height:20px; border-radius:6px;
+    display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;
+  }
+  .num.b2{background:var(--brand2);} .num.g{background:var(--green);} .num.gd{background:var(--gold);}
+
+  /* pyramid / framework list */
+  .lvl{display:flex; gap:10px; padding:8px 0; border-bottom:1px dashed var(--line);}
+  .lvl:last-child{border-bottom:none;}
+  .lvl .badge{flex:0 0 22px; height:22px; border-radius:50%; background:var(--soft);
+    color:var(--brand2); font-weight:700; display:flex; align-items:center; justify-content:center; font-size:11px;}
+  .lvl .t{font-weight:600;}
+  .lvl .d{color:var(--sub); font-size:11.5px;}
+  .pill{display:inline-block; font-size:10px; padding:1px 7px; border-radius:10px; font-weight:600; margin-left:6px;}
+  .pill.hot{background:#fdecef; color:var(--brand);}
+  .pill.cool{background:#eaf1fd; color:var(--brand2);}
+
+  /* callout */
+  .callout{
+    background:#fff8e6; border:1px solid #f2dc9a; border-left:4px solid var(--gold);
+    border-radius:8px; padding:11px 13px; font-size:11.8px; color:#6a5200;
+  }
+  .callout b{color:#8a3b00;}
+
+  /* steps */
+  .steps{display:flex; flex-direction:column; gap:7px;}
+  .step{display:flex; gap:9px; align-items:flex-start;}
+  .step .s{flex:0 0 20px; height:20px; border-radius:6px; background:var(--brand2); color:#fff;
+    font-size:10.5px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .step .body{font-size:11.6px;}
+  .step .body b{color:var(--ink);}
+  .step .body span{color:var(--sub);}
+
+  /* formula */
+  .formula{
+    background:#0f1b2d; color:#e8eef8; border-radius:9px; padding:12px 14px;
+    font-family:"Cambria Math","Times New Roman",serif; font-size:13px; text-align:center; margin:9px 0;
+  }
+  .formula em{color:var(--gold); font-style:normal; font-weight:700;}
+  .formula .k{color:#6fd3ff;}
+
+  /* decision tree */
+  .tree{display:flex; flex-direction:column; gap:8px;}
+  .branch{border:1px solid var(--line); border-radius:8px; padding:9px 11px; background:var(--soft);}
+  .branch .q{font-weight:700; font-size:11.8px; color:var(--brand2);}
+  .branch .a{font-size:11.4px; color:var(--sub); margin-top:2px;}
+  .branch.yes{background:#eafaf1; border-color:#bfe9d0;}
+  .branch.yes .q{color:var(--green);}
+
+  /* checklist */
+  .check{list-style:none; display:flex; flex-direction:column; gap:6px;}
+  .check li{display:flex; gap:8px; align-items:flex-start; font-size:11.5px;}
+  .check li::before{content:"✓"; color:var(--green); font-weight:800; flex:0 0 auto;}
+
+  /* footer */
+  .foot{border-top:1px solid var(--line); padding:12px 24px; display:flex;
+    justify-content:space-between; align-items:center; font-size:10.5px; color:var(--sub); flex-wrap:wrap; gap:6px;}
+  .foot b{color:var(--ink);}
+  .warn{color:var(--brand); font-weight:600;}
+  .mini{font-size:10.5px; color:var(--sub); margin-top:6px;}
+  .kw{color:var(--brand); font-weight:600;}
+  .kw2{color:var(--brand2); font-weight:600;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="tag">CBI · Points Review 复用模版</div>
+    <h1>积分增量测算方法论 · 一页纸</h1>
+    <p>Incremental Freq / GC vs Non-points Users　|　实验设计 · PSM · DID · 自检清单</p>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ROW 1 -->
+    <div class="row r1">
+      <!-- 框架拆解 -->
+      <div class="card">
+        <h2><span class="num">A</span>积分分析框架：4 层问题，只有 ② 需要因果推断</h2>
+        <div class="lvl">
+          <div class="badge">①</div>
+          <div><span class="t">平台是否在扩张</span> <span class="pill cool">描述性</span><br>
+          <span class="d">Point User count、渗透率、Awareness — 月度 tracking 即可</span></div>
+        </div>
+        <div class="lvl">
+          <div class="badge">②</div>
+          <div><span class="t">积分对 SW 生意的贡献</span> <span class="pill hot">需 PSM/DID</span><br>
+          <span class="d">积分用户 Freq/GC/Sales 是否可持续 &amp; <b>vs 非积分用户的净增量</b></span></div>
+        </div>
+        <div class="lvl">
+          <div class="badge">③</div>
+          <div><span class="t">体验能否带来更多到店</span> <span class="pill cool">定性/调研</span><br>
+          <span class="d">Brand image、Social listening、Survey</span></div>
+        </div>
+        <div class="lvl">
+          <div class="badge">④</div>
+          <div><span class="t">是否满足 Finance DR</span> <span class="pill cool">财务口径</span><br>
+          <span class="d">DR on track 核对</span></div>
+        </div>
+        <p class="mini">核心：要证明的不是"积分用户消费高"，而是<span class="kw">"是积分让他们多消费了"</span>——这正是 PSM/DID 的用武之地。</p>
+      </div>
+
+      <!-- 为什么不能直接对比 -->
+      <div class="card">
+        <h2><span class="num gd">!</span>为什么不能直接"积分 vs 非积分"对比</h2>
+        <div class="callout" style="margin-bottom:11px;">
+          <b>选择性偏差：</b>会用积分的人本身就更高频、更忠诚。哪怕没有积分，Freq/GC 也天然更高 → <b>直接对比会高估增量。</b>
+        </div>
+        <p style="font-size:11.6px; margin-bottom:9px;">必须做两件事把对比"洗干净"：</p>
+        <div class="step"><div class="s">P</div><div class="body"><b>PSM 解决"人不可比"</b> <span>— 从非积分用户里配出一批和积分用户几乎一模一样的影子对照组</span></div></div>
+        <div class="step" style="margin-top:7px;"><div class="s" style="background:var(--green);">D</div><div class="body"><b>DID 解决"大盘趋势"</b> <span>— 剔除季节性与大盘自然涨跌（如 APP Freq 本身 YOY 双位数下滑）</span></div></div>
+        <p class="mini">最佳实践：<span class="kw2">先 PSM 配平人群，再在配平样本上跑 DID</span>。</p>
+      </div>
+    </div>
+
+    <!-- ROW 2: PSM & DID -->
+    <div class="row r2">
+      <!-- PSM -->
+      <div class="card">
+        <h2><span class="num b2">B</span>PSM 倾向得分匹配 · 6 步</h2>
+        <div class="steps">
+          <div class="step"><div class="s">1</div><div class="body"><b>定义组别：</b><span>处理组=期内用/兑积分用户；对照池=从未用积分的 SW 用户</span></div></div>
+          <div class="step"><div class="s">2</div><div class="body"><b>选协变量（用"活动前"特征）：</b><span>前90天 Freq/AC/GC/DAU、渠道结构、品类结构、生命周期状态、注册时长、城市 tier</span></div></div>
+          <div class="step"><div class="s">3</div><div class="body"><b>跑倾向得分：</b><span>Logistic / GBDT 预测"是积分用户的概率"</span></div></div>
+          <div class="step"><div class="s">4</div><div class="body"><b>匹配：</b><span>最近邻 1:1 或 1:n + caliper（建议 0.2×SD）</span></div></div>
+          <div class="step"><div class="s">5</div><div class="body"><b>检验平衡性（不能省）：</b><span>各协变量 <span class="kw">SMD &lt; 0.1</span> 才算配平，否则重配</span></div></div>
+          <div class="step"><div class="s">6</div><div class="body"><b>算增量：</b><span>配平样本上比 Freq/GC/Sales 差异</span></div></div>
+        </div>
+      </div>
+
+      <!-- DID -->
+      <div class="card">
+        <h2><span class="num g">C</span>DID 双重差分 · 剔除大盘趋势</h2>
+        <div class="formula">
+          <em>DID</em> = (<span class="k">Ȳ</span><sub>处理,后</sub> − <span class="k">Ȳ</span><sub>处理,前</sub>) − (<span class="k">Ȳ</span><sub>对照,后</sub> − <span class="k">Ȳ</span><sub>对照,前</sub>)
+        </div>
+        <div class="formula" style="background:#12233a;">
+          Y<sub>it</sub> = β₀ + β₁·Treat + β₂·Post + <em>β₃·(Treat×Post)</em> + γX + ε
+        </div>
+        <p style="font-size:11.5px;"><span class="kw">交互项 β₃ = 积分的净增量效应</span>，看正负与显著性即可。</p>
+        <div class="callout" style="margin-top:10px;">
+          <b>必检前提 · 平行趋势：</b>活动前 8–12 周，两组 Freq/GC 走势需基本平行（无显著 pre-trend），否则 DID 结论不成立。
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 3: 决策树 + 清单 -->
+    <div class="row r2">
+      <!-- 实验设计决策树 -->
+      <div class="card">
+        <h2><span class="num">D</span>实验组/对照组 · 设计决策树</h2>
+        <div class="tree">
+          <div class="branch yes">
+            <div class="q">✅ 能否按用户随机放量？ → 方案 A：RCT（最优）</div>
+            <div class="a">随机圈定获积分资格 vs 同期 hold-out 不触达（沿用 AARR "vs control group uplift" 思路）</div>
+          </div>
+          <div class="branch">
+            <div class="q">否 → 方案 B：PSM 构造对照组（主力）</div>
+            <div class="a">积分全员开放、无 hold-out 时，从非积分用户配出可比对照组</div>
+          </div>
+          <div class="branch">
+            <div class="q">补充 → 方案 C：按频次分层对比</div>
+            <div class="a">Separate by SW Freq &amp; Points-related Freq，同层内比积分vs非积分，交叉验证</div>
+          </div>
+        </div>
+        <p class="mini">建议：<b>A 拿不到用 B，再用 C 交叉验证</b>——三者结论一致，说服力最强。</p>
+      </div>
+
+      <!-- 自检清单 -->
+      <div class="card">
+        <h2><span class="num gd">E</span>上会前 · 自检清单</h2>
+        <ul class="check">
+          <li>协变量全部取自<b>活动前</b>，无未来信息污染</li>
+          <li>匹配后各协变量 <span class="kw">SMD &lt; 0.1</span>，平衡性通过</li>
+          <li>时间窗前后各 <b>8–12 周</b>（比原"前后三周"更稳）</li>
+          <li><b>平行趋势图</b>已画，肉眼平行 + 无显著 pre-trend</li>
+          <li>先<b>剔除黑产</b>再配平，避免污染倾向得分</li>
+          <li>Incremental GC <b>口径与月度 review 统一</b></li>
+          <li>稳健性检验：换匹配比例 / caliper / 安慰剂检验</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <div><b>适用：</b>积分月度 Review · CBI Operation 优化支持　|　<b>方法链：</b>RCT ▸ PSM ▸ DID ▸ 平行趋势校验</div>
+    <div class="warn">口径统一 · 剔除黑产 · 平行趋势为因果结论前提</div>
+  </div>
+
+</div>
+</body>
+</html>

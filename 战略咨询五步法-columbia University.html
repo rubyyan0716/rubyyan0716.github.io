@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>战略咨询五步法 · 工具与模型全景</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f6f9fc;
+            color: #1a2a44;
+            padding: 30px 20px 50px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(0, 10, 30, 0.06);
+            padding: 32px 34px 40px;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            border-bottom: 3px solid #e6edf4;
+            padding-bottom: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 18px;
+            font-weight: 400;
+            color: #5b6f8c;
+        }
+        .sub {
+            color: #5b6f8c;
+            font-size: 16px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e6edf4;
+            padding-bottom: 14px;
+        }
+        .step {
+            margin: 32px 0 24px;
+            border-left: 6px solid #3b6b9b;
+            padding-left: 24px;
+        }
+        .step h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a2a44;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .step h2 .step-num {
+            background: #3b6b9b;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step .desc {
+            font-size: 16px;
+            color: #2d4a6a;
+            margin: 8px 0 14px;
+            line-height: 1.6;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
+            margin: 16px 0 8px;
+        }
+        .tool-card {
+            background: #f8faff;
+            border-radius: 14px;
+            padding: 16px 20px;
+            border: 1px solid #e6edf4;
+            transition: box-shadow 0.15s;
+        }
+        .tool-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 10, 30, 0.06);
+        }
+        .tool-card .tool-name {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1a2a44;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tool-card .tool-desc {
+            font-size: 14px;
+            color: #3a4c66;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+        .tool-card .tool-tag {
+            display: inline-block;
+            font-size: 12px;
+            background: #dce5f0;
+            padding: 0 12px;
+            border-radius: 30px;
+            color: #2d4a6a;
+            margin-top: 8px;
+        }
+        .related {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #2a5a8a;
+        }
+        .footnote {
+            margin-top: 40px;
+            border-top: 2px solid #e6edf4;
+            padding-top: 24px;
+            font-size: 14px;
+            color: #6a7e96;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 20px 16px; }
+            h1 { font-size: 26px; }
+            .step h2 { font-size: 22px; }
+            .tool-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        🧩 战略咨询五步法
+        <small>工具与模型全景</small>
+    </h1>
+    <div class="sub">基于哥伦比亚大学「Driving Strategic Impact」课程框架 · 结构化问题解决全链路</div>
+
+    <!-- ===== 步骤1 ===== -->
+    <div class="step" id="step1">
+        <h2><span class="step-num">1</span> 问题定义</h2>
+        <div class="desc">
+            明确项目的核心问题与范围，界定“我们究竟要解决什么”。这需要与客户对齐目标、交付物和边界，确保后续工作方向正确。
+        </div>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <div class="tool-name">📋 问题陈述 (Problem Statement)</div>
+                <div class="tool-desc">用一句话清晰描述核心问题，包含现状、目标、差距和关键约束。格式：<strong>“我们如何……？”</strong></div>
+                <span class="tool-tag">范围界定</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">🎯 目标设定 (Goal Setting)</div>
+                <div class="tool-desc">与客户共同确定项目的成功标准（KPI）、交付物（如报告、会议）及时间表，管理期望。</div>
+                <span class="tool-tag">对齐期望</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">🧩 利益相关者地图</div>
+                <div class="tool-desc">识别所有关键决策者、影响者和执行者，了解他们的需求、关切和权力结构，为后续沟通铺路。</div>
+                <span class="tool-tag">政治映射</span>
+            </div>
+        </div>
+        <div class="related"><strong>相关工具：</strong> SMART目标原则、工作说明书 (SOW) 模板</div>
+    </div>
+
+    <!-- ===== 步骤2 ===== -->
+    <div class="step" id="step2">
+        <h2><span class="step-num">2</span> 问题构建</h2>
+        <div class="desc">
+            将模糊的大问题拆解为清晰、可操作的子问题。这是结构化思维的核心，通常使用“议题树”按 MECE 原则层层分解。
+        </div>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <div class="tool-name">🌳 议题树 (Issue Tree)</div>
+                <div class="tool-desc">按 MECE（相互独立，完全穷尽）原则将问题分解为逻辑分支，每个分支再拆解，直至可分析的具体假设。</div>
+                <span class="tool-tag">MECE分解</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">💡 假设驱动 (Hypothesis-driven)</div>
+                <div class="tool-desc">在拆解过程中提出初步假设（可能的答案），然后针对性收集证据验证或推翻，避免“分析瘫痪”。</div>
+                <span class="tool-tag">效率导向</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">📊 逻辑树变体</div>
+                <div class="tool-desc">根据问题类型选择合适树形结构：<br>• <strong>诊断树</strong> (问题原因分析)<br>• <strong>方案树</strong> (寻找解决方案)<br>• <strong>决策树</strong> (评估选项)</div>
+                <span class="tool-tag">分类适配</span>
+            </div>
+        </div>
+        <div class="related"><strong>相关工具：</strong> 优先级矩阵（如“影响/可行性”二维矩阵）、80/20法则</div>
+    </div>
+
+    <!-- ===== 步骤3 ===== -->
+    <div class="step" id="step3">
+        <h2><span class="step-num">3</span> 数据收集与分析</h2>
+        <div class="desc">
+            高效获取内部与外部数据，提炼关键洞察。这一阶段需要平衡速度与准确性，并运用多种分析框架。
+        </div>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <div class="tool-name">🗣️ 访谈指南 (Interview Guide)</div>
+                <div class="tool-desc">设计半结构化访谈提纲，包含开放式问题和追问策略，从专家、客户和利益相关者处获取深度信息。</div>
+                <span class="tool-tag">一手数据</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">📈 行业分析框架</div>
+                <div class="tool-desc">• <strong>PESTEL</strong>：宏观环境分析<br>• <strong>波特五力</strong>：行业竞争结构<br>• <strong>价值链分析</strong>：企业内部活动</div>
+                <span class="tool-tag">外部洞察</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">📊 数据分析工具箱</div>
+                <div class="tool-desc">• 描述性统计 (趋势/分布)<br>• 相关性分析<br>• 回归/因果推断方法 (如需要)<br>• 数据可视化 (仪表盘)</div>
+                <span class="tool-tag">量化分析</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">🔍 标杆分析 (Benchmarking)</div>
+                <div class="tool-desc">将目标公司与行业最佳实践或直接竞争对手进行对比，识别差距和改进机会。</div>
+                <span class="tool-tag">对比洞察</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">📋 问卷调查与调研</div>
+                <div class="tool-desc">设计结构化问卷以收集来自广泛样本的定量数据，适用于满意度、需求偏好等研究。</div>
+                <span class="tool-tag">定量补充</span>
+            </div>
+        </div>
+        <div class="related"><strong>相关工具：</strong> 客户旅程地图、竞争对手画像、SWOT分析（作为诊断工具）</div>
+    </div>
+
+    <!-- ===== 步骤4 ===== -->
+    <div class="step" id="step4">
+        <h2><span class="step-num">4</span> 建议制定</h2>
+        <div class="desc">
+            综合所有分析，形成可执行、高价值的战略建议。需权衡利弊，并明确优先级和实施路径。
+        </div>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <div class="tool-name">🎯 假设-结论逻辑链</div>
+                <div class="tool-desc">从原始假设出发，将证据与结论连接，构建“金字塔式”论证结构：主结论→子结论→证据，确保逻辑严谨。</div>
+                <span class="tool-tag">结构化论证</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">📉 场景规划 (Scenarios)</div>
+                <div class="tool-desc">基于不同关键变量（如市场增长率、竞争反应）构建2-3个未来情景，评估建议的稳健性。</div>
+                <span class="tool-tag">不确定应对</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">⚖️ 权衡分析 (Trade-off)</div>
+                <div class="tool-desc">使用“影响/可行性”矩阵或多维度评估模型（如成本-收益、风险-回报）比较不同选项，做出最优选择。</div>
+                <span class="tool-tag">决策辅助</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">📄 路线图 (Roadmap)</div>
+                <div class="tool-desc">将建议分解为阶段性行动计划（短期、中期、长期），明确里程碑、责任人和关键资源。</div>
+                <span class="tool-tag">实施路径</span>
+            </div>
+        </div>
+        <div class="related"><strong>相关工具：</strong> 投资回报分析 (ROI)、净现值 (NPV) 计算、Pilot方案设计</div>
+    </div>
+
+    <!-- ===== 步骤5 ===== -->
+    <div class="step" id="step5">
+        <h2><span class="step-num">5</span> 沟通与实施</h2>
+        <div class="desc">
+            以有说服力的方式向客户或决策者呈现建议，推动共识和落地执行。不仅传递结论，更要管理变革过程。
+        </div>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <div class="tool-name">📊 故事线 (Storylining)</div>
+                <div class="tool-desc">构建引人入胜的叙事结构：背景→问题→分析→建议→行动。使用“金字塔原理”组织汇报材料，确保每一页PPT逻辑自洽。</div>
+                <span class="tool-tag">说服力设计</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">🤝 变革管理 (Change Management)</div>
+                <div class="tool-desc">识别实施中的障碍（文化、流程、技能），制定沟通、培训和支持计划，提升采纳率。</div>
+                <span class="tool-tag">落地护航</span>
+            </div>
+            <div class="tool-card">
+                <div class="tool-name">📈 追踪与反馈机制</div>
+                <div class="tool-desc">设计KPI仪表盘，定期追踪建议实施效果，建立反馈循环，及时调整策略。</div>
+                <span class="tool-tag">持续改进</span>
+            </div>
+        </div>
+        <div class="related"><strong>相关工具：</strong> 利益相关者沟通计划、RACI矩阵（责任分配）、试点项目 (Pilot) 设计</div>
+    </div>
+
+    <div class="footnote">
+        📌 该框架源于哥伦比亚大学商学院「Driving Strategic Impact」课程，核心在于将结构化思维贯穿始终。<br>
+        每个步骤的工具并非孤立，而是相互衔接，共同构成从问题到行动的高效路径。
+    </div>
+</div>
+</body>
+</html>

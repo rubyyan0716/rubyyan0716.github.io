@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOT月度报告 · 结构拆解</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f4f7fc;
+            color: #1a2a44;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 10, 30, 0.08);
+            padding: 32px 30px 40px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 3px solid #e6edf4;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5b6f8c;
+            margin-left: auto;
+        }
+        .subtitle {
+            background: #f0f6fe;
+            padding: 14px 20px;
+            border-radius: 16px;
+            border-left: 5px solid #3b6b9b;
+            margin-bottom: 28px;
+            font-size: 16px;
+            color: #2c405a;
+        }
+        .structure-overview {
+            display: flex;
+            justify-content: space-around;
+            gap: 16px;
+            margin: 24px 0 30px;
+            flex-wrap: wrap;
+        }
+        .structure-item {
+            background: #f8faff;
+            border-radius: 18px;
+            padding: 16px 20px;
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            border: 1px solid #e6edf4;
+        }
+        .structure-item .num {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3b6b9b;
+            display: block;
+        }
+        .structure-item .label {
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .structure-item .desc {
+            font-size: 14px;
+            color: #5b6f8c;
+            margin-top: 6px;
+        }
+
+        .section {
+            margin: 32px 0 20px;
+            border-left: 4px solid #3b6b9b;
+            padding-left: 20px;
+        }
+        .section h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section .tag {
+            background: #dce5f0;
+            padding: 0 14px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d4a6b;
+            white-space: nowrap;
+        }
+        .section .purpose {
+            color: #5b6f8c;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .sub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 16px 0;
+        }
+        .sub-card {
+            background: #f9fbff;
+            border-radius: 16px;
+            padding: 18px 20px;
+            border: 1px solid #e6edf4;
+        }
+        .sub-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a2a44;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sub-card .highlight {
+            background: #eaf1fa;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        .sub-card ul {
+            padding-left: 18px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .sub-card ul li {
+            margin-bottom: 2px;
+        }
+        .sub-card .key-finding {
+            background: #f0f5fe;
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-top: 10px;
+            font-size: 14px;
+            border-left: 3px solid #3b6b9b;
+        }
+        .indicator-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .indicator-table th {
+            background: #eaf1fa;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #cbd8e8;
+        }
+        .indicator-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e6edf4;
+            vertical-align: top;
+        }
+        .indicator-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .footnote {
+            margin-top: 30px;
+            border-top: 1px solid #e6edf4;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #5b6f8c;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .sub-grid {
+                grid-template-columns: 1fr;
+            }
+            .structure-overview {
+                flex-direction: column;
+            }
+            .container {
+                padding: 18px 16px;
+            }
+            h1 {
+                font-size: 22px;
+                flex-wrap: wrap;
+            }
+            h1 small {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            📊 HOT月度报告 · 结构拆解
+            <small>麦当劳品牌健康追踪 · 消费者洞察</small>
+        </h1>
+        <div class="subtitle">
+            <strong>📌 分析逻辑</strong>：宏观经济 → 市场表现 → 品牌竞争 → 品牌形象与体验，聚焦消费者心智变化。
+        </div>
+
+        <!-- 三层结构概览 -->
+        <div class="structure-overview">
+            <div class="structure-item">
+                <span class="num">1</span>
+                <div class="label">🏛️ 宏观背景</div>
+                <div class="desc">CPI / PMI / 汇率<br>消费信心与通胀</div>
+            </div>
+            <div class="structure-item">
+                <span class="num">2</span>
+                <div class="label">📈 市场表现</div>
+                <div class="desc">IEO / WQSR 客流<br>MCD &amp; KFC 份额</div>
+            </div>
+            <div class="structure-item">
+                <span class="num">3</span>
+                <div class="label">🧠 品牌心智</div>
+                <div class="desc">Awareness · TOM · Image<br>体验 · 活动认知</div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 板块一：宏观背景 -->
+        <div class="section">
+            <h2>
+                🏛️ 板块一：宏观背景
+                <span class="tag">P4–P8</span>
+            </h2>
+            <div class="purpose">解读宏观经济环境，为消费者行为变化提供背景。</div>
+            <div class="sub-grid">
+                <div class="sub-card">
+                    <h3>📊 经济指标</h3>
+                    <ul>
+                        <li><strong>CPI</strong> +1.2% YoY，温和通胀；食品CPI -1.6% (猪肉-15.2%)</li>
+                        <li><strong>PPI</strong> +2.8%，上游成本压力传导</li>
+                        <li><strong>PMI</strong> 50.3% (制造业扩张，服务业49.6%收缩)</li>
+                        <li><strong>汇率</strong>：美元兑人民币走高，上证指数区间3875–4243</li>
+                    </ul>
+                    <div class="key-finding">
+                        <strong>结论</strong>：经济“两速复苏”——制造/出口强，消费/地产弱；成本推动型通胀，挤压企业利润。
+                    </div>
+                </div>
+                <div class="sub-card">
+                    <h3>🎯 对餐饮的影响</h3>
+                    <ul>
+                        <li>青年失业率高 → 消费信心不足</li>
+                        <li>食品价格下降（猪肉等） → 外出就餐相对吸引力提升？</li>
+                        <li>但整体增长依赖政策托底，内生动力弱</li>
+                    </ul>
+                    <div class="key-finding">
+                        <strong>启示</strong>：宏观环境对WQSR大盘有间接影响，需关注消费者支出意愿的变化。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 板块二：市场表现 -->
+        <div class="section">
+            <h2>
+                📈 板块二：市场表现
+                <span class="tag">P9–P13</span>
+            </h2>
+            <div class="purpose">IEO/WQSR客流及双雄竞争格局，按城市层级细分。</div>
+            <div class="sub-grid">
+                <div class="sub-card">
+                    <h3>📊 大盘流量</h3>
+                    <ul>
+                        <li>IEO visits YTD: 545 vs 521 (+4.6%)</li>
+                        <li>WQSR visits YTD: 180 vs 166 (+8.4%)</li>
+                        <li>MCD visits +6.9%, KFC +3.1%</li>
+                        <li>MCD share +0.3pp, KFC -0.2pp (YOY)</li>
+                    </ul>
+                </div>
+                <div class="sub-card">
+                    <h3>🏙️ 城市层级表现</h3>
+                    <ul>
+                        <li><strong>T1 &amp; T2</strong>：IEO/WQSR增长快于MCD/KFC → MCD稳定，KFC份额下滑</li>
+                        <li><strong>LT (可比低线城市)</strong>：双雄均受益于渗透率提升，份额增长</li>
+                        <li>MCD渗透率各层级均提升，LT提升最明显</li>
+                        <li>KFC渗透率仅在LT提升，T1/T2持平或下降</li>
+                    </ul>
+                    <div class="key-finding">
+                        <strong>结论</strong>：MCD在客流增速和渗透率上表现优于KFC，低线城市是双方共同增长点。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 板块三：品牌心智 -->
+        <div class="section">
+            <h2>
+                🧠 板块三：品牌心智与体验
+                <span class="tag">P14–P21</span>
+            </h2>
+            <div class="purpose">品牌健康指标、形象认知、消费体验及活动认知。</div>
+
+            <!-- 子部分：品牌KPI -->
+            <div style="margin: 16px 0 12px;">
+                <h3 style="font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    📌 品牌KPI <span style="font-size: 14px; font-weight: 400; color: #5b6f8c;">P14–P15</span>
+                </h3>
+                <div class="sub-grid">
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">MCD变化</h4>
+                        <ul>
+                            <li><strong>Total Awareness</strong> +3 (主要来自T1)</li>
+                            <li><strong>TOM (Top of Mind)</strong> -4 (主要来自T2)</li>
+                            <li>与KFC差距：TOM -6 (T2/LT为主要缺口)</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">洞察</h4>
+                        <div class="key-finding">
+                            <strong>“知晓更多，但首选变少”</strong> —— 品牌知名度提升，但消费者第一提及率下降，尤其T2城市。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 品牌形象 -->
+            <div style="margin: 20px 0 12px;">
+                <h3 style="font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    🖼️ 品牌形象 <span style="font-size: 14px; font-weight: 400; color: #5b6f8c;">P16–P19</span>
+                </h3>
+                <div class="sub-grid">
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">MCD优势</h4>
+                        <ul>
+                            <li><strong>“美味牛肉汉堡”</strong> 领先KFC</li>
+                            <li><strong>“价格实惠”</strong> 领先KFC</li>
+                            <li>多数形象持平KFC</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">MCD劣势/下滑</h4>
+                        <ul>
+                            <li><strong>配送形象</strong> (速度/质量) 同比下滑，各层级均下降</li>
+                            <li><strong>部分鸡肉形象</strong> (美味BIC/翅) 下滑</li>
+                            <li>落后于KFC：“专属骑手”、“优质鸡肉来源”</li>
+                            <li>差距主要在T1城市</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="key-finding" style="margin: 8px 0;">
+                    <strong>总结</strong>：牛肉和性价比是MCD的护城河；配送和鸡肉品类是短板，需针对性提升。
+                </div>
+            </div>
+
+            <!-- 消费体验 -->
+            <div style="margin: 20px 0 12px;">
+                <h3 style="font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    ✅ 最近一次消费体验 <span style="font-size: 14px; font-weight: 400; color: #5b6f8c;">P20–P21</span>
+                </h3>
+                <div class="sub-grid">
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">整体表现</h4>
+                        <ul>
+                            <li>MCD在所有属性上同比保持稳定</li>
+                            <li>与KFC无差距（持平）</li>
+                            <li>涵盖：美味、温度、新鲜、选择、服务、环境等</li>
+                        </ul>
+                    </div>
+                    <div class="sub-card">
+                        <h4 style="font-weight: 600; font-size: 15px;">城市层级</h4>
+                        <ul>
+                            <li>T1/T2/LT均保持稳定，无差距</li>
+                            <li>意味着执行层面（门店体验）双方相当</li>
+                        </ul>
+                        <div class="key-finding">
+                            <strong>启示</strong>：体验不是短板，形象和心智才是需要发力的方向。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动认知（ATU） -->
+            <div style="margin: 20px 0 12px;">
+                <h3 style="font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    📣 核心活动认知 (ATU) <span style="font-size: 14px; font-weight: 400; color: #5b6f8c;">P22</span>
+                </h3>
+                <div class="sub-card">
+                    <h4 style="font-weight: 600; font-size: 15px;">主要活动认知（全国，% aware）</h4>
+                    <ul>
+                        <li><strong>MCD</strong>：13.9元随心配1+1 (67%)，大堡口福 (59%)，9.9元早餐 (64%)，麦金卡 (66%)，周一麦麦省 (54%)，积分活动 (49%)</li>
+                        <li><strong>KFC</strong>：疯狂星期四 (76%)，超值OK三件套 (60%)，大神卡 (55%)</li>
+                    </ul>
+                    <div class="key-finding">
+                        <strong>对比</strong>：MCD的“周一麦麦省”和“积分活动”认知较低；KFC“疯狂星期四”认知度极高，是MCD需追赶的标杆。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 整体分析逻辑 -->
+        <div style="margin-top: 28px; background: #f0f5fe; border-radius: 16px; padding: 16px 20px; border: 1px solid #dce5f0;">
+            <p style="font-weight: 700; margin-bottom: 6px;">🔍 整体分析逻辑链条</p>
+            <p style="font-size: 15px; line-height: 1.7; color: #2c405a;">
+                <strong>宏观环境</strong>（CPI/PMI/汇率） → 
+                <strong>市场表现</strong>（IEO/WQSR客流，双雄份额） → 
+                <strong>品牌健康</strong>（Awareness/TOM） → 
+                <strong>品牌形象</strong>（优势与短板） → 
+                <strong>消费体验</strong>（执行面） → 
+                <strong>活动认知</strong>（营销效率）
+            </p>
+        </div>
+
+        <!-- 关键指标字典 -->
+        <div style="margin-top: 32px; border-top: 2px solid #e6edf4; padding-top: 24px;">
+            <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 12px;">📖 关键指标字典</h2>
+            <table class="indicator-table">
+                <thead>
+                    <tr>
+                        <th style="width:22%;">指标</th>
+                        <th style="width:50%;">含义</th>
+                        <th style="width:28%;">本次数据</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Total Awareness</strong></td>
+                        <td>品牌总认知度（知晓该品牌的比例）</td>
+                        <td>MCD +3 YOY</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOM (Top of Mind)</strong></td>
+                        <td>第一提及率（消费者首先想到的品牌）</td>
+                        <td>MCD -4 YOY，落后KFC 6pp</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Penetration</strong></td>
+                        <td>渗透率（过去一定时期内购买过的用户比例）</td>
+                        <td>MCD提升，KFC稳定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Frequency</strong></td>
+                        <td>消费频次（平均购买次数）</td>
+                        <td>双雄均稳定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Brand Imagery</strong></td>
+                        <td>品牌形象/消费者对具体属性的认知</td>
+                        <td>牛肉/性价比领先，配送/鸡肉落后</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Last Visit Experience</strong></td>
+                        <td>最近一次消费体验评分（产品、服务、环境等）</td>
+                        <td>MCD稳定，与KFC无差距</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ATU Awareness</strong></td>
+                        <td>特定营销活动/产品的认知度</td>
+                        <td>MCD“周一麦麦省”54%，KFC“疯狂星期四”76%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footnote">
+            📌 本结构拆解基于 McD Apr 2026 HOT Monthly Report，覆盖全国46城市，按T1/T2/LT层级细分。数据来源：HOT消费者追踪调研。
+        </div>
+    </div>
+</body>
+</html>

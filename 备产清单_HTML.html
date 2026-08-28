@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🍼 待产 & 产后必备清单 · 最少可用原则</title>
+    <style>
+        /* ===== 全局重置 & 基础 ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f7f3f6;
+            color: #2d2a2c;
+            padding: 24px 20px 60px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        /* ===== 顶部标题 & 总进度 ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 24px 16px 20px;
+            background: linear-gradient(135deg, #fce9f0 0%, #f8e4ed 100%);
+            border-radius: 32px;
+            box-shadow: 0 4px 16px rgba(180, 120, 150, 0.12);
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #4d3642;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .header h1 span {
+            background: #ffffffcc;
+            padding: 0 14px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #7a5a6b;
+        }
+
+        .total-progress-wrap {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .progress-track {
+            flex: 1;
+            min-width: 140px;
+            height: 10px;
+            background: #e6d3dd;
+            border-radius: 99px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #dbb6cc, #c697b0);
+            border-radius: 99px;
+            transition: width 0.35s ease;
+        }
+
+        .stats {
+            font-size: 15px;
+            font-weight: 500;
+            color: #4d3642;
+            background: #ffffffcc;
+            padding: 4px 18px;
+            border-radius: 40px;
+            white-space: nowrap;
+        }
+
+        /* ===== 三大卡片 ===== */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            margin-top: 8px;
+        }
+
+        @media (min-width: 820px) {
+            .section-grid {
+                grid-template-columns: repeat(3, 1fr);
+                align-items: start;
+            }
+        }
+
+        /* ===== 卡片样式 ===== */
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 20px 18px 22px;
+            box-shadow: 0 6px 24px rgba(160, 120, 140, 0.10);
+            transition: box-shadow 0.2s;
+            border: 1px solid rgba(220, 200, 212, 0.25);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f2e6ed;
+        }
+
+        .card-header .title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #3f2f3a;
+        }
+        .card-header .title .icon {
+            font-size: 26px;
+        }
+
+        .card-header .sub-progress {
+            font-size: 14px;
+            font-weight: 500;
+            color: #7a5a6b;
+            background: #f5edf1;
+            padding: 2px 14px;
+            border-radius: 40px;
+            white-space: nowrap;
+        }
+
+        /* 子分类 */
+        .sub-group {
+            margin-top: 16px;
+        }
+        .sub-group:first-of-type {
+            margin-top: 4px;
+        }
+
+        .sub-group .sub-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #806673;
+            letter-spacing: 0.3px;
+            padding-left: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sub-group .sub-title::before {
+            content: "▸";
+            color: #c9aebb;
+            font-weight: 300;
+        }
+
+        /* ===== 自定义 Checkbox 列表 ===== */
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 4px;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 4px 6px 4px 4px;
+            border-radius: 12px;
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+        .item-row:hover {
+            background: #f9f2f6;
+        }
+
+        .item-row input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        }
+
+        /* 自定义盒子 */
+        .custom-check {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            margin-top: 1px;
+            border-radius: 7px;
+            border: 2px solid #cfbcc8;
+            background: #fcf9fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .item-row input:checked+.custom-check {
+            background: #b28ba2;
+            border-color: #b28ba2;
+            box-shadow: 0 2px 6px rgba(178, 139, 162, 0.30);
+        }
+        .item-row input:checked+.custom-check::after {
+            content: "✓";
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .item-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #2d2a2c;
+            padding-top: 1px;
+            transition: color 0.25s, text-decoration 0.25s;
+            word-break: break-word;
+        }
+
+        .item-row input:checked~.item-text {
+            color: #b0a0aa;
+            text-decoration: line-through;
+            text-decoration-color: #d4c0cc;
+        }
+
+        /* 标签（顺产/剖腹产标注） */
+        .tag {
+            font-size: 11px;
+            font-weight: 500;
+            color: #b28ba2;
+            background: #f2e9ef;
+            padding: 0 10px;
+            border-radius: 30px;
+            margin-left: 6px;
+            white-space: nowrap;
+            display: inline-block;
+            line-height: 1.6;
+        }
+
+        /* ===== 底部重置 ===== */
+        .footer-actions {
+            margin-top: 36px;
+            text-align: center;
+        }
+
+        .btn-reset {
+            background: transparent;
+            border: 1.5px solid #dcc8d4;
+            color: #7a5a6b;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+        }
+        .btn-reset:hover {
+            background: #f2e6ed;
+            border-color: #c9aebb;
+        }
+        .btn-reset:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== 响应式微调 ===== */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px 40px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .card {
+                padding: 16px 14px 18px;
+            }
+            .item-text {
+                font-size: 14px;
+            }
+            .custom-check {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* ===== 打印样式 ===== */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0.5in;
+            }
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .btn-reset {
+                display: none;
+            }
+            .item-row:hover {
+                background: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <!-- 顶部 -->
+        <header class="header">
+            <h1>
+                🧺 待产 &amp; 产后清单
+                <span>最少可用</span>
+            </h1>
+            <div class="total-progress-wrap">
+                <div class="progress-track">
+                    <div class="progress-fill" id="totalFill" style="width:0%;"></div>
+                </div>
+                <div class="stats" id="totalStats">0 / 0</div>
+            </div>
+        </header>
+
+        <!-- 卡片网格 -->
+        <div class="section-grid" id="sectionGrid"></div>
+
+        <!-- 底部 -->
+        <div class="footer-actions">
+            <button class="btn-reset" id="resetBtn">↻ 重置所有勾选</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            //  1. 数据 —— 最少可用原则（精简后的核心物品）
+            // ============================================================
+            const DATA = [{
+                id: 'hospital-bag',
+                icon: '👜',
+                name: '待产包 · 生产时',
+                sub: [{
+                    name: '📄 证件类',
+                    items: ['身份证', '医保卡', '产检档案']
+                }, {
+                    name: '👩 妈妈用品',
+                    items: ['产褥垫 (1包)', '安心裤 / 计量卫生巾', '一次性内裤', '带吸管水杯', '出院衣服 (一套)']
+                }, {
+                    name: '👶 宝宝用品',
+                    items: ['NB 纸尿裤 (1包)', '52码连体衣 (1件)', '包被 / 抱被 (1条)']
+                }, {
+                    name: '🔋 其他',
+                    items: ['手机充电器 + 充电宝', '能量零食 (巧克力/能量棒)']
+                }]
+            }, {
+                id: 'post-mom',
+                icon: '🌸',
+                name: '产后 · 妈妈用品',
+                sub: [{
+                    name: '👚 衣物类',
+                    items: ['哺乳内衣 (2~3件)', '一次性内裤 (足量)']
+                }, {
+                    name: '🍼 哺乳用品',
+                    items: [
+                        '防溢乳垫 (1盒)',
+                        '吸奶器 (双边电动)',
+                        '储奶袋 / 储奶瓶',
+                        '乳头膏 (羊毛脂)',
+                        '哺乳枕 (可选，但很实用)'
+                    ]
+                }, {
+                    name: '🩹 护理用品',
+                    items: [
+                        '产妇卫生巾 (大号/中号)',
+                        '会阴冲洗器 <span class="tag">顺产</span>'
+                    ]
+                }]
+            }, {
+                id: 'post-baby',
+                icon: '🧸',
+                name: '产后 · 宝宝用品',
+                sub: [{
+                    name: '🍼 喂养',
+                    items: ['奶瓶 (小号 2个)', '一段奶粉 (小罐备用)', '维生素D滴剂', '奶瓶刷']
+                }, {
+                    name: '😴 睡眠',
+                    items: ['婴儿床 / 床中床', '床垫 + 床单 (2条)', '襁褓睡袋 (2条)']
+                }, {
+                    name: '👕 衣物',
+                    items: ['52/59码连体衣 (4件)', '袜子 (2~3双)']
+                }, {
+                    name: '🧴 洗护',
+                    items: [
+                        '二合一洗发沐浴露',
+                        '润肤乳 / 抚触油',
+                        '浴盆',
+                        '纱布巾 (6条以上)',
+                        '婴儿专用洗衣液',
+                        '护臀膏',
+                        '婴儿指甲剪'
+                    ]
+                }, {
+                    name: '🧻 尿布',
+                    items: ['NB 纸尿裤 (2包)', '隔尿垫 (可水洗 / 一次性)']
+                }, {
+                    name: '🚗 出行',
+                    items: ['婴儿安全提篮 / 安全座椅 <span class="tag">出院必备</span>']
+                }]
+            }];
+
+            // ============================================================
+            //  2. 状态管理 (localStorage)
+            // ============================================================
+            const STORAGE_KEY = 'baby_checklist_state_v1';
+
+            // 收集所有 item 的 id
+            function getAllItemIds() {
+                const ids = [];
+                DATA.forEach(cat => {
+                    cat.sub.forEach(sub => {
+                        sub.items.forEach((_, idx) => {
+                            // id 格式: categoryId-subIndex-itemIndex
+                            const subIdx = cat.sub.indexOf(sub);
+                            ids.push(`${cat.id}-${subIdx}-${idx}`);
+                        });
+                    });
+                });
+                return ids;
+            }
+
+            // 默认状态：全部 false
+            function getDefaultState() {
+                const state = {};
+                getAllItemIds().forEach(id => { state[id] = false; });
+                return state;
+            }
+
+            // 加载状态，若不存在则使用默认
+            function loadState() {
+                try {
+                    const stored = localStorage.getItem(STORAGE_KEY);
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        // 只保留当前数据中存在的 id
+                        const validIds = new Set(getAllItemIds());
+                        const cleaned = {};
+                        for (const [key, val] of Object.entries(parsed)) {
+                            if (validIds.has(key)) {
+                                cleaned[key] = !!val;
+                            }
+                        }
+                        // 补全缺失的 id (新增的物品)
+                        const defaultState = getDefaultState();
+                        for (const id of validIds) {
+                            if (!(id in cleaned)) {
+                                cleaned[id] = defaultState[id];
+                            }
+                        }
+                        return cleaned;
+                    }
+                } catch (_) { /* ignore */ }
+                return getDefaultState();
+            }
+
+            function saveState(state) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                } catch (_) { /* ignore */ }
+            }
+
+            // ============================================================
+            //  3. 渲染
+            // ============================================================
+            const state = loadState();
+            const gridEl = document.getElementById('sectionGrid');
+            const totalFill = document.getElementById('totalFill');
+            const totalStats = document.getElementById('totalStats');
+
+            // 辅助：安全 HTML (允许少量标签)
+            function safeHtml(text) {
+                // 只允许 <span class="tag"> 等
+                const div = document.createElement('div');
+                div.textContent = text;
+                // 简单处理：如果包含 <span class="tag"> 则保留
+                // 为了安全，我们只允许白名单
+                const temp = document.createElement('div');
+                temp.innerHTML = text;
+                // 移除 script
+                const scripts = temp.querySelectorAll('script');
+                scripts.forEach(el => el.remove());
+                // 只保留 span.tag
+                const all = temp.querySelectorAll('*');
+                all.forEach(el => {
+                    if (el.tagName.toLowerCase() === 'span' && el.classList.contains('tag')) {
+                        // 保留
+                    } else {
+                        // 其他标签都转义为文本
+                        const txt = el.textContent;
+                        el.replaceWith(txt);
+                    }
+                });
+                return temp.innerHTML;
+            }
+
+            function render() {
+                gridEl.innerHTML = '';
+                let totalItems = 0;
+                let doneItems = 0;
+
+                DATA.forEach((cat, catIdx) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    // ---- 卡片头 ----
+                    let subDone = 0;
+                    let subTotal = 0;
+                    // 先统计该分类下所有 item
+                    const catItems = [];
+                    cat.sub.forEach((sub, subIdx) => {
+                        sub.items.forEach((itemText, itemIdx) => {
+                            const id = `${cat.id}-${subIdx}-${itemIdx}`;
+                            const checked = state[id] || false;
+                            catItems.push({ id, checked, itemText, subIdx, itemIdx });
+                        });
+                    });
+                    subTotal = catItems.length;
+                    subDone = catItems.filter(it => it.checked).length;
+                    totalItems += subTotal;
+                    doneItems += subDone;
+
+                    const subPercent = subTotal === 0 ? 0 : Math.round((subDone / subTotal) * 100);
+
+                    const header = document.createElement('div');
+                    header.className = 'card-header';
+                    header.innerHTML = `
+                        <div class="title">
+                            <span class="icon">${cat.icon}</span>
+                            ${cat.name}
+                        </div>
+                        <div class="sub-progress">${subDone}/${subTotal}</div>
+                    `;
+                    card.appendChild(header);
+
+                    // ---- 子分类 ----
+                    cat.sub.forEach((sub, subIdx) => {
+                        const group = document.createElement('div');
+                        group.className = 'sub-group';
+
+                        const title = document.createElement('div');
+                        title.className = 'sub-title';
+                        title.textContent = sub.name;
+                        group.appendChild(title);
+
+                        const list = document.createElement('div');
+                        list.className = 'item-list';
+
+                        sub.items.forEach((itemText, itemIdx) => {
+                            const id = `${cat.id}-${subIdx}-${itemIdx}`;
+                            const checked = state[id] || false;
+
+                            const row = document.createElement('label');
+                            row.className = 'item-row';
+
+                            const input = document.createElement('input');
+                            input.type = 'checkbox';
+                            input.checked = checked;
+                            input.dataset.id = id;
+
+                            const custom = document.createElement('span');
+                            custom.className = 'custom-check';
+
+                            const textSpan = document.createElement('span');
+                            textSpan.className = 'item-text';
+                            // 允许内嵌 span.tag
+                            textSpan.innerHTML = safeHtml(itemText);
+
+                            row.appendChild(input);
+                            row.appendChild(custom);
+                            row.appendChild(textSpan);
+                            list.appendChild(row);
+
+                            // 事件监听
+                            input.addEventListener('change', function(e) {
+                                state[this.dataset.id] = this.checked;
+                                saveState(state);
+                                render();
+                            });
+                        });
+
+                        group.appendChild(list);
+                        card.appendChild(group);
+                    });
+
+                    gridEl.appendChild(card);
+                });
+
+                // 更新总进度
+                const done = doneItems;
+                const total = totalItems;
+                const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+                totalFill.style.width = pct + '%';
+                totalStats.textContent = `${done} / ${total}`;
+            }
+
+            // ============================================================
+            //  4. 重置
+            // ============================================================
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('确定要清除所有勾选状态吗？')) {
+                    const defaultState = getDefaultState();
+                    for (const key of Object.keys(state)) {
+                        state[key] = defaultState[key] || false;
+                    }
+                    saveState(state);
+                    render();
+                }
+            });
+
+            // ============================================================
+            //  5. 启动
+            // ============================================================
+            render();
+
+            // 暴露 state 方便调试 (可选)
+            window.__checklistState = state;
+
+        })();
+    </script>
+
+</body>
+</html>

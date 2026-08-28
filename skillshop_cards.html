@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Skillshop · Google Ads 核心知识点学习卡片</title>
+<style>
+  :root{--blue:#4285F4;--red:#EA4335;--yellow:#FBBC05;--green:#34A853;--ink:#202124;--sub:#5f6368;--bg:#f6f8fc;--card:#ffffff;--line:#e0e3e9;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:60px;}
+  header{background:linear-gradient(135deg,#1a73e8,#4285F4 55%,#5e97f6);color:#fff;padding:26px 20px 20px;}
+  header h1{font-size:22px;font-weight:700;letter-spacing:.5px;}
+  header p{font-size:13px;opacity:.92;margin-top:6px;line-height:1.6;}
+  .gdots span{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;}
+  .toolbar{position:sticky;top:0;z-index:9;background:#fff;border-bottom:1px solid var(--line);padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;flex:1;}
+  .tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer;color:var(--sub);white-space:nowrap;}
+  .tab.on{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600;}
+  .btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 12px;font-size:13px;cursor:pointer;color:var(--ink);}
+  .btn:hover{background:#f1f3f4;}
+  .btn.hot.on{background:var(--yellow);border-color:var(--yellow);font-weight:600;}
+  .stats{padding:10px 18px 0;font-size:13px;color:var(--sub);}
+  .stats b{color:var(--ink);}
+  .bar{height:6px;background:#e8eaed;border-radius:3px;margin:8px 18px 0;overflow:hidden;}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#7bc96f);width:0;transition:width .3s;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;padding:16px 18px;}
+  .cardwrap{perspective:1200px;min-height:190px;}
+  .card{position:relative;width:100%;height:100%;min-height:190px;transform-style:preserve-3d;transition:transform .45s;cursor:pointer;}
+  .cardwrap.flip .card{transform:rotateY(180deg);}
+  .face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 40px;box-shadow:0 1px 3px rgba(60,64,67,.08);display:flex;flex-direction:column;}
+  .face.back{transform:rotateY(180deg);background:#fbfdff;}
+  .chip{align-self:flex-start;font-size:11px;padding:2px 9px;border-radius:999px;color:#fff;margin-bottom:9px;font-weight:600;}
+  .hotmark{position:absolute;top:12px;right:14px;font-size:11px;color:#b06000;background:#fef7e0;border:1px solid #fbbc05;padding:1px 7px;border-radius:999px;font-weight:600;}
+  .q{font-size:15.5px;font-weight:650;line-height:1.55;}
+  .a{font-size:13.5px;line-height:1.75;color:#3c4043;overflow:auto;}
+  .a b{color:#1a73e8;}
+  .a em{font-style:normal;color:var(--red);font-weight:600;}
+  .hint{position:absolute;bottom:12px;left:16px;font-size:11px;color:#9aa0a6;}
+  .mark{position:absolute;bottom:8px;right:10px;display:flex;gap:6px;}
+  .mk{font-size:11.5px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;cursor:pointer;background:#fff;color:var(--sub);}
+  .mk.got.on{background:var(--green);border-color:var(--green);color:#fff;}
+  .mk.todo.on{background:var(--red);border-color:var(--red);color:#fff;}
+  .cardwrap.doneGot .face{border-color:#a8dab5;background:#f2fbf4;}
+  .cardwrap.doneTodo .face{border-color:#f6b6b0;}
+  footer{padding:18px;font-size:12px;color:var(--sub);line-height:1.7;}
+  @media (max-width:480px){.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="gdots"><span style="background:#4285F4"></span><span style="background:#EA4335"></span><span style="background:#FBBC05"></span><span style="background:#34A853"></span></span>Google Skillshop · Google Ads 核心知识点</h1>
+  <p>覆盖 2026 现行认证:搜索 / 展示 / 视频 / 应用 / 创意 / AI-Powered Performance(PMax+智能出价) / AI-Powered Shopping / 衡量与GA4。点卡片翻面看答案,标记"已掌握"跟踪进度(刷新后重置)。</p>
+</header>
+
+<div class="toolbar">
+  <div class="tabs" id="tabs"></div>
+  <button class="btn hot" id="hotBtn">★ 只看高频</button>
+  <button class="btn" id="shuffleBtn">🔀 打乱</button>
+  <button class="btn" id="flipAllBtn">全部翻面</button>
+  <button class="btn" id="resetBtn">重置标记</button>
+</div>
+<div class="stats" id="stats"></div>
+<div class="bar"><i id="barfill"></i></div>
+<div class="grid" id="grid"></div>
+
+<footer>口径说明:内容按 Skillshop 2026 现行认证大纲整理(通过线 80 分,证书有效期 12 个月,全部免费)。旧版 Shopping ads / Measurement 认证已由 AI-Powered Shopping / AI-Powered Performance 取代;旧的"最终点击以外的归因模型"(首次点击/线性/时间衰减/位置)已下线,默认为数据驱动归因 DDA。</footer>
+
+<script>
+const MODS = [
+  {k:"base", n:"基础与竞价", c:"#4285F4"},
+  {k:"search", n:"搜索广告", c:"#1a73e8"},
+  {k:"creative", n:"广告创意", c:"#EA4335"},
+  {k:"display", n:"展示广告", c:"#34A853"},
+  {k:"video", n:"视频/YouTube", c:"#d93025"},
+  {k:"pmax", n:"PMax与智能出价", c:"#9334e6"},
+  {k:"shopping", n:"购物广告", c:"#f29900"},
+  {k:"apps", n:"应用广告", c:"#0f9d58"},
+  {k:"measure", n:"衡量与GA4", c:"#5f6368"},
+];
+const CARDS = [
+// ============ 基础与竞价 ============
+{m:"base",hot:1,q:"Google Ads 账户的层级结构是什么?",a:"<b>账户 → 广告系列(Campaign)→ 广告组(Ad Group)→ 广告 + 关键字</b>。预算与出价策略在系列层;定位与关键字在组层。<em>PMax 例外</em>:没有广告组,用「资产组 Asset Group」承载素材与受众信号。"},
+{m:"base",hot:1,q:"广告评级 Ad Rank 由哪 6 类因素决定?",a:"① <b>出价</b>;② <b>广告与着陆页质量</b>(预期CTR/相关性/着陆页体验);③ <b>评级最低门槛</b>;④ <b>拍卖竞争程度</b>;⑤ <b>用户搜索情境</b>(位置/设备/时间/查询性质);⑥ <b>广告附加资产及其他格式的预期效果</b>。每次拍卖实时计算。"},
+{m:"base",hot:1,q:"质量得分 Quality Score 的三大组成部分?",a:"<b>预期点击率(Expected CTR)+ 广告相关性(Ad Relevance)+ 着陆页体验(Landing Page Experience)</b>,每项评级为「高于平均/平均/低于平均」,合成 1–10 分。它是<em>诊断工具</em>,不直接等于竞价时用的实时质量信号。"},
+{m:"base",hot:1,q:"实际点击费用(实际CPC)如何计算?",a:"只需支付「刚好击败下一名广告评级」所需的最低金额:<b>实际CPC ≈ 下一名 Ad Rank ÷ 你的质量因素 + $0.01</b>。所以质量越高,同样排名付得越少——质量是省钱杠杆。"},
+{m:"base",hot:1,q:"智能出价(Smart Bidding)有哪几种?各适用什么目标?",a:"基于转化的实时竞价:<b>尽可能提高转化次数</b>(有预算无CPA目标)/<b>目标每次转化费用 tCPA</b>(控获客成本)/<b>尽可能提高转化价值</b>/<b>目标广告支出回报率 tROAS</b>(电商价值导向)。非转化类:<b>目标展示份额</b>(品牌见度)、每次点击费用人工出价+提高转化率的<b>智能点击付费 ECPC 已退役</b>。"},
+{m:"base",hot:1,q:"什么是 Power Pair(黄金组合)?",a:"Google 官方主推的 AI 组合:<b>广泛匹配 + 智能出价</b>(再加 <b>PMax</b> 即「Power Pack」)。逻辑:广泛匹配给 AI 足够的探索空间,智能出价按每次查询的转化概率实时定价,两者互为放大器。"},
+{m:"base",hot:0,q:"AI-Powered Ads 的三大自动化支柱?",a:"① <b>出价自动化</b>(Smart Bidding);② <b>素材自动化</b>(RSA/自适应展示/AI 生成素材);③ <b>定位自动化</b>(广泛匹配、优化型定位、受众信号)。考试主线:把手动控制交给 AI,人负责<em>目标、素材、数据质量</em>。"},
+{m:"base",hot:0,q:"广告附加资产(Assets,旧称附加信息)有哪些?作用?",a:"<b>站内链接 Sitelinks / 宣传信息 Callouts / 结构化摘要 Structured Snippets / 图片 / 电话 / 地址 / 价格 / 促销</b>等。免费展示、按正常点击计费;能提升 CTR 并作为 Ad Rank 第⑥因素,官方建议至少配 4 个站内链接。"},
+{m:"base",hot:0,q:"每日预算与实际花费的关系?",a:"单日最高可花到日预算的 <b>2 倍</b>(应对高流量日),但一个计费周期内总花费不超过 <b>日预算 × 30.4</b>(月均天数),超过部分返还为超额投放抵扣。"},
+// ============ 搜索 ============
+{m:"search",hot:1,q:"三种关键字匹配方式(2026 现行口径)?",a:"<b>广泛匹配</b>:触达与关键字<em>含义相关</em>的所有查询(会参考组内其他关键字、着陆页等语境);<b>词组匹配 \"...\"</b>:查询需<em>包含关键字的含义</em>;<b>完全匹配 [...]</b>:查询与关键字<em>含义相同</em>(含同义改写)。修饰符广泛匹配(BMM)已废除;三种都基于语义而非字面。"},
+{m:"search",hot:1,q:"否定关键字的匹配逻辑与正向有什么关键区别?",a:"否定关键字<em>不做语义扩展</em>——只按字面(及紧密变体)排除,不含同义词。所以要手动加复数/拼错/同义变体。层级:可加在广告组/系列/账户级+否定关键字列表。PMax 的品牌排除单独设置。"},
+{m:"search",hot:1,q:"搜索广告拍卖何时发生?排名如何定?",a:"用户<em>每次搜索</em>都触发一次实时拍卖:对每个参拍广告计算 Ad Rank,按 Ad Rank 排序决定是否展示与位置。同一广告主同一查询只出一条(去重),排名≠出价高低,质量差可被低价高质量者超越。"},
+{m:"search",hot:0,q:"搜索字词报告(Search Terms Report)有什么用?",a:"展示<em>实际触发广告的用户查询</em>(与买的关键字可能不同)。两大用法:① 把高转化字词加为正向关键字;② 把不相关字词加为否定关键字。是广泛匹配时代的核心巡检工具(隐私原因仅展示达到量级门槛的字词)。"},
+{m:"search",hot:0,q:"动态搜索广告 DSA 的机制与适用场景?",a:"不买关键字,Google 按<b>网站/页面 feed 内容</b>自动匹配查询、自动生成标题并指向对应落地页(描述仍手写)。适合 SKU 多、网站结构好的站点;需配否定关键字防跑偏。"},
+{m:"search",hot:0,q:"广告日程 / 地理位置 / 设备定位属于什么层级?",a:"都在<b>广告系列层</b>设置。地理定位可按「所在地或经常所在地 / 搜索意图指向地」两种口径;配合出价调整(智能出价下大多自动接管,人工出价才需手调 ±%)。"},
+{m:"search",hot:0,q:"Google Ads 政策四大类?",a:"<b>禁止的内容</b>(假冒/危险品等)、<b>禁止的行为</b>(误导/数据滥用)、<b>受限内容</b>(酒/赌/医疗等要资质或限地区)、<b>编辑与技术标准</b>(符号滥用、落地页可用性)。违规→拒登;严重/屡犯→停户。"},
+// ============ 创意 ============
+{m:"creative",hot:1,q:"响应式搜索广告 RSA 的构成与机制?",a:"最多 <b>15 个标题 + 4 条描述</b>,每次展示动态组合出最多 3 标题+2 描述。系统按查询与历史表现挑组合;可 <b>Pin 固定</b>某标题到位置 1/2/3(固定越多,组合空间越小,Ad Strength 越低)。每组建议至少 1 条 RSA(也是当前唯一标准搜索广告格式)。"},
+{m:"creative",hot:1,q:"Ad Strength(广告效力)看什么维度?",a:"四维:<b>标题数量足够多 / 标题多样性(不重复) / 含热门关键字 / 描述独特性</b>,评级 差→一般→良好→极佳。它是<em>投放前诊断</em>,不直接参与竞价,但「极佳」平均带来更多转化(官方口径 +12% 左右量级)。"},
+{m:"creative",hot:0,q:"响应式展示广告 RDA 需要提供哪些素材?",a:"<b>图片(横向1.91:1+方形1:1)、Logo、短标题(≤30)、长标题(≤90)、描述、企业名称</b>,可加视频。系统自动组合适配全网版位,并可开启自动生成素材/智能裁剪。展示网络默认且推荐格式。"},
+{m:"creative",hot:1,q:"视频创意 ABCD 法则是什么?",a:"<b>A</b>ttract 开头 5 秒抓注意(近景/快节奏/人脸);<b>B</b>rand 尽早自然露品牌;<b>C</b>onnect 用情绪与故事建立连接;<b>D</b>irect 明确行动号召(CTA)。Google 与 Kantar 验证的效果创意框架,视频认证必考。"},
+{m:"creative",hot:0,q:"素材(Asset)在 AI 时代的角色为什么变重?",a:"定位与出价自动化后,<em>素材成为广告主最大的可控变量</em>:素材数量与多样性决定系统可探索的组合空间;各格式(RSA/RDA/PMax资产组/App)都要求「喂足喂多样」。官方口径:素材是新的定位。"},
+// ============ 展示 ============
+{m:"display",hot:1,q:"Google 展示广告网络(GDN)的覆盖规模?",a:"超过 <b>300 万</b>网站与应用 + Google 自有版位(Gmail、YouTube 等),触达全球约 <b>90%</b> 互联网用户。适合营销漏斗的认知与考虑阶段,以及再营销收口。"},
+{m:"display",hot:1,q:"展示广告的受众类型体系?",a:"按意图深度:<b>人口特征 → 兴趣相似受众 Affinity(长期兴趣)→ 有购买意向 In-Market(正在比价)→ 自定义细分 Custom Segments(按关键词/URL/应用定义)→ 您的数据 Your Data(再营销/客户名单 Customer Match)</b>。类似受众(Similar Audiences)已退役,由优化型定位接棒扩量。"},
+{m:"display",hot:1,q:"优化型定位(Optimized Targeting)是什么?",a:"展示/需求激发系列<em>默认开启</em>的自动扩量:以你的转化数据为学习起点,超出所选受众去找可能转化的人——<b>所选受众只是「信号/起点」而非边界</b>。想严格圈人需手动关闭。"},
+{m:"display",hot:0,q:"Demand Gen(需求激发)广告是什么?",a:"接替 Discovery 的视觉信息流产品:投放于 <b>YouTube(含Shorts)+ Discover + Gmail</b>,主打「种草→行动」中段;支持图片+视频混投、类似购物的商品卡,与 Video Action 合流后也承接视频转化目标。"},
+{m:"display",hot:0,q:"再营销(您的数据细分)有哪些来源?",a:"<b>网站/应用访客(代码圈人)、客户名单 Customer Match(上传哈希邮箱/手机号)、YouTube 互动用户、Google Analytics 受众</b>。Customer Match 是第一方数据战略核心,可用于定向、排除与智能出价信号。"},
+{m:"display",hot:0,q:"品牌安全与频次如何管理?",a:"内容排除(敏感内容类别)、版位排除(具体网站/App/频道)、<b>频次上限</b>(展示系列可设);账户级还可统一排除清单。认知类视频系列另有目标频次(Target Frequency)产品。"},
+// ============ 视频 ============
+{m:"video",hot:1,q:"YouTube 主要广告格式有哪些?",a:"<b>可跳过插播</b>(5秒后可跳,无时长上限建议≤3分)/<b>不可跳过插播</b>(≤15秒)/<b>导视 Bumper</b>(≤6秒)/<b>信息流视频 In-Feed</b>(首页/搜索结果封面点击)/<b>Shorts 广告</b>/<b>首页大师版 Masthead</b>(预订制)。"},
+{m:"video",hot:1,q:"视频广告怎么计费?CPV 何时计一次?",a:"<b>CPV</b>(可跳过插播):看满 <b>30 秒</b>或看完(不足30s)或发生互动,三者最先达成时计费。<b>目标千次展示 tCPM</b>:不可跳过、Bumper、Reach 组合、Masthead。In-Feed 按点击观看计。"},
+{m:"video",hot:1,q:"按漏斗目标选视频产品怎么选?",a:"<b>认知</b>:Video Reach Campaigns(VRC,混投可跳过/不可跳过/Bumper 求最低成本触达)+ 目标频次;<b>考虑</b>:视频观看系列 VVC(最大化观看);<b>行动</b>:Demand Gen(承接原 Video Action),带 CTA/站内链接/商品feed。"},
+{m:"video",hot:0,q:"Brand Lift(品牌提升)衡量什么?",a:"用问卷对照组测<b>广告回想度、品牌认知度、考虑度、好感度、购买意向</b>的增量(实验组 vs 对照组),配合搜索提升(Search Lift)。用于认知类投放的效果证明,需达最低花费门槛。"},
+{m:"video",hot:0,q:"YouTube 定向除共享受众外,特有的是什么?",a:"<b>自定义细分-搜索意图</b>:圈「在 Google 搜过某些词的人」,在 YouTube 上触达(搜索意图迁移);再加内容定向(版位/主题/关键字上下文)。音频广告与播客版位补充覆盖。"},
+// ============ PMax 与智能出价 ============
+{m:"pmax",hot:1,q:"Performance Max 是什么?覆盖哪些版位?",a:"<b>一个系列跨全部 Google 渠道</b>:搜索、购物、展示、YouTube、Gmail、Discover、地图。以转化/转化价值为目标,AI 统一分配预算与版位。与关键字搜索系列共存时:<em>完全匹配的关键字优先</em>,其余按 Ad Rank 竞争。"},
+{m:"pmax",hot:1,q:"PMax 的「资产组 + 受众信号」怎么理解?",a:"<b>资产组 Asset Group</b>=一套素材(标题/描述/图片/视频/Logo,可挂商品feed),按主题建多个;<b>受众信号 Audience Signal</b>=你提供的种子受众(你的数据/自定义细分),<em>只是起点提示,不是定向边界</em>,系统会自行扩展。"},
+{m:"pmax",hot:1,q:"PMax 常考的控制项有哪些?",a:"<b>品牌排除</b>(不吃品牌词流量)/<b>新客获取目标</b>(只为新客出价或新客加价)/<b>转化价值规则</b>/<b>广告系列级否定关键字</b>(后来开放)/<b>资产报告与搜索主题 Search Themes</b>(给AI的查询提示)。"},
+{m:"pmax",hot:1,q:"tCPA 和 tROAS 分别怎么工作?",a:"<b>tCPA</b>:设定平均每次转化成本目标,系统对每次拍卖预估转化率后定价,追求在目标成本内拿最多转化;<b>tROAS</b>:设定转化价值/花费比目标(如500%),系统预估<em>转化价值</em>出价,优先高价值用户。都需要足够转化数据量,冷启动期波动正常。"},
+{m:"pmax",hot:0,q:"智能出价用到哪些实时信号?",a:"设备、位置、时段、语言、操作系统、再营销名单归属、浏览器、实际查询语义等<b>拍卖时信号(auction-time signals)</b>的组合交叉——这是人工出价无法企及的维度数,也是考试反复强调的「为什么交给AI」。"},
+{m:"pmax",hot:0,q:"AI-Powered Performance Ads 认证的核心叙事?",a:"三步:① 用<b>价值出价</b>(给不同转化定价值)对齐商业目标;② 用 <b>Power Pair/PMax</b> 全渠道抓需求;③ 用<b>第一方数据+增强型转化</b>喂准信号。考题多为「某目标场景→选哪种出价/系列组合」。"},
+// ============ 购物 ============
+{m:"shopping",hot:1,q:"投购物广告的前置条件是什么?",a:"<b>Google Merchant Center 账户 + 商品 Feed</b>,并与 Google Ads 关联。Feed 关键属性:id、title、description、link、image_link、price、availability、GTIN/brand/MPN、google_product_category。商品数据质量直接决定召回与点击率。"},
+{m:"shopping",hot:1,q:"标准购物系列 vs PMax(零售版)的区别?",a:"<b>标准购物</b>:仅购物版位,可分商品组手动/智能出价,控制力强;<b>PMax挂feed</b>:购物+全渠道,自动化程度最高,官方主推。同账户并存时 PMax 优先级更高(同商品 PMax 抢量)。"},
+{m:"shopping",hot:1,q:"购物广告的排序不看关键字,看什么?",a:"没有关键字!按 <b>Feed 数据相关性(标题/类目/属性)× 出价 × 历史表现</b>匹配查询。所以优化手段=<em>标题前置核心词、图片合规白底、价格与库存准确、补全 GTIN</em>,再叠加否定关键字排除不相关查询。"},
+{m:"shopping",hot:0,q:"免费商品搜索结果(Free Listings)是什么?",a:"Merchant Center 商品可<b>免费</b>出现在 Google 购物标签等位置(类似电商版自然流量)。与付费购物广告互补,只需 feed 合规即可获得,认证里作为「上 feed 的额外红利」考点。"},
+{m:"shopping",hot:0,q:"AI-Powered Shopping Ads 认证新增强调什么?",a:"<b>Merchant Center Next</b> 简化版界面、AI 生成商品图/场景图(Product Studio)、本地库存广告 LIA(线下库存线上导流)、与 PMax 的深度绑定,以及用转化价值规则区分新老客/毛利。"},
+// ============ 应用 ============
+{m:"apps",hot:1,q:"应用广告系列(App Campaigns)最大的特点?",a:"<b>全自动</b>:不选关键字、不选版位、不选人群——只给<b>文字+图片+视频+HTML5 素材和预算/目标</b>,系统自动跨 <b>搜索、Google Play、YouTube、展示、Discover</b> 投放并组合素材(还会自动抓取商店信息)。"},
+{m:"apps",hot:1,q:"应用系列的三种优化目标?",a:"① <b>安装量</b>(tCPI,量优先);② <b>应用内操作</b>(tCPA,如注册/下单,找会行动的用户);③ <b>应用内操作价值</b>(tROAS,价值优先,要求回传收入)。进阶:预注册系列(Play)与再互动系列(App engagement,唤回老用户)。"},
+{m:"apps",hot:0,q:"应用转化数据从哪来?",a:"<b>Firebase SDK</b>(Google 官方)或第三方归因平台 <b>MMP</b>(AppsFlyer/Adjust等)回传安装与应用内事件;iOS 受 ATT/SKAN 影响需建模。数据回传质量决定 tCPA/tROAS 能不能跑。"},
+{m:"apps",hot:0,q:"应用系列预算与出价的经验法则?",a:"官方建议:日预算 ≥ <b>50 × tCPI</b>(安装目标)或 ≥ <b>10 × tCPA</b>(操作目标),给足学习期(通常2周内不大改);素材尽量配齐横竖屏视频+多尺寸图片,让系统有的可选。"},
+// ============ 衡量与GA4 ============
+{m:"measure",hot:1,q:"Google Ads 转化跟踪有哪几种来源?",a:"<b>网站转化</b>(gtag.js / Google Tag Manager)、<b>应用转化</b>(Firebase)、<b>来电转化</b>、<b>离线转化导入</b>(线索closing回传,增强型离线转化)、<b>店访/店内销售</b>,以及从 <b>GA4 导入关键事件</b>。"},
+{m:"measure",hot:1,q:"什么是增强型转化(Enhanced Conversions)?",a:"在转化回传时附带<b>经 SHA-256 哈希的第一方数据</b>(邮箱/手机号),与 Google 登录态匹配,补足因 Cookie 限制丢失的归因。分网站版与线索版(Enhanced Conversions for Leads)。隐私时代必考。"},
+{m:"measure",hot:1,q:"现行归因模型口径?",a:"默认且推荐:<b>数据驱动归因 DDA</b>(机器学习按真实贡献分功劳,无最低量要求);可选:<b>最终点击</b>。<em>首次点击/线性/时间衰减/根据位置 四种规则模型已下线</em>。转化窗口与计数方式(每一次/唯一一次)可配。"},
+{m:"measure",hot:1,q:"GA4 与 UA 的本质区别?",a:"GA4 是<b>事件模型</b>:一切皆 event+参数(无会话内嵌套的命中类型),跨 Web+App 统一;转化改叫<b>关键事件 Key Events</b>;报告基于探索(Explorations);免费版可导出 <b>BigQuery</b>;基于同意模式做<b>行为/转化建模</b>。"},
+{m:"measure",hot:0,q:"GA4 与 Google Ads 关联后能做什么?",a:"① 把 GA4 关键事件<b>导入为 Ads 转化</b>;② 共享 <b>GA4 受众</b>用于再营销;③ 在 GA4 看 Ads 流量表现(集成报告);④ 出价可用 GA4 转化。注意同一行为别在两边重复计入转化。"},
+{m:"measure",hot:0,q:"Consent Mode(同意模式)与建模转化是什么?",a:"用户拒绝 Cookie 时,标签以<b>无 Cookie 信号(ping)</b>上报,Google 用机器学习<b>建模补齐</b>被拒部分的转化(modeled conversions),保持出价学习不中断。V2 版新增 ad_user_data / ad_personalization 两个同意位。"},
+{m:"measure",hot:0,q:"价值出价(Value-Based Bidding)落地三步?",a:"① 给不同转化<b>赋值</b>(静态或动态回传);② 必要时用<b>转化价值规则</b>按地域/设备/受众调值(如新客×1.5);③ 切换 <b>最大化转化价值 / tROAS</b>。让系统「追钱」而不是「追次数」。"},
+{m:"measure",hot:0,q:"常用效果指标怎么算?",a:"<b>CTR</b>=点击/展示;<b>CVR</b>=转化/点击;<b>CPA</b>=花费/转化;<b>ROAS</b>=转化价值/花费;<b>展示份额 IS</b>=实际展示/可参拍展示(丢失分「预算受限」与「评级受限」两种,是诊断扩量空间的核心指标)。"},
+];
+
+let curMod = "all", hotOnly = false, order = CARDS.map((_,i)=>i);
+const marks = new Array(CARDS.length).fill(0); // 0=未标 1=掌握 2=待复习
+
+const tabsEl = document.getElementById("tabs");
+function renderTabs(){
+  const all = [{k:"all",n:"全部",c:"#202124"}].concat(MODS);
+  tabsEl.innerHTML = all.map(m=>`<button class="tab${curMod===m.k?" on":""}" data-k="${m.k}">${m.n} <span style="opacity:.65">${m.k==="all"?CARDS.length:CARDS.filter(c=>c.m===m.k).length}</span></button>`).join("");
+}
+tabsEl.addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;curMod=b.dataset.k;renderTabs();renderGrid();});
+
+document.getElementById("hotBtn").onclick=function(){hotOnly=!hotOnly;this.classList.toggle("on",hotOnly);renderGrid();};
+document.getElementById("shuffleBtn").onclick=()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}renderGrid();};
+let allFlipped=false;
+document.getElementById("flipAllBtn").onclick=function(){allFlipped=!allFlipped;document.querySelectorAll(".cardwrap").forEach(w=>w.classList.toggle("flip",allFlipped));this.textContent=allFlipped?"全部翻回":"全部翻面";};
+document.getElementById("resetBtn").onclick=()=>{marks.fill(0);renderGrid();};
+
+const grid=document.getElementById("grid");
+function visible(){return order.filter(i=>{const c=CARDS[i];return (curMod==="all"||c.m===curMod)&&(!hotOnly||c.hot);});}
+function renderGrid(){
+  const vis=visible();
+  grid.innerHTML=vis.map(i=>{
+    const c=CARDS[i],mod=MODS.find(m=>m.k===c.m);
+    return `<div class="cardwrap${marks[i]===1?" doneGot":marks[i]===2?" doneTodo":""}" data-i="${i}">
+      <div class="card">
+        <div class="face front">
+          ${c.hot?'<span class="hotmark">★ 高频</span>':""}
+          <span class="chip" style="background:${mod.c}">${mod.n}</span>
+          <div class="q">${c.q}</div>
+          <div class="hint">点击翻面看答案</div>
+          <div class="mark">${mkBtns(i)}</div>
+        </div>
+        <div class="face back">
+          <span class="chip" style="background:${mod.c}">${mod.n}</span>
+          <div class="a">${c.a}</div>
+          <div class="hint">再点一下翻回</div>
+          <div class="mark">${mkBtns(i)}</div>
+        </div>
+      </div></div>`;
+  }).join("");
+  renderStats();
+}
+function mkBtns(i){return `<button class="mk got${marks[i]===1?" on":""}" data-m="1">已掌握</button><button class="mk todo${marks[i]===2?" on":""}" data-m="2">待复习</button>`;}
+grid.addEventListener("click",e=>{
+  const mk=e.target.closest(".mk");
+  const wrap=e.target.closest(".cardwrap");
+  if(!wrap)return;
+  const i=+wrap.dataset.i;
+  if(mk){e.stopPropagation();marks[i]=marks[i]===+mk.dataset.m?0:+mk.dataset.m;renderGrid();return;}
+  wrap.classList.toggle("flip");
+});
+function renderStats(){
+  const vis=visible();
+  const got=vis.filter(i=>marks[i]===1).length, todo=vis.filter(i=>marks[i]===2).length;
+  document.getElementById("stats").innerHTML=`当前视图 <b>${vis.length}</b> 张 · 已掌握 <b style="color:#188038">${got}</b> · 待复习 <b style="color:#d93025">${todo}</b>(标记仅本次会话有效)`;
+  document.getElementById("barfill").style.width=vis.length?Math.round(got/vis.length*100)+"%":"0%";
+}
+renderTabs();renderGrid();
+</script>
+</body>
+</html>

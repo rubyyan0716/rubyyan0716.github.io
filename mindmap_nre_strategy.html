@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麦当劳新人留存策略数据分析脑图</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/panzoom@9.4.0/dist/panzoom.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+        }
+        .toolbar {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toolbar button {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .toolbar button:hover { background: #f0f0f0; }
+        .toolbar select {
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #diagram {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+            cursor: grab;
+        }
+        #diagram:active { cursor: grabbing; }
+        .mermaid { max-width: none !important; }
+        .zoom-info {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #666;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <select id="theme" onchange="changeTheme(this.value)">
+            <option value="default" selected>Default</option>
+            <option value="dark" >Dark</option>
+            <option value="forest" >Forest</option>
+            <option value="neutral" >Neutral</option>
+        </select>
+        <button onclick="resetZoom()">Reset</button>
+        <button onclick="zoomIn()">+</button>
+        <button onclick="zoomOut()">-</button>
+        <button onclick="exportPNG()">PNG</button>
+    </div>
+    <div class="container">
+        <div id="diagram">
+            <pre class="mermaid">
+mindmap
+  root((麦当劳新人留存策略<br>数据分析落地框架))
+    数据基建
+      表源梳理
+        hive.ads_order.t_order_apply_d
+        t_dim_member_info（会员画像）
+        t_dim_product_catalog（产品品类）
+        t_dim_promotion_voucher（券领取/核销）
+      字段对齐
+        is_new_customer
+        bi_dt（订单日期）
+        is_gc_count
+        order_net_amount
+        coupon_type
+    人群分层定义
+      券依赖型
+        领过新人礼的用户
+        新人礼券核销后30天内
+        复购驱动=大促/BA/券补贴
+      自然高频型
+        未使用新人礼的用户
+        5月有早餐/OMM/Base menu消费
+        早餐渗透率>O2O渗透率>正餐渗透率
+    核心分析专题
+      专题1: 券依赖度评估
+        领券用户首单 vs 无券用户首单
+        券依赖用户30/60/90天留存率
+        补贴撤除后自然留存率
+        券驱动边际效应递减拐点
+      专题2: 自然高频路径还原
+        22万无券留存用户的品类组合
+        高频场景发现路径（搜索/推荐/线下）
+        早餐+OMM+Base menu组合频次分布
+        工作日vs.周末品类差异
+      专题3: 品类渗透漏斗
+        新人首单品类 → 次日品类 → 7日品类
+        早餐品类进入率
+        OMM新品尝鲜率
+        Base menu复购率
+      专题4: 新人分层激活实验
+        A/B/C包激活效果对比
+        7日品类任务完成率
+        任务引导 vs 纯券补贴留存差异
+    策略验证设计
+      实验分组
+        对照组: 现有统一新人礼
+        实验组A: 品类组合包（无折扣券）
+        实验组B: 品类包 + 7日任务
+        实验组C: 高潜力用户无券激活
+      核心观测指标
+        次日留存率
+        7日品类渗透率（≥2品类）
+        90天自然频次（撤券后）
+        LTV 180天
+      样本量估算
+        各组最低5万人
+        置信度95% / 最小可检测效应3%
+    指标监控体系
+      实时监控
+        新人礼领取率 & 核销率
+        首单后7日复购率
+        品类渗透率（每日）
+      周度报告
+        各实验组留存率趋势
+        券成本 vs 自然留存对比
+        高频品类TOP10
+      月度复盘
+        NRE各组LTV
+        策略ROI评估
+        迭代方向建议
+            </pre>
+        </div>
+    </div>
+    <div class="zoom-info">Scroll to zoom, drag to pan</div>
+
+    <script>
+        let panzoomInstance;
+        const mermaidCode = `mindmap
+  root((麦当劳新人留存策略<br>数据分析落地框架))
+    数据基建
+      表源梳理
+        hive.ads_order.t_order_apply_d
+        t_dim_member_info（会员画像）
+        t_dim_product_catalog（产品品类）
+        t_dim_promotion_voucher（券领取/核销）
+      字段对齐
+        is_new_customer
+        bi_dt（订单日期）
+        is_gc_count
+        order_net_amount
+        coupon_type
+    人群分层定义
+      券依赖型
+        领过新人礼的用户
+        新人礼券核销后30天内
+        复购驱动=大促/BA/券补贴
+      自然高频型
+        未使用新人礼的用户
+        5月有早餐/OMM/Base menu消费
+        早餐渗透率>O2O渗透率>正餐渗透率
+    核心分析专题
+      专题1: 券依赖度评估
+        领券用户首单 vs 无券用户首单
+        券依赖用户30/60/90天留存率
+        补贴撤除后自然留存率
+        券驱动边际效应递减拐点
+      专题2: 自然高频路径还原
+        22万无券留存用户的品类组合
+        高频场景发现路径（搜索/推荐/线下）
+        早餐+OMM+Base menu组合频次分布
+        工作日vs.周末品类差异
+      专题3: 品类渗透漏斗
+        新人首单品类 → 次日品类 → 7日品类
+        早餐品类进入率
+        OMM新品尝鲜率
+        Base menu复购率
+      专题4: 新人分层激活实验
+        A/B/C包激活效果对比
+        7日品类任务完成率
+        任务引导 vs 纯券补贴留存差异
+    策略验证设计
+      实验分组
+        对照组: 现有统一新人礼
+        实验组A: 品类组合包（无折扣券）
+        实验组B: 品类包 + 7日任务
+        实验组C: 高潜力用户无券激活
+      核心观测指标
+        次日留存率
+        7日品类渗透率（≥2品类）
+        90天自然频次（撤券后）
+        LTV 180天
+      样本量估算
+        各组最低5万人
+        置信度95% / 最小可检测效应3%
+    指标监控体系
+      实时监控
+        新人礼领取率 & 核销率
+        首单后7日复购率
+        品类渗透率（每日）
+      周度报告
+        各实验组留存率趋势
+        券成本 vs 自然留存对比
+        高频品类TOP10
+      月度复盘
+        NRE各组LTV
+        策略ROI评估
+        迭代方向建议`;
+
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            gantt: {
+                barHeight: 30,
+                barGap: 8,
+                topPadding: 50,
+                leftPadding: 120,
+                gridLineStartPadding: 50,
+                fontSize: 14,
+                sectionFontSize: 16,
+                numberSectionStyles: 4,
+                useWidth: 1200,
+            },
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+            },
+            sequence: {
+                useMaxWidth: false,
+                boxMargin: 10,
+                noteMargin: 10,
+                messageMargin: 35,
+                mirrorActors: true,
+            },
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const element = document.getElementById('diagram');
+            panzoomInstance = panzoom(element, {
+                maxZoom: 5,
+                minZoom: 0.1,
+                initialZoom: 1,
+            });
+        });
+
+        function resetZoom() {
+            panzoomInstance.moveTo(0, 0);
+            panzoomInstance.zoomAbs(0, 0, 1);
+        }
+        function zoomIn() {
+            const t = panzoomInstance.getTransform();
+            panzoomInstance.zoomAbs(window.innerWidth/2, window.innerHeight/2, t.scale * 1.2);
+        }
+        function zoomOut() {
+            const t = panzoomInstance.getTransform();
+            panzoomInstance.zoomAbs(window.innerWidth/2, window.innerHeight/2, t.scale / 1.2);
+        }
+        async function changeTheme(theme) {
+            mermaid.initialize({
+                theme: theme,
+                securityLevel: 'loose',
+                gantt: { barHeight: 30, barGap: 8, topPadding: 50, leftPadding: 120, fontSize: 14, useWidth: 1200 },
+                flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' },
+                sequence: { useMaxWidth: false, boxMargin: 10, noteMargin: 10, messageMargin: 35 },
+            });
+            const container = document.querySelector('.mermaid');
+            container.removeAttribute('data-processed');
+            container.innerHTML = mermaidCode;
+            await mermaid.run();
+        }
+        function exportPNG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (!svg) { alert('No diagram'); return; }
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.onload = () => {
+                canvas.width = img.width * 2;
+                canvas.height = img.height * 2;
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const a = document.createElement('a');
+                a.download = 'diagram.png';
+                a.href = canvas.toDataURL('image/png');
+                a.click();
+            };
+            img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+        }
+    </script>
+</body>
+</html>

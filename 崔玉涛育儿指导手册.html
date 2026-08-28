@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《崔玉涛育儿百科》核心要点 · 完整版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f7f4f0;
+            color: #2d2a2c;
+            padding: 24px 16px 40px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            padding: 28px 24px 36px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #efe8e0;
+            padding-bottom: 18px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #7a6a5a;
+            margin-left: auto;
+        }
+        .search-box {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 10px 18px;
+            border: 2px solid #e6ddd4;
+            border-radius: 40px;
+            font-size: 15px;
+            background: #fcfaf7;
+            outline: none;
+            transition: 0.2s;
+            min-width: 180px;
+        }
+        .search-box input:focus {
+            border-color: #b8a898;
+        }
+        .search-box .filter-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .search-box .filter-btn {
+            padding: 8px 18px;
+            border: 2px solid #e6ddd4;
+            border-radius: 30px;
+            background: transparent;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #5a4a3a;
+            transition: 0.2s;
+        }
+        .search-box .filter-btn.active {
+            background: #2d1f12;
+            color: #fff;
+            border-color: #2d1f12;
+        }
+        .search-box .filter-btn:hover:not(.active) {
+            background: #ede6de;
+        }
+
+        .intro {
+            background: #f6f2ec;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            border-left: 5px solid #b8a898;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4d3a2a;
+        }
+        .intro strong {
+            color: #2d1f12;
+        }
+
+        /* 折叠卡片 */
+        .part {
+            margin-bottom: 24px;
+        }
+        .part-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #3d2a1a;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e6ddd4;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .part-title .badge {
+            font-size: 14px;
+            background: #d6cbc0;
+            padding: 0 16px;
+            border-radius: 30px;
+            color: #3d2a1a;
+            font-weight: 500;
+        }
+
+        .chapter-card {
+            border: 1px solid #ece4dc;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            background: #fcfaf7;
+        }
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            cursor: pointer;
+            transition: background 0.15s;
+            user-select: none;
+            flex-wrap: wrap;
+        }
+        .chapter-header:hover {
+            background: #f6f0ea;
+        }
+        .chapter-header .ch-num {
+            font-size: 13px;
+            font-weight: 600;
+            color: #b8a898;
+            min-width: 70px;
+        }
+        .chapter-header .ch-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #2d1f12;
+            flex: 1;
+        }
+        .chapter-header .ch-tags {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .chapter-header .ch-tags span {
+            background: #ede6de;
+            font-size: 11px;
+            padding: 0 10px;
+            border-radius: 30px;
+            color: #4d3a2a;
+        }
+        .chapter-header .arrow {
+            font-size: 14px;
+            color: #9a8a7a;
+            transition: transform 0.25s;
+        }
+        .chapter-card.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        .chapter-body {
+            display: none;
+            padding: 0 18px 18px 18px;
+            border-top: 1px solid #ece4dc;
+            background: #ffffff;
+        }
+        .chapter-card.open .chapter-body {
+            display: block;
+        }
+
+        .body-section {
+            margin-top: 14px;
+        }
+        .body-section h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #3d2a1a;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .body-section h4 .icon {
+            font-size: 16px;
+        }
+        .body-section ul {
+            padding-left: 20px;
+            line-height: 1.7;
+            font-size: 14px;
+            color: #3d3a38;
+        }
+        .body-section ul li {
+            margin-bottom: 2px;
+        }
+        .body-section .highlight-item {
+            background: #fdf8f0;
+            border-left: 3px solid #d4a87a;
+            padding: 6px 14px;
+            border-radius: 6px;
+            margin: 4px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .body-section .highlight-item strong {
+            color: #8a5a3a;
+        }
+
+        .warning-box {
+            background: #fdf6f0;
+            border-left: 4px solid #d4886a;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .warning-box strong {
+            color: #b86a4a;
+        }
+
+        .special-section {
+            background: #f0ebe4;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin: 16px 0 8px;
+            border-left: 5px solid #b8a898;
+        }
+        .special-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #3d2a1a;
+            margin-bottom: 8px;
+        }
+        .special-section ul {
+            padding-left: 20px;
+            line-height: 1.7;
+            font-size: 14px;
+            color: #4d3a2a;
+        }
+
+        .appendix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+        .appendix-item {
+            background: #fcfaf7;
+            border-radius: 12px;
+            padding: 14px 18px;
+            border: 1px solid #ece4dc;
+        }
+        .appendix-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d1f12;
+        }
+        .appendix-item p {
+            font-size: 14px;
+            color: #6a5a4a;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        .footnote {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #9a8a7a;
+            text-align: center;
+            border-top: 1px solid #efe8e0;
+            padding-top: 20px;
+        }
+
+        .no-result {
+            text-align: center;
+            padding: 40px 20px;
+            color: #9a8a7a;
+            font-size: 16px;
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 16px 12px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .chapter-header {
+                padding: 12px 14px;
+            }
+            .chapter-header .ch-name {
+                font-size: 15px;
+            }
+            .chapter-body {
+                padding: 0 14px 14px 14px;
+            }
+            .search-box {
+                flex-direction: column;
+            }
+            .search-box .filter-group {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        📘 崔玉涛育儿百科 · 核心要点
+        <small>完整版 · 含注意事项</small>
+    </h1>
+
+    <!-- 搜索与过滤 -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 搜索章节、关键词...">
+        <div class="filter-group" id="filterGroup">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="喂养">🍼 喂养</button>
+            <button class="filter-btn" data-filter="护理">🛁 护理</button>
+            <button class="filter-btn" data-filter="发育">📈 发育</button>
+            <button class="filter-btn" data-filter="疾病">🏥 疾病</button>
+            <button class="filter-btn" data-filter="早教">🧸 早教</button>
+            <button class="filter-btn" data-filter="安全">⚠️ 安全</button>
+        </div>
+    </div>
+
+    <div class="intro">
+        <strong>📌 核心理念：</strong> 自然养育 · 尊重孩子天性 · 科学原则不变。<br>
+        <strong>聚焦“生命早期1000天”</strong>（孕期至2岁），强调喂养、护理、发育与早期教育。<br>
+        <strong>⚠️ 特别提醒：</strong> 书中所有“崔医生特别提醒”和“专题”内容均已提取，请重点关注。
+    </div>
+
+    <div id="chapterContainer"></div>
+
+    <!-- 早产专题 -->
+    <div class="part" id="preterm-section">
+        <div class="part-title">
+            <span>👶 早产宝宝专题</span>
+            <span class="badge">第23章</span>
+        </div>
+        <div class="special-section">
+            <h3>核心要点</h3>
+            <ul>
+                <li><strong>定义：</strong>胎龄 &lt; 37周出生的宝宝。矫正月龄用于评估发育（实际月龄 - 早产周数）。</li>
+                <li><strong>NICU住院：</strong>家长可参与袋鼠式护理、学习喂养技巧、记录宝宝日常。</li>
+                <li><strong>喂养：</strong>母乳是最好的选择，需额外添加母乳强化剂。出院后继续强化喂养。</li>
+                <li><strong>辅食添加：</strong>按矫正月龄添加，顺序同足月儿，但需更关注铁、钙、蛋白质的补充。</li>
+                <li><strong>发育监测：</strong>使用<strong>早产儿专用生长曲线</strong>（矫正月龄），关注头围增长。</li>
+            </ul>
+            <div style="margin-top:10px;">
+                <strong>常见健康问题（需重点监测）：</strong>
+                <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">心脏问题（PDA）</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">呼吸系统（BPD）</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">脑室周围白质软化</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">早产儿视网膜病变</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">听力筛查</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">贫血</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">黄疸</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">胃食管反流</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">佝偻病</span>
+                    <span style="background:#ede6de; padding:2px 12px; border-radius:30px; font-size:13px;">疝气</span>
+                </div>
+            </div>
+            <div class="warning-box" style="margin-top:10px;">
+                <strong>⚠️ 特别提醒：</strong> 早产儿疫苗接种和体检需按矫正月龄评估。出院后定期随访，重点关注神经发育、视力和听力。
+            </div>
+        </div>
+    </div>
+
+    <!-- 附录 -->
+    <div style="margin-top: 28px; border-top: 2px solid #efe8e0; padding-top: 22px;">
+        <div class="part-title" style="border-bottom: none; margin-bottom: 12px;">
+            📎 附录
+        </div>
+        <div class="appendix-grid">
+            <div class="appendix-item">
+                <h4>附录1 · 疫苗</h4>
+                <p>常见疫苗简介及推荐注射时间（一类/二类、联合/单独疫苗选择）</p>
+            </div>
+            <div class="appendix-item">
+                <h4>附录2 · 生长曲线</h4>
+                <p>0~5岁宝宝身长、体重、头围、BMI曲线图（男女分版）</p>
+            </div>
+            <div class="appendix-item">
+                <h4>📱 育学园App</h4>
+                <p>记录生长、发育测评、疫苗提醒、每日知识推送、会员课程</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        💡 本书特点：文字 + 图解 + 视频（扫码） + App联动 · 崔玉涛医生30余年儿科经验<br>
+        聚焦“自然养育”，尊重个体差异，强调科学喂养、护理与早期发展。
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // 完整数据：每章的核心要点 + 注意事项
+    // ============================================================
+    const chaptersData = [
+        // ---- 第一部分 ----
+        {
+            part: 1,
+            ch: '1',
+            name: '准备好做妈妈',
+            tags: ['分娩', '母乳', '待产'],
+            points: [
+                { type: '要点', items: ['临产三大征兆：见红、规律宫缩（511法则）、破水（需平躺立即就医）', '拉玛泽呼吸法5阶段：胸部呼吸→嘻嘻轻浅呼吸→喘息呼吸→哈气呼吸→用力推呼吸', '自然分娩三产程：规律宫缩→娩出胎儿→娩出胎盘，无痛分娩可选', '剖宫产术前：禁食8h、备皮、插尿管、腰椎麻醉', '母乳喂养好处：含乳清蛋白、免疫因子、低聚糖，促进肠道菌群建立'] },
+                { type: '⚠️ 注意事项', items: ['破水后立即平躺，垫高臀部，减少羊水流出', '剖宫产术后6h禁食禁水，排气后才可进食', '产后1-2周方可喝下奶汤，过早喝荤汤易堵奶', '乳头扁平/内陷可孕37周起牵拉，使用乳头矫正器'] }
+            ]
+        },
+        {
+            part: 1,
+            ch: '2',
+            name: '宝宝出生之后',
+            tags: ['产后', '疫苗', '筛查'],
+            points: [
+                { type: '要点', items: ['产后2h观察：监测出血、子宫收缩、胎盘完整性', '顺产产后24h：按摩子宫、定时量体温、伤口护理、排尿排便', '剖宫产：术后6h侧卧翻身、排气后进食、拔尿管后2-4h排尿', '新生儿阿普加评分：5项（心率/呼吸/肌张力/刺激反应/肤色），总分10分', '乙肝疫苗出生后12h接种，卡介苗24h内（体重≥2500g）', '足跟血：出生后3天采，筛查苯丙酮尿症和甲减'] },
+                { type: '⚠️ 注意事项', items: ['产后出血量大或有血块立即告知医生', '剖宫产伤口疼痛可使用镇痛泵，不影响母乳喂养', '卡介苗接种后2周出现脓疱属正常，不要挤压或包扎', '足跟血最迟不超过出生后20天'] }
+            ]
+        },
+        // ---- 第二部分 核心章节 ----
+        {
+            part: 2,
+            ch: '1~2周',
+            name: '新生宝宝',
+            tags: ['黄疸', '母乳', '抚触'],
+            points: [
+                { type: '要点', items: ['新生儿反射：惊跳、吮吸、觅食、行走、强握、防御（4-6月消失）', '生理性黄疸：出生后24h至9-10天出现，多吃多排可退', '初乳：产后5天内分泌，含丰富抗体，应作为宝宝第一口奶', '母乳喂养按需哺乳，每天8-12次，判断吃饱看尿量（6次/天）', '脐带护理：75%酒精消毒脐根，每天2次，保持干燥', '抚触：面部→胸部→腹部→四肢→背部，每次5-10min'] },
+                { type: '⚠️ 注意事项', items: ['黄疸宝宝不要喂糖水（影响奶量），可适当晒太阳（遮住眼睛）', '宝宝体重下降不超过出生体重的7%即正常，不要着急加配方粉', '哺乳前不要用消毒湿巾擦乳房，温水毛巾即可', '夜间哺乳不要侧卧睡着，防止压住宝宝', '宝宝呛奶时保持侧躺拍背，不要竖抱'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '3~4周',
+            name: '趴卧 · 配方粉',
+            tags: ['肠绞痛', '尿布疹', '配方粉'],
+            points: [
+                { type: '要点', items: ['趴卧练习：清醒时每天2-3次，每次2-15min，锻炼颈部肌肉', '肠绞痛：每天哭闹≥3h，每周≥3天，持续≥1周，飞机抱可缓解', '尿布疹护理：清水冲洗→晾干→涂护臀霜，不要用湿巾擦', '斜颈判断：摸胸锁乳突肌一侧硬结，每天按摩3次，每次15min', '配方粉冲调：先水后粉，按说明比例，用40°C温水'] },
+                { type: '⚠️ 注意事项', items: ['宝宝哭闹不一定是饿，先检查纸尿裤、温度、是否困倦', '新生儿痤疮、粟粒疹不需要处理，会自行消退', '鹅口疮不要用硬物刮，可在医生指导下用制霉菌素', '偏头不会影响智力，但严重时需用矫正头盔', '混合喂养先喂母乳再补配方粉，不要交叉喂养'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '1~2月',
+            name: '满月 · 42天体检',
+            tags: ['体检', '髋关节'],
+            points: [
+                { type: '要点', items: ['满月发育：追视、对人脸有反应、俯卧抬头', '42天体检：身长体重头围、心肺听诊、囟门、髋关节检查', '枕秃：生理性现象，会随年龄增长改善', 'O型腿：生理性，18个月内最明显，不要过早让宝宝蹦跳', '髋关节发育自查：双腿外展角度不对称需就医'] },
+                { type: '⚠️ 注意事项', items: ['宝宝头热是正常（汗毛孔未发育完全，靠头部散热）', '吃手是自我安慰，不要强行制止，保持手部清洁即可', '不要用消毒湿巾擦手，避免消毒剂成分被吃入肠道', '腿纹不对称不一定髋关节有问题，但需医生排查'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '2~3月',
+            name: '睡眠 · 互动',
+            tags: ['睡眠', '早教'],
+            points: [
+                { type: '要点', items: ['逐渐减少夜奶，帮助建立昼夜规律', '2-3月可以开始用枕头（高度1-2cm）', '让宝宝睡小床，与大床拼接但不同床', '大运动：俯卧抬头45°-90°，开始用手支撑'] },
+                { type: '⚠️ 注意事项', items: ['不要让宝宝站在大人腿上蹦跳，影响膝关节发育', '宝宝技能发育有个体差异，不要和别的宝宝比较', '与不同气质宝宝相处：敏感型需更多安抚，活泼型需更多活动'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '3~4月',
+            name: '出牙 · 翻身',
+            tags: ['出牙', '背奶'],
+            points: [
+                { type: '要点', items: ['出牙时间和顺序因人而异，4-7月第一颗乳牙萌出', '偏头矫正：6个月内通过体位矫正，4个月以上严重者用矫正头盔', '口腔清洁：纱布蘸温水擦拭牙龈和舌面', '背奶：准备吸奶器、储奶袋，上班后坚持母乳'] },
+                { type: '⚠️ 注意事项', items: ['宝宝突然拒绝吃母乳，可能是出牙不适或妈妈饮食变化', '帮助宝宝适应奶瓶：换人喂、选择仿母乳奶嘴', '心杂音：部分宝宝有生理性杂音，需医生排查'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '4~5月',
+            name: '坐 · 辅食信号',
+            tags: ['辅食', '坐'],
+            points: [
+                { type: '要点', items: ['宝宝能扶坐、靠坐，双手支撑坐稳', '出牙不适：用牙胶、冷毛巾缓解', '添加辅食的信号：能坐稳、挺舌反射消失、对食物感兴趣', '大运动发展顺序：趴→抬头→翻身→坐→爬→站→走'] },
+                { type: '⚠️ 注意事项', items: ['宝宝拇指内扣不一定有问题，随年龄改善', '6个月内母乳宝宝不需要额外补钙，补充维生素D即可', '辅食添加不必过早，6个月最合适'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '5~6月',
+            name: '辅食添加',
+            tags: ['辅食', '转奶'],
+            points: [
+                { type: '要点', items: ['辅食添加原则：由少到多、由稀到稠、由细到粗', '第一口辅食：含铁婴儿米粉', '添加工具：餐椅、围兜、硅胶勺、分格碗', '断夜奶：逐渐减少夜间喂养，延长时间间隔'] },
+                { type: '⚠️ 注意事项', items: ['添加一种新食物观察3-5天，确认不过敏再添加下一种', '6个月后母乳中铁含量不足，需补充含铁辅食', '转奶需循序渐进，新旧奶粉混合过渡', '幼儿急疹：高热3-5天后热退疹出，不需特殊处理'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '6~7月',
+            name: '爬行 · 咀嚼',
+            tags: ['爬行', '咀嚼'],
+            points: [
+                { type: '要点', items: ['爬行：从匍匐爬行到手膝爬行，锻炼四肢协调', '辅食质地的变化：从泥糊状过渡到小颗粒状', '咀嚼训练：给宝宝吃有适当颗粒的食物', '让宝宝习惯餐椅：每次吃饭都坐餐椅'] },
+                { type: '⚠️ 注意事项', items: ['添加辅食后大便变稠、颜色变深属正常', '不要阻止宝宝用手抓食物，这是自主进食的起点', '幼儿急疹出疹子后即可洗澡，不需避风'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '7~8月',
+            name: '乳牙 · 挑食',
+            tags: ['乳牙', '挑食'],
+            points: [
+                { type: '要点', items: ['乳牙护理：用指套牙刷或纱布清洁', '辅食质地：碎末状、小丁状，锻炼咀嚼', '宝宝恐新：重复尝试10-15次才可能接受新食物', '食物过敏：添加新食物观察3-5天'] },
+                { type: '⚠️ 注意事项', items: ['宝宝还不出牙不一定是缺钙，乳牙萌出时间个体差异大', '宝宝吃饭抢勺子时，给他一个勺子自己探索', '宝宝皮肤发黄不一定是黄疸，可能是胡萝卜素摄入过多'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '8~9月',
+            name: '爬行进阶 · 杯子',
+            tags: ['杯子', '安全'],
+            points: [
+                { type: '要点', items: ['爬行范围扩大，家中做好安全防护', '开始让宝宝尝试用杯子喝水（学饮杯）', '不要阻止宝宝用左手，左撇子不需纠正', '预防踢被子：用睡袋代替被子'] },
+                { type: '⚠️ 注意事项', items: ['桌角、电源、楼梯口做好防护', '不要给学爬的宝宝穿带袜子的连体衣，防滑更重要', '宝宝吃饭抢勺子时，给他一个勺子自己探索'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '9~10月',
+            name: '扶站 · 手指食物',
+            tags: ['扶站', '鞋'],
+            points: [
+                { type: '要点', items: ['扶站：扶着沙发或围栏站立，不要过早用学步车', '手指食物：煮软的胡萝卜条、西兰花等，锻炼抓握和咀嚼', '扁平足：婴幼儿扁平足多为生理性，2岁后逐渐改善', '选鞋：鞋底防滑、鞋头宽大、1/3处弯曲'] },
+                { type: '⚠️ 注意事项', items: ['宝宝屏气发作时保持冷静，确保呼吸通畅，通常3-5秒恢复', '不要强行阻止宝宝的探索行为，在安全范围内给予自由', '保护宝宝隐私：如厕训练时关上门'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '10~11月',
+            name: '贫血 · 技能倒退',
+            tags: ['贫血', '语言'],
+            points: [
+                { type: '要点', items: ['应对贫血：红肉、动物肝脏、高铁米粉', '宝宝不良进食习惯：边吃边玩、扔食物、含饭不咽', '语言发展：能说2-3个字，能用手指指物', '保护隐私：如厕时关上门'] },
+                { type: '⚠️ 注意事项', items: ['宝宝出现技能倒退是正常现象，如爬行倒退，不用焦虑', '处理倒刺：用指甲刀剪掉，不要用手撕', '引导宝宝说话：多描述见闻，放慢语速，留出回应时间'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '11~12月',
+            name: '学步 · 断母乳',
+            tags: ['断奶', '学步'],
+            points: [
+                { type: '要点', items: ['学步：扶走→独站→独走，步态不稳正常', '断母乳时机：1岁左右可断，但母乳可持续到2岁', '断母乳方法：逐步减少次数，用配方粉/牛奶替代', '助步工具：选择稳固的学步推车，不要用学步车'] },
+                { type: '⚠️ 注意事项', items: ['1岁后母乳仍有营养，不需断奶', '断母乳期间妈妈不要避开宝宝，给予更多陪伴', '宝宝学步时摔倒是正常，在安全环境下让宝宝练习', '远途旅行：准备安全座椅、折叠推车、常用药品'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '12~14月',
+            name: '1岁体检 · 自我意识',
+            tags: ['1岁', '自我'],
+            points: [
+                { type: '要点', items: ['1岁体检：身长体重、视力筛查、牙齿检查', '走路问题：O型腿/X型腿生理性，2-3岁后逐渐改善', '1岁宝宝自我意识萌芽，出现“不”、“我的”等语言', '鼓励宝宝自己吃饭：允许用手抓，提供适合的餐具'] },
+                { type: '⚠️ 注意事项', items: ['宝宝注意力涣散是正常的，不要过早要求专注', '拒绝大人喂饭是自我意识的表现，给宝宝自主权', '1岁后晚上不要加餐，保证夜间睡眠质量'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '15~17月',
+            name: '走路 · 情绪管理',
+            tags: ['情绪', '电子产品'],
+            points: [
+                { type: '要点', items: ['15个月大部分宝宝能独立行走，走路姿势不稳正常', '1岁半后可以用奶制品补钙：酸奶、奶酪', '睡眠问题：1岁半后可能出现夜醒、抗拒睡觉', '陌生人焦虑：1岁半后逐渐减弱，但仍需引导'] },
+                { type: '⚠️ 注意事项', items: ['宝宝在公共场所情绪失控时，先安抚情绪再讲道理', '电子产品做早教：2岁以下尽量不看，2岁以上控制在15min/次', '帮助宝宝应对陌生人：不要强迫打招呼，给予安全感'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '18~20月',
+            name: '如厕训练 · 刷牙',
+            tags: ['如厕', '刷牙'],
+            points: [
+                { type: '要点', items: ['如厕训练信号：白天能保持2小时干爽、对上厕所感兴趣', '开始刷牙：用米粒大小含氟牙膏，家长辅助刷', '七步洗手法：教宝宝正确洗手', '性别意识：2岁左右开始，正确引导'] },
+                { type: '⚠️ 注意事项', items: ['如厕训练不强迫，男宝宝先练坐再练站', '宝宝好动不等于多动症，专注力在2岁后逐渐发展', '发音不清：2岁前口齿不清正常，不要急于纠正'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '21~23月',
+            name: '逆反 · 习惯',
+            tags: ['逆反', '习惯'],
+            points: [
+                { type: '要点', items: ['2岁前后出现第一个叛逆期，学会说“不”', '健康饮食习惯：定时定点吃饭，不追喂', '如厕训练倒退：出牙、生病、环境变化可能导致倒退', '探索私处：2岁后开始出现，需正确引导'] },
+                { type: '⚠️ 注意事项', items: ['宝宝拒绝一切变化是正常的，提前告知并给予适应时间', '夜醒频繁可能与出牙、大运动发展有关', '不要用食物作为奖励或惩罚，避免造成饮食问题'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '2~2.5岁',
+            name: '口吃 · 可怕的两岁',
+            tags: ['口吃', '叛逆'],
+            points: [
+                { type: '要点', items: ['口吃：2-3岁语言爆发期可能出现口吃，通常自然消失', '可怕的2岁：脾气暴躁、拒绝配合、情绪波动大', '外出就餐：准备小零食、玩具，选择儿童友好餐厅', '2岁饮食：三餐+1-2次加餐，营养均衡'] },
+                { type: '⚠️ 注意事项', items: ['宝宝口吃时不要打断或纠正，耐心听完', '面对叛逆期：给予有限选择权，不要硬碰硬', '宝宝奇怪行为（如重复动作）是探索世界的表现，不用过度干预'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '2.5~3岁',
+            name: '叛逆 · 入园准备',
+            tags: ['入园', '社交'],
+            points: [
+                { type: '要点', items: ['3岁前是第二个叛逆期，自我意识强烈', '入园准备：提前参观幼儿园、阅读入园绘本、培养自理能力', '如何处理说谎：理解宝宝分不清想象和现实，不直接惩罚', '分享习惯：3岁前不强制分享，先满足物权意识'] },
+                { type: '⚠️ 注意事项', items: ['想象中的朋友是正常现象，3岁左右出现，不用纠正', '宝宝说脏话：冷处理，转移注意力', '角色扮演游戏：鼓励参与，促进想象力和社交发展'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '3~4岁',
+            name: '分房 · 幼儿园',
+            tags: ['分房', '幼儿园'],
+            points: [
+                { type: '要点', items: ['分房睡：3岁后可尝试，循序渐进，给予安抚物', '幼儿园适应：帮助宝宝建立安全感，接纳入园情绪', '性教育：正面回答“我从哪里来”，用正确名称介绍身体部位', '合作意识：通过合作类游戏培养团队意识'] },
+                { type: '⚠️ 注意事项', items: ['分房后夜醒是正常的，陪伴安抚后回自己房间', '3岁孩子做事慢、无厘头是正常的，不要催促', '教宝宝保护自己：身体权概念，拒绝不舒服的触碰'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '4~5岁',
+            name: '社交 · 家务',
+            tags: ['社交', '家务'],
+            points: [
+                { type: '要点', items: ['社交引导：帮助宝宝建立友谊，处理冲突', '家务活动：让宝宝参与简单家务（叠衣服、擦桌子等）', '控制甜食：限制含糖饮料和零食，培养清淡口味', '正面管教：用描述式表扬代替简单赞美'] },
+                { type: '⚠️ 注意事项', items: ['4岁的孩子爱说“我不行”，需要鼓励尝试', '鼓励孩子社交：创造与同龄人相处的机会', '孩子对死亡、成长的好奇心是正常的，给予答案'] }
+            ]
+        },
+        {
+            part: 2,
+            ch: '5~6岁',
+            name: '入学准备',
+            tags: ['入学', '礼仪'],
+            points: [
+                { type: '要点', items: ['饮食成人化：5岁后可逐步过渡到成人类食物，但需控制盐和糖', '餐桌礼仪：吃饭不玩闹、不挑食、感恩食物', '幼小衔接：培养时间观念、任务意识、专注力', '珍视表达欲：每天与孩子分享所见所闻'] },
+                { type: '⚠️ 注意事项', items: ['对孩子要有合理的预期，不要和“别人家的孩子”比较', '入学前让孩子熟悉小学校园环境，减少陌生感'] }
+            ]
+        },
+        // ---- 第三部分 ----
+        {
+            part: 3,
+            ch: '1',
+            name: '保健常识',
+            tags: ['免疫力', '疫苗', '抗生素'],
+            points: [
+                { type: '要点', items: ['免疫力：分先天性免疫和获得性免疫，合理喂养和疫苗接种是获得性免疫的关键', '肠道菌群：是免疫系统的重要组成部分，不要过度使用消毒剂', '益生菌：在肠道菌群失调时可适当补充，但不建议长期服用', '抗生素：是处方药，必须在医生指导下使用，切勿滥用', '疫苗：一类（国家免费）和二类（自费），有条件建议接种二类疫苗'] },
+                { type: '⚠️ 注意事项', items: ['感冒发烧不超过38.5°C优先物理降温，不必急于用药', '抗生素一定要遵医嘱足疗程使用，不能随意停药', '接种疫苗后出现轻微发热、烦躁是正常反应', '联合疫苗能减少接种次数，但有接种禁忌时不能使用'] }
+            ]
+        },
+        {
+            part: 3,
+            ch: '2',
+            name: '常见症状和疾病',
+            tags: ['发热', '咳嗽', '腹泻'],
+            points: [
+                { type: '要点', items: ['发热：体温≥37.5°C，38.5°C以下物理降温（温水擦浴），以上可考虑退热药', '咳嗽：不要盲目止咳，咳嗽是身体保护机制，需对症处理（化痰）', '腹泻：预防脱水（口服补液盐），继续喂养，暂不添加新辅食', '肺炎：症状包括持续高热、咳嗽加重、呼吸急促，需及时就医', '手足口病：发热+手/足/口腔疱疹，居家隔离，注意皮肤清洁'] },
+                { type: '⚠️ 注意事项', items: ['宝宝发热时不要捂汗，不要用酒精擦浴', '咳嗽时不要随意用镇咳药，咨询医生', '腹泻期间不要停奶/停辅食，可继续清淡饮食', '中耳炎：宝宝抓耳朵、哭闹、发热需警惕，及时就医', '热性惊厥：多数良性，保持侧躺、清理口腔即可'] }
+            ]
+        },
+        {
+            part: 3,
+            ch: '3',
+            name: '意外伤害处理',
+            tags: ['急救', '心肺复苏', '烫伤'],
+            points: [
+                { type: '要点', items: ['心肺复苏（婴儿）：5次按压+1次人工呼吸（按压深度4cm，频率100-120次/分）', '异物梗住呼吸道：海姆立克法（婴儿：背部拍击+胸部冲击）', '烧烫伤：冲（凉水冲15-20min）→脱（剪开衣物）→盖（纱布覆盖）→送', '磕碰头部：观察24h，出现呕吐、嗜睡、抽搐立即就医', '鼻子受伤：捏鼻翼止血，头前倾'] },
+                { type: '⚠️ 注意事项', items: ['伤口处理前先洗手，用流动水冲洗', '不要给伤口直接涂药粉，影响观察', '动物咬伤后清洗伤口并立即就医接种狂犬疫苗', '中暑：阴凉处降温、补液，严重者就医', '触电：切断电源后施救，不要徒手接触伤者'] }
+            ]
+        }
+    ];
+
+    // ============================================================
+    // 渲染逻辑
+    // ============================================================
+    const container = document.getElementById('chapterContainer');
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function renderChapters(filter, query) {
+        let html = '';
+        const parts = { 1: [], 2: [], 3: [] };
+        const queryLower = query.toLowerCase();
+
+        chaptersData.forEach(ch => {
+            // 过滤逻辑
+            let matchTag = true;
+            if (filter !== 'all') {
+                matchTag = ch.tags.some(t => t === filter);
+            }
+            let matchSearch = true;
+            if (queryLower) {
+                const content = ch.name + ' ' + ch.tags.join(' ') + ' ' +
+                    ch.points.map(p => p.items.join(' ')).join(' ');
+                matchSearch = content.toLowerCase().includes(queryLower);
+            }
+            if (matchTag && matchSearch) {
+                parts[ch.part].push(ch);
+            }
+        });
+
+        // 如果所有部分都为空
+        const total = Object.values(parts).reduce((sum, arr) => sum + arr.length, 0);
+        if (total === 0) {
+            document.getElementById('noResult').style.display = 'block';
+        } else {
+            document.getElementById('noResult').style.display = 'none';
+        }
+
+        const partTitles = {
+            1: { label: '🧩 第一部分 · 迎接宝宝的到来', badge: '孕晚期 · 分娩 · 产后' },
+            2: { label: '🌱 第二部分 · 和宝宝一起长大', badge: '0~6岁分月龄/年龄' },
+            3: { label: '🛡️ 第三部分 · 孩子的健康与安全', badge: '保健 · 疾病 · 意外' }
+        };
+
+        for (const [pIdx, chapters] of Object.entries(parts)) {
+            if (chapters.length === 0) continue;
+            const pt = partTitles[pIdx];
+            html += `<div class="part">`;
+            html += `<div class="part-title"><span>${pt.label}</span><span class="badge">${pt.badge}</span></div>`;
+
+            chapters.forEach(ch => {
+                const id = `ch-${pIdx}-${ch.ch}`.replace(/\s/g, '');
+                const isOpen = false;
+                html += `<div class="chapter-card ${isOpen ? 'open' : ''}" data-tags="${ch.tags.join(',')}" data-name="${ch.name}" data-ch="${ch.ch}">`;
+                html += `<div class="chapter-header" data-target="${id}">`;
+                html += `<span class="ch-num">${ch.ch}</span>`;
+                html += `<span class="ch-name">${ch.name}</span>`;
+                html += `<div class="ch-tags">${ch.tags.map(t => `<span>${t}</span>`).join('')}</div>`;
+                html += `<span class="arrow">▼</span>`;
+                html += `</div>`;
+                html += `<div class="chapter-body" id="${id}">`;
+
+                ch.points.forEach(p => {
+                    const isWarning = p.type.includes('⚠️');
+                    if (isWarning) {
+                        html += `<div class="warning-box"><strong>⚠️ ${p.type}</strong><ul>`;
+                        p.items.forEach(item => { html += `<li>${item}</li>`; });
+                        html += `</ul></div>`;
+                    } else {
+                        html += `<div class="body-section"><h4><span class="icon">📌</span> ${p.type}</h4><ul>`;
+                        p.items.forEach(item => { html += `<li>${item}</li>`; });
+                        html += `</ul></div>`;
+                    }
+                });
+
+                html += `</div></div>`;
+            });
+
+            html += `</div>`;
+        }
+
+        container.innerHTML = html;
+
+        // ---- 事件绑定：折叠 ----
+        document.querySelectorAll('.chapter-header[data-target]').forEach(header => {
+            header.addEventListener('click', function() {
+                const targetId = this.dataset.target;
+                const card = this.closest('.chapter-card');
+                if (card) {
+                    card.classList.toggle('open');
+                }
+            });
+        });
+    }
+
+    // ---- 搜索与过滤 ----
+    document.getElementById('searchInput').addEventListener('input', function() {
+        searchQuery = this.value;
+        renderChapters(currentFilter, searchQuery);
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.dataset.filter;
+            renderChapters(currentFilter, searchQuery);
+        });
+    });
+
+    // ---- 初始化 ----
+    renderChapters('all', '');
+
+    // ---- 空结果提示 ----
+    const noResult = document.createElement('div');
+    noResult.className = 'no-result';
+    noResult.id = 'noResult';
+    noResult.textContent = '😅 没有找到匹配的内容，试试其他关键词吧';
+    container.after(noResult);
+</script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>因果推断 · 完全教程 | 从基础到前沿</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f6f9fc;
+            color: #1a2a44;
+            padding: 30px 20px 50px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(0, 10, 30, 0.06);
+            padding: 32px 34px 40px;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            border-bottom: 3px solid #e6edf4;
+            padding-bottom: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 18px;
+            font-weight: 400;
+            color: #5b6f8c;
+        }
+        .meta {
+            display: flex;
+            gap: 20px;
+            color: #6a7e96;
+            font-size: 15px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .toc {
+            background: #f0f4fa;
+            border-radius: 16px;
+            padding: 18px 24px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3b6b9b;
+        }
+        .toc h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1a2a44;
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 4px 18px;
+        }
+        .toc a {
+            color: #2a5a8a;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            padding: 3px 0;
+            border-bottom: 1px dashed transparent;
+            transition: 0.15s;
+        }
+        .toc a:hover {
+            border-bottom-color: #3b6b9b;
+            color: #1a2a44;
+        }
+
+        .chapter {
+            margin: 40px 0 32px;
+            border-bottom: 2px solid #e6edf4;
+            padding-bottom: 8px;
+        }
+        .chapter h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a2a44;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .chapter h2 .badge {
+            font-size: 14px;
+            font-weight: 500;
+            background: #dce5f0;
+            padding: 0 16px;
+            border-radius: 30px;
+            color: #3a4c66;
+        }
+
+        .section {
+            margin: 28px 0 16px;
+        }
+        .section h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a2a44;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h3 .sub-badge {
+            font-size: 14px;
+            font-weight: 500;
+            background: #f0e8f5;
+            padding: 0 14px;
+            border-radius: 30px;
+            color: #6a3a8a;
+        }
+        .section h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 18px 0 8px;
+            color: #2d4a6a;
+        }
+
+        .concept-box {
+            background: #f9fbfd;
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin: 16px 0;
+            border-left: 4px solid #3b6b9b;
+        }
+        .concept-box .label {
+            font-weight: 700;
+            color: #0f2b4a;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .formula {
+            background: #eef3f8;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-family: 'Times New Roman', serif;
+            font-size: 18px;
+            text-align: center;
+            margin: 14px 0;
+            border: 1px solid #dce4ed;
+            letter-spacing: 0.5px;
+        }
+        .example-box {
+            background: #f5f8fe;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            border: 1px solid #e6edf4;
+        }
+        .example-box .ex-title {
+            font-weight: 700;
+            color: #2a5a8a;
+        }
+        .example-box ul, .section ul {
+            padding-left: 24px;
+            margin: 8px 0;
+        }
+        .example-box li, .section li {
+            margin-bottom: 4px;
+        }
+
+        .assumption-box {
+            background: #fef9ee;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin: 12px 0;
+            border-left: 4px solid #d4a87a;
+        }
+        .assumption-box strong {
+            color: #8a5a3a;
+        }
+
+        .footnote {
+            margin-top: 40px;
+            border-top: 2px solid #e6edf4;
+            padding-top: 24px;
+            font-size: 14px;
+            color: #6a7e96;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 20px 16px; }
+            h1 { font-size: 26px; flex-wrap: wrap; }
+            h1 small { font-size: 16px; }
+            .chapter h2 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>
+        📘 因果推断完全教程
+        <small>从潜在结果到前沿方法</small>
+    </h1>
+    <div class="meta">
+        <span>📖 适用于商业分析 · 政策评估 · 数据科学</span>
+        <span>🧠 包含逻辑推导 · 案例拆解 · 识别策略</span>
+    </div>
+
+    <!-- 目录 -->
+    <div class="toc">
+        <h2>📑 课程目录</h2>
+        <div class="toc-grid">
+            <a href="#ch1">1. 因果推断基础</a>
+            <a href="#ch2">2. 因果图 (DAG)</a>
+            <a href="#ch3">3. 随机实验 (RCT)</a>
+            <a href="#ch4">4. 双重差分 (DID)</a>
+            <a href="#ch5">5. 工具变量 (IV)</a>
+            <a href="#ch6">6. 断点回归 (RDD)</a>
+            <a href="#ch7">7. 匹配与加权 (PSM/IPW)</a>
+            <a href="#ch8">8. 面板数据方法</a>
+            <a href="#ch9">9. 敏感性分析</a>
+            <a href="#ch10">10. 进阶前沿</a>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第1章 -->
+    <div class="chapter" id="ch1">
+        <h2>1. 因果推断基础 <span class="badge">根本问题</span></h2>
+        <div class="section">
+            <h3>1.1 相关 ≠ 因果</h3>
+            <p>两个变量存在统计关联，不代表一个导致了另一个。因果推断的挑战在于：我们只能观察到一个结果，无法同时看到“如果没发生”的反事实。</p>
+            <div class="example-box">
+                <span class="ex-title">📘 经典案例：</span> 冰淇淋销量与溺水人数正相关。但这是因为“温度”同时影响了两者——这是混淆变量（Confounder）。
+            </div>
+        </div>
+        <div class="section">
+            <h3>1.2 潜在结果框架 (Rubin Causal Model)</h3>
+            <p>每个个体 i 有两个潜在结果：<strong>Y<sub>i</sub>(1)</strong>（接受处理）和 <strong>Y<sub>i</sub>(0)</strong>（未接受处理）。</p>
+            <div class="formula">
+                个体因果效应 = Y<sub>i</sub>(1) − Y<sub>i</sub>(0)
+            </div>
+            <div class="concept-box">
+                <span class="label">⚠️ 因果推断的根本问题：</span>
+                我们永远无法同时观测到同一个体的 Y(1) 和 Y(0)。解决方案是估计 <strong>平均因果效应 (ATE)</strong>：ATE = E[Y(1) - Y(0)]。
+            </div>
+            <h4>关键假设：SUTVA</h4>
+            <ul>
+                <li><strong>无干扰 (No Interference)：</strong> 个体 i 的结果只取决于其自身的处理状态，不受他人处理状态影响。</li>
+                <li><strong>一致性 (Consistency)：</strong> 个体 i 在观察到的处理状态下的结果等于相应的潜在结果。</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h3>1.3 识别因果的障碍</h3>
+            <ul>
+                <li><strong>混淆偏差：</strong> 因果变量与结果有共同的因（如上面冰淇淋的例子）。</li>
+                <li><strong>选择偏差：</strong> 处理组和对照组本身在基线上就不同（如自选择）。</li>
+                <li><strong>反向因果：</strong> 结果反过来影响原因（如“高收入导致高学历”还是“高学历导致高收入”）。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第2章 -->
+    <div class="chapter" id="ch2">
+        <h2>2. 因果图 (DAG) <span class="badge">因果地图</span></h2>
+        <div class="section">
+            <h3>2.1 基本结构</h3>
+            <p>DAG（有向无环图）用节点表示变量，箭头表示因果关系。它是判断控制哪些变量（以及不控制哪些变量）的逻辑依据。</p>
+            <ul>
+                <li><strong>链 (Chain)：</strong> X → M → Y （M是中介，控制M会阻断X对Y的效应）。</li>
+                <li><strong>叉 (Fork)：</strong> X ← Z → Y （Z是混淆，控制Z可阻断虚假关联）。</li>
+                <li><strong>对撞 (Collider)：</strong> X → Z ← Y （Z是碰撞变量，控制Z会打开X和Y之间的非因果路径）。</li>
+            </ul>
+            <div class="assumption-box">
+                <strong>🔑 后门准则：</strong> 要识别 X→Y 的因果效应，需要控制一组变量（非后门变量），阻断所有X和Y之间的后门路径，且不控制任何对撞变量。
+            </div>
+            <div class="example-box">
+                <span class="ex-title">📘 案例：</span> 研究“吸烟→肺癌”。<br>
+                DAG：社会阶层 → 吸烟 → 肺癌 ← 基因。<br>
+                <strong>结论：</strong> 控制“社会阶层”（阻断混淆路径），但不要控制“基因”（它是碰撞变量，控制它会放大偏差）。
+            </div>
+        </div>
+        <div class="section">
+            <h3>2.2 d-分离</h3>
+            <p>在DAG中，如果两条路径被一组变量 <strong>Z</strong> 阻断，则称 X 和 Y 在给定 Z 时条件独立。</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第3章 -->
+    <div class="chapter" id="ch3">
+        <h2>3. 随机对照实验 (RCT) <span class="badge">金标准</span></h2>
+        <div class="section">
+            <h3>3.1 核心逻辑</h3>
+            <p>将个体随机分配到处理组和对照组。随机化确保了处理分配独立于所有混淆变量（包括不可观测的）。</p>
+            <div class="formula">
+                ATE = E[Y | D=1] − E[Y | D=0]
+            </div>
+            <p>因为随机化满足 <strong>无混淆 (Unconfoundedness)</strong>：Y(1), Y(0) ⊥ D | X。</p>
+        </div>
+        <div class="section">
+            <h3>3.2 局限性与扩展</h3>
+            <ul>
+                <li><strong>外部效度：</strong> 实验环境可能无法代表现实世界。</li>
+                <li><strong>依从性问题：</strong> 并非所有参与者都遵守协议。此时估计的是 <strong>意图处理效应 (ITT)</strong>，或使用 <strong>依从者平均因果效应 (CACE)</strong>。</li>
+                <li><strong>伦理与成本：</strong> 很多场景（如宏观经济政策）无法进行随机实验。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第4章 -->
+    <div class="chapter" id="ch4">
+        <h2>4. 双重差分 (DID) <span class="badge">准实验</span></h2>
+        <div class="section">
+            <h3>4.1 标准DID</h3>
+            <p>利用处理组与对照组在政策前后的差异变化来推断因果。</p>
+            <div class="formula">
+                DID = (Y<sub>处理,后</sub> − Y<sub>处理,前</sub>) − (Y<sub>对照,后</sub> − Y<sub>对照,前</sub>)
+            </div>
+            <h4>关键假设：平行趋势</h4>
+            <div class="assumption-box">
+                <strong>⚠️ 核心前提：</strong> 如果没有政策冲击，处理组和对照组的结果趋势应该是平行的。需通过“事件研究法”检验前期趋势是否平行。
+            </div>
+            <div class="example-box">
+                <span class="ex-title">📘 案例：</span> 最低工资对就业的影响。处理组=调薪城市，对照组=邻市。<br>
+                ▶ 处理组：60% → 62% (变化+2%)<br>
+                ▶ 对照组：61% → 60.5% (变化-0.5%)<br>
+                <strong>DID = 2% − (-0.5%) = 2.5%</strong>（政策使就业率提升2.5个百分点）。
+            </div>
+        </div>
+        <div class="section">
+            <h3>4.2 多期DID与TWFE</h3>
+            <p>在渐进性政策中，双向固定效应（TWFE）模型可能会因“负权重”问题产生偏差。若处理效应具有异质性（动态变化），传统TWFE估计值可能不可靠。</p>
+            <ul>
+                <li><strong>解决方案：</strong> 使用 <strong>Callaway & Sant'Anna (2021)</strong> 方法，或 <strong>Sun & Abraham (2021)</strong> 方法，分别估计不同处理时点的组别-时间平均处理效应。</li>
+            </ul>
+            <div class="concept-box">
+                <span class="label">🧠 进阶提示：</span> 建议使用 <strong>合成双重差分 (Synthetic DID)</strong>，它结合了DID与合成控制法的优点，能更好地满足平行趋势假设，尤其是在对照组质量不佳时。
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第5章 -->
+    <div class="chapter" id="ch5">
+        <h2>5. 工具变量 (IV) <span class="badge">排除混淆</span></h2>
+        <div class="section">
+            <h3>5.1 定义与假设</h3>
+            <p>工具变量 Z 必须满足：</p>
+            <ul>
+                <li><strong>相关性：</strong> Z 与处理变量 D 相关（强工具）。</li>
+                <li><strong>外生性（排他性）：</strong> Z 仅通过 D 影响 Y，且与误差项正交。</li>
+            </ul>
+            <div class="formula">
+                IV 估计量 = Cov(Z, Y) / Cov(Z, D)
+            </div>
+            <div class="example-box">
+                <span class="ex-title">📘 经典案例：</span> 教育对收入的影响。<br>
+                工具变量：出生季度（美国法律规定满6岁当年入学）。Q1出生的孩子更早入学，教育年限更长。<br>
+                <strong>逻辑：</strong> 出生季度（Z）影响教育年限（D），但不直接影响收入（Y），只能通过教育影响收入。
+            </div>
+        </div>
+        <div class="section">
+            <h3>5.2 弱工具变量与LATE</h3>
+            <ul>
+                <li><strong>弱工具：</strong> 如果 Z 与 D 的相关性很弱，IV估计会严重有偏。应检查第一阶段 F 统计量（>10才安全）。</li>
+                <li><strong>LATE (局部平均处理效应)：</strong> IV 估计的是“受工具影响的依从者”的因果效应，而非全人群的 ATE。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第6章 -->
+    <div class="chapter" id="ch6">
+        <h2>6. 断点回归 (RDD) <span class="badge">临界值设计</span></h2>
+        <div class="section">
+            <h3>6.1 精确断点回归</h3>
+            <p>利用一个连续变量（如考试成绩、年龄）的某一临界值，将个体划分为处理组和对照组。临界值附近的个体在基线特征上几乎相同，唯一差异是是否跨过临界值。</p>
+            <div class="formula">
+                ATT = lim<sub>c→c₀⁺</sub> E[Y | X=c] − lim<sub>c→c₀⁻</sub> E[Y | X=c]
+            </div>
+            <div class="example-box">
+                <span class="ex-title">📘 案例：</span> 重点高中对大学升学率的影响。<br>
+                临界值：中考分数线。比较刚刚过线（进重点）和刚刚没过线（进普通）的学生。<br>
+                <strong>结果：</strong> 如果就业率在分数线处有一个跳跃，这个跳跃值就是重点高中对升学的因果效应。
+            </div>
+        </div>
+        <div class="section">
+            <h3>6.2 带宽选择与检验</h3>
+            <ul>
+                <li><strong>带宽选择：</strong> 使用均方误差(MSE)最优准则（如IK法），进行敏感度分析（多个带宽）。</li>
+                <li><strong>操纵检验 (McCrary检验)：</strong> 检查个体是否在临界值处“精确操纵”（如人为修改分数线），若存在操纵则RDD失效。</li>
+                <li><strong>协变量平衡：</strong> 检验临界值两侧的协变量（如年龄、性别）分布是否连续。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第7章 -->
+    <div class="chapter" id="ch7">
+        <h2>7. 匹配与加权 <span class="badge">控制选择偏差</span></h2>
+        <div class="section">
+            <h3>7.1 倾向得分匹配 (PSM)</h3>
+            <p>用 Logit/Probit 模型估计个体接受处理的概率（倾向得分），然后将处理组与倾向得分相近的对照组匹配。</p>
+            <div class="concept-box">
+                <span class="label">🔑 关键假设：</span> 条件可忽略性——在给定协变量 X 后，潜在结果与处理分配独立。即 Y(1), Y(0) ⊥ D | X。
+            </div>
+            <div class="example-box">
+                <span class="ex-title">📘 案例：</span> 职业培训对工资的影响。计算“参加培训的概率”（基于年龄、学历等），匹配后比较工资差异，消除自选择偏差。
+            </div>
+            <h4>匹配方法扩展：</h4>
+            <ul>
+                <li><strong>CEM (粗化精确匹配)：</strong> 对协变量进行粗化分层匹配，适用于离散变量。</li>
+                <li><strong>IPW (逆概率加权)：</strong> 使用倾向得分的倒数作为权重，构造伪总体以消除偏差。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第8章 -->
+    <div class="chapter" id="ch8">
+        <h2>8. 面板数据方法 <span class="badge">控制固定效应</span></h2>
+        <div class="section">
+            <h3>8.1 固定效应模型</h3>
+            <p>利用面板数据（N个个体，T个时期）控制不随时间变化的个体异质性（α<sub>i</sub>）。</p>
+            <div class="formula">
+                Y<sub>it</sub> = βD<sub>it</sub> + α<sub>i</sub> + λ<sub>t</sub> + ε<sub>it</sub>
+            </div>
+            <ul>
+                <li><strong>个体固定效应：</strong> 剔除“恒定不变”的个体特征（如文化、智商）。</li>
+                <li><strong>时间固定效应：</strong> 控制共同的时间趋势（如宏观经济波动）。</li>
+            </ul>
+            <div class="example-box">
+                <span class="ex-title">📘 案例：</span> 研究“婚姻对收入的影响”。固定效应模型利用个体自身在不同时间点的变化（结婚前 vs 结婚后）来估计效应，消除了“懒惰/勤奋”等个体固定特征带来的偏差。
+            </div>
+        </div>
+        <div class="section">
+            <h3>8.2 一阶差分 (FD)</h3>
+            <p>将每个时期做差分，消除个体固定效应，利用 ΔY = βΔD + Δε 进行估计。当 ε<sub>it</sub> 服从随机游走时，FD比FE更高效。</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第9章 -->
+    <div class="chapter" id="ch9">
+        <h2>9. 稳健性与敏感性分析 <span class="badge">检验可信度</span></h2>
+        <div class="section">
+            <h3>9.1 安慰剂检验</h3>
+            <ul>
+                <li><strong>时间安慰剂：</strong> 假设政策发生在真实时间之前的某个时点，看是否出现同样效应（如果出现，说明原结果不可信）。</li>
+                <li><strong>地点安慰剂：</strong> 随机分配处理组，看是否出现类似效应（分布检验）。</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h3>9.2 Rosenbaum 敏感性检验 (匹配后)</h3>
+            <p>检验“需要多大的未观测混淆”才能推翻当前结论。用 Γ 参数衡量（Γ越大，对偏倚越不敏感）。</p>
+        </div>
+        <div class="section">
+            <h3>9.3 Oster 检验</h3>
+            <p>通过比较控制变量加入前后系数变化，以及 R² 变化，推断未观测混淆的潜在影响。</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第10章 -->
+    <div class="chapter" id="ch10">
+        <h2>10. 进阶前沿 <span class="badge">最新工具</span></h2>
+        <div class="section">
+            <h3>10.1 合成控制法 (SCM)</h3>
+            <p>通过加权组合对照组个体，为单个处理单元（如某个城市）合成一个“虚拟的反事实”。</p>
+            <div class="example-box">
+                <span class="ex-title">📘 案例：</span> 研究加州烟草税对烟草消费的影响。用其他未实施税法的州加权组合成“合成加州”，比较真实加州与合成加州的烟草消费差异。
+            </div>
+        </div>
+        <div class="section">
+            <h3>10.2 因果机器学习</h3>
+            <ul>
+                <li><strong>Causal Forest：</strong> 基于随机森林估计异质性处理效应（CATE），可探索“哪些人受益最多”。</li>
+                <li><strong>Double/Debiased ML：</strong> 利用机器学习控制高维混淆，实现更灵活的估计，同时保持Neyman正交性防止过拟合偏误。</li>
+            </ul>
+            <div class="concept-box">
+                <span class="label">🧠 趋势洞察：</span> 因果推断正从“平均效应”转向“异质性效应”（谁获益）。这要求在模型中融入机器学习，但必须严格遵循识别假设（如无混淆）。
+            </div>
+        </div>
+        <div class="section">
+            <h3>10.3 因果发现 (Causal Discovery)</h3>
+            <p>利用算法从数据中自动学习DAG结构，如 PC 算法、LiNGAM 等。注意：这仅适用于探索性分析，验证仍需专家知识与实验。</p>
+        </div>
+    </div>
+
+    <div class="footnote">
+        📌 本教材涵盖了从古典识别策略到现代机器学习方法的完整光谱。<br>
+        核心思想：严谨的识别假设 + 稳健的实证检验 = 可信的因果结论。
+    </div>
+
+</div>
+</body>
+</html>

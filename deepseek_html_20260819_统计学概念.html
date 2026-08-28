@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>统计学与因果推断 · 知识卡片学习工具</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f4f7fb;
+            color: #1a2a44;
+            padding: 24px 16px 40px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5b6f8c;
+        }
+        .subtitle {
+            color: #5b6f8c;
+            font-size: 15px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e6edf4;
+            padding-bottom: 14px;
+        }
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 10px 18px;
+            border: 2px solid #dce4ed;
+            border-radius: 40px;
+            font-size: 15px;
+            background: #fff;
+            outline: none;
+            transition: 0.2s;
+            min-width: 180px;
+        }
+        .search-box input:focus {
+            border-color: #3b6b9b;
+        }
+        .filter-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 18px;
+            border: 2px solid #dce4ed;
+            border-radius: 30px;
+            background: transparent;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #3a4c66;
+            transition: 0.2s;
+        }
+        .filter-btn.active {
+            background: #1a2a44;
+            color: #fff;
+            border-color: #1a2a44;
+        }
+        .filter-btn:hover:not(.active) {
+            background: #e6edf4;
+        }
+
+        /* 卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 22px;
+            box-shadow: 0 4px 12px rgba(0, 10, 30, 0.05);
+            border: 1px solid #e6edf4;
+            transition: box-shadow 0.2s, transform 0.15s;
+            cursor: pointer;
+        }
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 10, 30, 0.08);
+            transform: translateY(-2px);
+        }
+        .card .tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            background: #e6edf4;
+            color: #3a4c66;
+            padding: 0 12px;
+            border-radius: 30px;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+        .card .tag.stat {
+            background: #e3ecf7;
+            color: #2a5a8a;
+        }
+        .card .tag.causal {
+            background: #f0e8f5;
+            color: #6a3a8a;
+        }
+        .card .tag.core {
+            background: #fdf0e3;
+            color: #a86a2a;
+        }
+        .card .title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1a2a44;
+            margin-bottom: 6px;
+        }
+        .card .brief {
+            font-size: 14px;
+            color: #4a5a6e;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .card .detail {
+            font-size: 14px;
+            color: #2a3a54;
+            line-height: 1.7;
+            display: none;
+            border-top: 1px solid #e6edf4;
+            padding-top: 12px;
+            margin-top: 8px;
+        }
+        .card .detail .example {
+            background: #f8faff;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border-left: 4px solid #3b6b9b;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        .card .detail .example strong {
+            color: #1a2a44;
+        }
+        .card.open .detail {
+            display: block;
+        }
+        .card .expand-hint {
+            font-size: 13px;
+            color: #8a9aaa;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .no-result {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8a9aaa;
+            font-size: 16px;
+            grid-column: 1 / -1;
+            display: none;
+        }
+
+        .footer {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 14px;
+            color: #8a9aaa;
+            border-top: 1px solid #e6edf4;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .search-box {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        📊 统计学 × 因果推断
+        <small>知识卡片 · 点击展开详情</small>
+    </h1>
+    <div class="subtitle">核心概念 · 逻辑推导 · 实际案例 · 从入门到理解</div>
+
+    <!-- 搜索 & 过滤 -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 搜索概念、关键词...">
+        <div class="filter-group" id="filterGroup">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="stat">📈 统计</button>
+            <button class="filter-btn" data-filter="causal">🔬 因果推断</button>
+            <button class="filter-btn" data-filter="core">⭐ 核心概念</button>
+        </div>
+    </div>
+
+    <div class="card-grid" id="cardGrid"></div>
+
+    <div class="footer">
+        💡 点击卡片展开详细解释与案例 · 帮助你深入理解每一个概念
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // 知识卡片数据
+    // ============================================================
+    const cardsData = [
+        // ===== 统计基础 =====
+        {
+            tag: 'stat',
+            tagLabel: '📈 统计',
+            title: '描述性统计',
+            brief: '用指标概括数据特征：均值、中位数、众数、方差、标准差。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>均值 (Mean)：</strong> 所有数据之和 ÷ 数据个数。对极端值敏感。</li>
+                    <li><strong>中位数 (Median)：</strong> 排序后处于中间位置的数值。不受极端值影响。</li>
+                    <li><strong>众数 (Mode)：</strong> 出现频率最高的数值。</li>
+                    <li><strong>方差 (Variance)：</strong> 数据偏离均值的平方和的平均值，衡量离散程度。</li>
+                    <li><strong>标准差 (Std Dev)：</strong> 方差的平方根，与原始数据同单位，更直观。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 某公司员工月薪 [5000, 5500, 6000, 6500, 30000]。<br>
+                    均值 = 10600（被极端值拉高），中位数 = 6000（更能代表普通员工的收入水平）。
+                </div>
+            `
+        },
+        {
+            tag: 'stat',
+            tagLabel: '📈 统计',
+            title: '正态分布',
+            brief: '数据围绕均值对称分布，68-95-99.7法则。是许多统计方法的基础假设。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>钟形曲线：</strong> 数据集中在均值附近，两侧对称递减。</li>
+                    <li><strong>68-95-99.7法则：</strong> 约68%数据在 ±1σ 内，95%在 ±2σ 内，99.7%在 ±3σ 内。</li>
+                    <li><strong>标准化 (Z-score)：</strong> Z = (x - μ) / σ，将任意正态分布转为标准正态分布。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 某校学生身高均值170cm，标准差10cm。68%学生身高在160-180cm之间，95%在150-190cm之间。身高195cm的Z-score = (195-170)/10 = 2.5，属于偏高2.5个标准差。
+                </div>
+            `
+        },
+        {
+            tag: 'stat',
+            tagLabel: '📈 统计',
+            title: '置信区间',
+            brief: '在给定的置信水平下，真实参数可能落入的数值范围。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>置信水平：</strong> 通常为95%，表示有95%的把握真实值落在区间内。</li>
+                    <li><strong>区间宽度：</strong> 样本量越大 → 区间越窄；置信水平越高 → 区间越宽。</li>
+                    <li><strong>计算公式：</strong> 样本均值 ± 临界值 × 标准误。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 某品牌手机电池平均续航时间抽样调查，95%置信区间为 [18.5h, 21.5h]。这意味着我们95%确信所有该型号手机的真实平均续航在18.5-21.5小时之间。
+                </div>
+            `
+        },
+        {
+            tag: 'stat',
+            tagLabel: '📈 统计',
+            title: '假设检验',
+            brief: '通过样本数据对总体参数做出推论，判断差异是否具有统计意义。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>原假设 H₀：</strong> 认为没有效应/差异（如：μ₁ = μ₂）。</li>
+                    <li><strong>备择假设 H₁：</strong> 认为存在效应/差异（如：μ₁ ≠ μ₂）。</li>
+                    <li><strong>p值：</strong> 在H₀为真的条件下，观察到当前或更极端结果的概率。</li>
+                    <li><strong>显著性水平 α：</strong> 通常设为0.05。p < 0.05 → 拒绝H₀，结果显著。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 测试一种新药是否有效。H₀：新药无效（治愈率与安慰剂相同）。实验后p=0.02 < 0.05，拒绝H₀，结论：新药有效。注意：p=0.02不代表有98%的概率有效，而是说“假设无效时，出现当前结果的概率只有2%”。
+                </div>
+            `
+        },
+        {
+            tag: 'stat',
+            tagLabel: '📈 统计',
+            title: '第一类与第二类错误',
+            brief: '假设检验中的两种决策错误：假阳性 vs 假阴性。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>第一类错误 (Type I)：</strong> 原假设为真，但拒绝了它。即“假阳性”，代价是相信了不存在的效应。</li>
+                    <li><strong>第二类错误 (Type II)：</strong> 原假设为假，但未能拒绝它。即“假阴性”，代价是错过了真实的效应。</li>
+                    <li><strong>权衡：</strong> 降低 α 会减少第一类错误，但可能增加第二类错误。增加样本量可以同时降低两种错误。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 法庭审判类比：H₀=被告无罪（假定无罪）。第一类错误 = 冤枉好人；第二类错误 = 放过罪犯。法律体系倾向于“宁可放过，也不错判”，即重视降低第一类错误（控制α）。
+                </div>
+            `
+        },
+        {
+            tag: 'stat',
+            tagLabel: '📈 统计',
+            title: '相关性 vs 回归',
+            brief: '相关性衡量变量间的关联强度；回归则预测一个变量如何随另一个变量变化。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>相关系数 r：</strong> 范围 -1 到 1，衡量两个变量线性关系的强度和方向。</li>
+                    <li><strong>决定系数 R²：</strong> 表示模型解释了数据变异的比例，R²=0.8说明模型解释了80%的变异。</li>
+                    <li><strong>线性回归：</strong> y = β₀ + β₁x + ε，β₁表示x每变化1单位，y的预期变化量。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 广告投入与销售额的相关系数 r=0.92，说明高度正相关。回归模型：销售额 = 100 + 3.5×广告费。这意味着广告费每增加1万元，销售额预期增加3.5万元。
+                </div>
+            `
+        },
+        // ===== 因果推断 =====
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '相关 ≠ 因果',
+            brief: '两个变量存在统计关联，不代表一个导致了另一个。这是因果推断最重要的第一课。',
+            detail: `
+                <p><strong>核心逻辑：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>相关：</strong> 只是两个变量共同变化，可能由第三方因素驱动。</li>
+                    <li><strong>因果：</strong> 需要满足 <strong>三要素</strong> —— 原因在前、原因变化导致结果变化、排除其他解释。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 冰淇淋销量与溺水人数呈正相关，但这不代表吃冰淇淋会导致溺水。真正的原因是：天气炎热 → 人们吃冰淇淋 + 游泳增多。温度是一个 <strong>混淆变量</strong>，同时影响了原因（冰淇淋）和结果（溺水）。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '混淆变量 (Confounder)',
+            brief: '同时影响“原因”和“结果”的第三方变量，导致我们误判因果关系。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>混淆变量：</strong> 是原因和结果的共同原因，会产生虚假的关联。</li>
+                    <li><strong>控制混淆：</strong> 通过随机化实验、分层分析、多变量回归或因果推断方法（如DAG）来消除。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 研究发现“喝咖啡的人比不喝咖啡的人寿命更长”。但喝咖啡的人可能收入更高、教育水平更好、医疗条件更好——这些 <strong>社会经济地位</strong> 才是真正影响寿命的因素。当控制了收入和教育后，咖啡与寿命的关系可能就消失了。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '随机对照实验 (RCT)',
+            brief: '通过随机分组、控制干预，建立因果关系的“金标准”。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>随机分组：</strong> 将研究对象随机分配到“干预组”（接受处理）和“对照组”（不接受处理）。</li>
+                    <li><strong>盲法：</strong> 单盲（参与者不知情）、双盲（参与者和研究者均不知情），减少主观偏差。</li>
+                    <li><strong>为何有效：</strong> 随机化可以平衡已知和未知的混淆变量，让两组在统计上“相同”，所以结果的差异只能归因于干预。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 新冠疫苗临床试验：10000名志愿者随机分为两组，一组接种疫苗，一组接种安慰剂。两组在年龄、性别、健康状况等特征上均衡分布。最终疫苗组感染率显著低于安慰剂组，可以得出结论：疫苗有效。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '自然实验',
+            brief: '利用自然发生的、外部的政策或事件变化来推断因果关系。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>定义：</strong> 当RCT不可行时，利用政府政策、自然灾害、制度变化等“近似随机”的外生冲击来构造实验组和对照组。</li>
+                    <li><strong>优势：</strong> 真实世界场景，外部效度高。</li>
+                    <li><strong>挑战：</strong> 需要论证冲击真的是“外生的”（不受人为干扰）。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 研究“教育对收入的影响”。直接比较（受教育和未受教育者）可能有偏差（聪明的人更爱读书）。但可以利用某个地区因政策突然延长义务教育年限这一“自然实验”——强制延期的那群人相当于“被随机”多读了书，以此来估计教育的真实回报。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '工具变量 (IV)',
+            brief: '当存在不可观测的混淆时，用“工具”来抽取因果关系的“纯净部分”。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>定义：</strong> 一个变量Z，它满足：① Z与原因X相关（相关性）；② Z不直接影响结果Y，Z与未观测混淆无关（外生性）。</li>
+                    <li><strong>逻辑：</strong> 通过Z这个“纯净的”变量来捕捉X中真正影响Y的部分，排除混淆。</li>
+                    <li><strong>经典例子：</strong> 用“距离医学院的远近”作为“是否学医”的工具变量，来研究“学医对收入的影响”。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 研究“教育对收入的影响”。用“出生季度”作为工具变量——美国法律规定满6岁当年才能入学，所以1-3月出生的孩子入学时已满6岁，10-12月出生的孩子不满6岁要等一年。出生季度（Z）影响了教育年限（X），但不直接影响收入（Y），只通过教育影响收入。这就是一个经典的Angrist-Krueger工具变量研究。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '双重差分 (DID)',
+            brief: '比较政策实施前后，处理组与对照组的差异变化，消除时间趋势和固定偏差。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>原理：</strong> 双重差分 = (处理组_后 - 处理组_前) - (对照组_后 - 对照组_前)。</li>
+                    <li><strong>关键假设：</strong> 平行趋势——如果没有处理，两组的时间趋势应该平行。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 某城市提高了最低工资，研究其对就业的影响。以邻市为对照，比较两地在政策前后的就业率：<br>
+                    ▶ 处理组（政策城市）：政策前就业率60%，政策后62%，变化+2%<br>
+                    ▶ 对照组（邻市）：政策前61%，政策后60.5%，变化-0.5%<br>
+                    ▶ DID = 2% - (-0.5%) = 2.5%<br>
+                    结论：政策使就业率提升了2.5个百分点（扣除了两地的时间趋势差异）。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '倾向得分匹配 (PSM)',
+            brief: '在观察性数据中，为处理组找到“最像”的对照组，模拟随机化实验。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>倾向得分：</strong> 基于个体特征计算其“接受处理”的概率 P(X)。</li>
+                    <li><strong>匹配：</strong> 将处理组个体与倾向得分最接近的对照组个体配对，从而控制可观测的混淆变量。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 研究“职业培训对工资的影响”。参加培训的人可能本来就更有上进心（自选择偏差）。PSM方法：计算每个人“参加培训”的概率（基于年龄、教育、经验等），然后将参加培训的人与未参加但概率相似的“平行个体”匹配，比较两组工资差，得到更干净的因果效应。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '断点回归 (RDD)',
+            brief: '利用一个连续变量的“临界值”附近，人为构造的“准实验”来推断因果关系。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>原理：</strong> 当个体围绕某个临界值（如高考分数线、年龄门槛）被分到不同组别时，临界值附近的两组个体在各方面几乎相同，唯一的差异是是否“跨过了线”。</li>
+                    <li><strong>解读：</strong> 在断点处结果的跳跃 = 因果效应。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 研究“上重点高中对大学升学率的影响”。以中考分数线为断点：刚好过线（进重点）的学生和刚好没过线（进普通）的学生，在能力和家庭背景上几乎一样。比较这两组学生的大学升学率差异，就是重点高中对升学的因果效应。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: '中介分析',
+            brief: '探究原因X通过什么路径（中间变量M）影响结果Y。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>直接效应：</strong> X → Y 直接作用的部分。</li>
+                    <li><strong>间接效应：</strong> X → M → Y 通过中介变量作用的部分。</li>
+                    <li><strong>总效应：</strong> 直接效应 + 间接效应。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 研究“广告投放”如何影响“销售”。路径一：广告 → 品牌认知 → 销售（品牌认知是中介）。路径二：广告 → 点击 → 销售（点击是中介）。中介分析可以拆解出“广告通过提升品牌认知增加了多少销售”和“广告通过带来点击增加了多少销售”，帮助优化广告策略。
+                </div>
+            `
+        },
+        {
+            tag: 'causal',
+            tagLabel: '🔬 因果推断',
+            title: 'DAG (有向无环图)',
+            brief: '用图形化方式表达变量间的因果假设，是因果推断的“地图”。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>节点：</strong> 变量。边（箭头）：表示因果关系（X → Y 表示 X 导致 Y）。</li>
+                    <li><strong>路径：</strong> 因果信息流动的通道。</li>
+                    <li><strong>阻断/控制：</strong> 在DAG中，“控制”一个变量会阻断通过它的因果路径。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 研究“吸烟 → 肺癌”是否存在混淆。<br>
+                    <p style="margin-top:6px; background:#f8faff; padding:8px 14px; border-radius:8px;">
+                        <strong>DAG结构：</strong> 社会阶层 → 吸烟 → 肺癌 ← 基因<br>
+                        <span style="font-size:13px; color:#4a5a6e;">解释：社会阶层影响吸烟习惯，吸烟影响肺癌；基因（如易感性）也直接导致肺癌，但不影响吸烟。<br>
+                        结论：控制社会阶层，但不控制基因（基因是collider，控制它反而会引入偏差）。</span>
+                    </p>
+                </div>
+            `
+        },
+        {
+            tag: 'core',
+            tagLabel: '⭐ 核心概念',
+            title: '潜在结果框架 (Rubin因果模型)',
+            brief: '因果效应 = 同一个体在“接受处理”和“不接受处理”两种状态下的结果差异。',
+            detail: `
+                <p><strong>核心概念：</strong></p>
+                <ul style="padding-left:20px; margin:6px 0;">
+                    <li><strong>潜在结果：</strong> 每个个体有两个潜在结果——Y(1)（接受处理的潜在结果）和Y(0)（未接受处理的潜在结果）。</li>
+                    <li><strong>因果效应：</strong> 同一个体的 Y(1) - Y(0)。</li>
+                    <li><strong>根本问题：</strong> 我们永远无法同时观察到 Y(1) 和 Y(0)，只能观察到其中一种。这就是“因果推断的根本问题”。</li>
+                    <li><strong>解决方案：</strong> 通过随机化实验（RCT）或准实验方法，用群体的平均因果效应（ATE）来替代个体因果效应。</li>
+                </ul>
+                <div class="example">
+                    <strong>📘 案例：</strong> 小明服了感冒药后3天康复。但问题是——如果小明没有服药，他会不会也在3天康复？我们永远不知道（因为没有平行时空）。所以我们只能通过比较大规模实验中药组和安慰剂组的平均康复天数，来推断药物的平均因果效应。
+                </div>
+            `
+        }
+    ];
+
+    // ============================================================
+    // 渲染逻辑
+    // ============================================================
+    const grid = document.getElementById('cardGrid');
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function renderCards(filter, query) {
+        const q = query.toLowerCase().trim();
+        let filtered = cardsData;
+
+        if (filter !== 'all') {
+            filtered = filtered.filter(c => c.tag === filter);
+        }
+        if (q) {
+            filtered = filtered.filter(c => {
+                const text = c.title + ' ' + c.brief + ' ' + c.detail;
+                return text.toLowerCase().includes(q);
+            });
+        }
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="no-result" style="display:block;">😅 没有找到匹配的概念，试试其他关键词吧</div>`;
+            return;
+        }
+
+        let html = '';
+        filtered.forEach((card, idx) => {
+            const id = `card-${idx}`;
+            const tagClass = card.tag === 'stat' ? 'stat' : card.tag === 'causal' ? 'causal' : 'core';
+            html += `
+                <div class="card" id="${id}" data-tag="${card.tag}">
+                    <span class="tag ${tagClass}">${card.tagLabel}</span>
+                    <div class="title">${card.title}</div>
+                    <div class="brief">${card.brief}</div>
+                    <div class="expand-hint">🔽 点击展开详情</div>
+                    <div class="detail">${card.detail}</div>
+                </div>
+            `;
+        });
+
+        grid.innerHTML = html;
+
+        // ---- 点击卡片展开/收起 ----
+        document.querySelectorAll('.card').forEach(el => {
+            el.addEventListener('click', function(e) {
+                // 如果点击的是详情区域内的链接或按钮，不触发折叠
+                if (e.target.closest('a')) return;
+                this.classList.toggle('open');
+                const hint = this.querySelector('.expand-hint');
+                if (hint) {
+                    hint.textContent = this.classList.contains('open') ? '🔼 点击收起' : '🔽 点击展开详情';
+                }
+            });
+        });
+    }
+
+    // ---- 搜索 ----
+    document.getElementById('searchInput').addEventListener('input', function() {
+        searchQuery = this.value;
+        renderCards(currentFilter, searchQuery);
+    });
+
+    // ---- 过滤 ----
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.dataset.filter;
+            renderCards(currentFilter, searchQuery);
+        });
+    });
+
+    // ---- 初始化 ----
+    renderCards('all', '');
+</script>
+</body>
+</html>

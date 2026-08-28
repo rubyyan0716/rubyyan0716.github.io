@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>婴儿用品选购对比 · 婴儿车/婴儿床/监视器/安全座椅</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f6f4f9;
+            color: #1a1a2e;
+            padding: 24px 16px 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            padding: 28px 24px 36px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #ece6f0;
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #6e5a7a;
+            margin-left: auto;
+        }
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+        .nav-tabs button {
+            padding: 8px 22px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            background: #ece6f0;
+            color: #3d2a4a;
+            transition: all 0.2s;
+        }
+        .nav-tabs button.active {
+            background: #1a1a2e;
+            color: #fff;
+        }
+        .nav-tabs button:hover:not(.active) {
+            background: #d8cfe0;
+        }
+
+        .category {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .category.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% { opacity: 0.4; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 20px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title .badge {
+            font-size: 14px;
+            font-weight: 500;
+            background: #e6deec;
+            padding: 0 14px;
+            border-radius: 30px;
+            color: #3d2a4a;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin-bottom: 28px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 700px;
+        }
+        th {
+            background: #f2edf5;
+            padding: 12px 12px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid #d6cde0;
+        }
+        td {
+            padding: 12px 12px;
+            border-bottom: 1px solid #ede8f2;
+            vertical-align: top;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .brand {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .model {
+            color: #4d3a5a;
+        }
+        .pros {
+            color: #1f6b3e;
+        }
+        .cons {
+            color: #b13e3e;
+        }
+        .price {
+            font-weight: 600;
+            color: #1a1a2e;
+            white-space: nowrap;
+        }
+        .tag {
+            display: inline-block;
+            background: #e6deec;
+            font-size: 12px;
+            padding: 0 10px;
+            border-radius: 30px;
+            color: #3d2a4a;
+            margin-right: 4px;
+        }
+
+        .footnote {
+            font-size: 14px;
+            color: #6e5a7a;
+            border-top: 1px solid #ece6f0;
+            padding-top: 20px;
+            margin-top: 16px;
+        }
+        @media (max-width: 640px) {
+            .container { padding: 18px 14px; }
+            h1 { font-size: 22px; flex-wrap: wrap; }
+            .nav-tabs button { font-size: 14px; padding: 6px 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        🛒 婴儿用品选购对比
+        <small>婴儿车 · 婴儿床 · 监视器 · 安全座椅</small>
+    </h1>
+
+    <div class="nav-tabs" id="tabNav">
+        <button class="active" data-tab="stroller">🚼 婴儿车</button>
+        <button data-tab="bed">🛏️ 婴儿床</button>
+        <button data-tab="monitor">📹 监视器</button>
+        <button data-tab="carseat">💺 婴儿座椅</button>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- 婴儿车 -->
+    <!-- ========================================= -->
+    <div id="tab-stroller" class="category active">
+        <div class="section-title">🚼 婴儿车推荐对比 <span class="badge">UPPAbaby</span></div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:18%;">品牌 / 型号</th>
+                        <th style="width:30%;">👍 优势</th>
+                        <th style="width:30%;">👎 劣势</th>
+                        <th style="width:22%;">💰 价格区间 (人民币)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="brand">UPPAbaby Cruz V3</span><br><span class="model">全能首选</span></td>
+                        <td class="pros">• 座椅可完全放平，新生儿可用<br>• 避震优秀，推行顺滑<br>• 高景观（60cm），储物篮大<br>• 性价比高</td>
+                        <td class="cons">• 不能拓展为双人车<br>• 重量约12.3kg，不算轻</td>
+                        <td class="price">¥5,000 – 6,500</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">UPPAbaby Vista V3</span><br><span class="model">二胎/多孩</span></td>
+                        <td class="pros">• 可拓展为双人/三人推车<br>• 推行质感最佳，避震顶级<br>• 超大储物篮</td>
+                        <td class="cons">• 较重（约12.6kg）<br>• V3版不标配睡篮（需另购）<br>• 价格高</td>
+                        <td class="price">¥7,500 – 9,500</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">UPPAbaby Minu V3</span><br><span class="model">轻便王者</span></td>
+                        <td class="pros">• 极轻（约7.6kg）<br>• 可折叠登机<br>• 座椅可完全放平，新生儿可用</td>
+                        <td class="cons">• 避震一般（城市路面OK）<br>• 储物篮较小</td>
+                        <td class="price">¥4,000 – 5,500</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footnote">
+            💡 <strong>选购建议：</strong> 单孩家庭首选 Cruz V3；二胎计划选 Vista V3；频繁出行/小户型选 Minu V3。
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- 婴儿床 -->
+    <!-- ========================================= -->
+    <div id="tab-bed" class="category">
+        <div class="section-title">🛏️ 婴儿床推荐对比 <span class="badge">木质 vs 布质</span></div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:18%;">品牌 / 型号</th>
+                        <th style="width:30%;">👍 优势</th>
+                        <th style="width:30%;">👎 劣势</th>
+                        <th style="width:22%;">💰 价格区间 (人民币)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="brand">宜家 桑维 (SUNDVIK)</span><br><span class="model">山毛榉木</span></td>
+                        <td class="pros">• 性价比极高 (约1499元)<br>• 材质坚固（山毛榉）<br>• 可拆卸侧栏做拼接床<br>• 安全无异味口碑好</td>
+                        <td class="cons">• 无万向轮，不易移动<br>• 床板仅2档调节<br>• 部分用户反馈有异响</td>
+                        <td class="price">¥1,400 – 1,700</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Boori 南洋杉款</span><br><span class="model">成长型设计</span></td>
+                        <td class="pros">• 成长型（可变形为儿童床/书桌）<br>• 用料扎实，质感高级<br>• 环保水性漆，气味小<br>• 带万向轮，移动方便</td>
+                        <td class="cons">• 价格较高 (数千元)<br>• 较重，不便搬运<br>• 部分型号功能配置有差异</td>
+                        <td class="price">¥3,500 – 6,500</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">ABCmokoo</span><br><span class="model">折叠布质/木质</span></td>
+                        <td class="pros">• 设计获奖，颜值高<br>• 可折叠，免安装<br>• 多档高度可调</td>
+                        <td class="cons">• 品控不稳定（变形/异响）<br>• 售后差，换货困难<br>• 围栏偏矮，存安全隐患</td>
+                        <td class="price">¥800 – 2,000</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">布质婴儿床（通用）</span><br><span class="model">轻便型</span></td>
+                        <td class="pros">• 轻便、可折叠<br>• 无甲醛担忧<br>• 价格亲民</td>
+                        <td class="cons">• 稳固性较差<br>• 使用年限短<br>• 布料易脏需清洗</td>
+                        <td class="price">¥300 – 1,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footnote">
+            💡 <strong>材质对比：</strong> 山毛榉（宜家）硬度高，更耐用；南洋杉（Boori）纹理美，稳定环保。预算有限选宜家，追求品质选Boori。布质床适合移动/旅行，木质床适合固定主力。
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- 监视器 -->
+    <!-- ========================================= -->
+    <div id="tab-monitor" class="category">
+        <div class="section-title">📹 婴儿监视器推荐对比 <span class="badge">多品牌</span></div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:18%;">品牌 / 型号</th>
+                        <th style="width:30%;">👍 优势</th>
+                        <th style="width:30%;">👎 劣势</th>
+                        <th style="width:22%;">💰 价格区间 (人民币)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="brand">Owlet Dream Duo 2</span><br><span class="model">健康监测</span></td>
+                        <td class="pros">• 医疗级血氧/心率监测<br>• 无需订阅<br>• 适合有健康担忧的家庭</td>
+                        <td class="cons">• 价格昂贵<br>• 需穿戴设备</td>
+                        <td class="price">¥2,500 – 3,500</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Nanit Pro</span><br><span class="model">睡眠分析</span></td>
+                        <td class="pros">• 顶尖睡眠追踪<br>• 呼吸监测<br>• 数据分析全面</td>
+                        <td class="cons">• 需Wi-Fi<br>• 价格较高<br>• 部分功能需订阅</td>
+                        <td class="price">¥2,000 – 3,000</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">CuboAi Plus</span><br><span class="model">AI全时侦测</span></td>
+                        <td class="pros">• AI侦测（口鼻覆盖/翻身）<br>• 2.5K超高清<br>• 睡眠分析</td>
+                        <td class="cons">• 价格中高端<br>• 需要Wi-Fi</td>
+                        <td class="price">¥1,800 – 2,800</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Maxi-Cosi See Pro 360°</span><br><span class="model">AI哭声翻译</span></td>
+                        <td class="pros">• 哭声翻译（饥饿/胀气等）<br>• 2K高清，360°旋转<br>• 功能新颖</td>
+                        <td class="cons">• 价格偏高<br>• 新功能稳定性待验证</td>
+                        <td class="price">¥2,200 – 3,200</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">VTech V-Care</span><br><span class="model">双模式</span></td>
+                        <td class="pros">• Wi-Fi + 专用监视屏双模式<br>• 断网仍可用<br>• 功能全面</td>
+                        <td class="cons">• 价格中端<br>• 屏幕分辨率一般</td>
+                        <td class="price">¥1,200 – 1,800</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">TP-Link Tapo C840</span><br><span class="model">高性价比</span></td>
+                        <td class="pros">• 双镜头旋转<br>• AI哭声/遮脸侦测<br>• 价格亲民</td>
+                        <td class="cons">• 需Wi-Fi<br>• 功能不如专业品牌丰富</td>
+                        <td class="price">¥400 – 700</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Infant Optics DXR-8 Pro</span><br><span class="model">专用屏传统款</span></td>
+                        <td class="pros">• 无Wi-Fi，极致可靠<br>• 专用监视屏<br>• 信号稳定</td>
+                        <td class="cons">• 无手机App<br>• 功能较基础</td>
+                        <td class="price">¥1,300 – 1,800</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">海马爸比 三代</span><br><span class="model">AI+热成像</span></td>
+                        <td class="pros">• AI看护（遮脸/哭声/围栏）<br>• 热成像体温监测<br>• 国产品牌性价比</td>
+                        <td class="cons">• 热成像精度一般<br>• 需连接Wi-Fi</td>
+                        <td class="price">¥800 – 1,200</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">萤石 BM1</span><br><span class="model">便携基础款</span></td>
+                        <td class="pros">• 便携电池版<br>• 基础功能扎实<br>• 价格实惠</td>
+                        <td class="cons">• 功能简单<br>• 无AI分析</td>
+                        <td class="price">¥300 – 600</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footnote">
+            💡 <strong>选购建议：</strong> 健康监测选 Owlet；智能睡眠分析选 Nanit/CuboAi；稳定可靠选 Infant Optics/VTech；高性价比选 TP-Link/萤石；AI功能丰富选海马爸比/Maxi-Cosi。
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- 婴儿座椅（安全座椅） -->
+    <!-- ========================================= -->
+    <div id="tab-carseat" class="category">
+        <div class="section-title">💺 婴儿安全座椅推荐对比 <span class="badge">海外品牌</span></div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:14%;">品牌</th>
+                        <th style="width:12%;">代表型号</th>
+                        <th style="width:12%;">适用年龄</th>
+                        <th style="width:28%;">👍 优势</th>
+                        <th style="width:22%;">👎 劣势</th>
+                        <th style="width:12%;">💰 价格区间 (人民币)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="brand">Britax Römer</span></td>
+                        <td>BABY-SAFE CORE /<br>双面骑士</td>
+                        <td>0-15个月 /<br>0-4岁</td>
+                        <td class="pros">• 英国老牌，安全性高<br>• BABY-SAFE仅3.9kg<br>• 获消委会4.5星<br>• ClickTight安装<br>• 部分德国制造</td>
+                        <td class="cons">• 高端型号价格高<br>• 部分产地为中国</td>
+                        <td class="price">¥2,300 – 8,000+</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Maxi-Cosi</span></td>
+                        <td>Coral / Pebble 360 /<br>Mica 360 / Emerald 360 S</td>
+                        <td>0-12个月 /<br>0-4岁 /<br>0-12岁</td>
+                        <td class="pros">• 荷兰高端品牌<br>• Coral内胆1.7kg，极轻便<br>• Jade可完全平躺（首款i-Size）<br>• 360°旋转<br>• i-Size认证</td>
+                        <td class="cons">• 部分型号偏 bulky<br>• 底座需另购<br>• 价格偏高</td>
+                        <td class="price">¥2,500 – 6,000+</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Cybex</span></td>
+                        <td>Cloud T / Aton G2 /<br>Sirona T</td>
+                        <td>0-24个月 /<br>0-4岁</td>
+                        <td class="pros">• 德国设计，获设计奖<br>• Cloud T获4.5星<br>• Aton G2获GREENGUARD Gold<br>• 支撑腿+侧撞保护</td>
+                        <td class="cons">• 价格偏高<br>• 部分产地为中国</td>
+                        <td class="price">¥3,000 – 7,000+</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Nuna</span></td>
+                        <td>PIPA urbn / PRUU</td>
+                        <td>0-12个月 /<br>0-4岁</td>
+                        <td class="pros">• 荷兰高端，设计现代<br>• PIPA urbn仅3.3kg，获4.5星<br>• PRUU获2025 Mother&Baby金奖<br>• 170°接近全平躺<br>• 兼容所有Nuna推车</td>
+                        <td class="cons">• 价格偏高<br>• PRUU约¥4,980</td>
+                        <td class="price">¥2,800 – 5,500+</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Chicco</span></td>
+                        <td>Seat 4 Fix Air /<br>Kory i-Size</td>
+                        <td>0-12岁 /<br>0-15个月</td>
+                        <td class="pros">• 意大利品牌，性价比高<br>• 0-12岁一椅到底<br>• 360°旋转+ISOFIX<br>• Air透气专利</td>
+                        <td class="cons">• 部分型号较重<br>• 设计感稍逊</td>
+                        <td class="price">¥2,000 – 4,500</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Doona</span></td>
+                        <td>Doona i /<br>Doona i+ISOFIX</td>
+                        <td>0-18个月</td>
+                        <td class="pros">• 提篮+推车二合一<br>• 车轮一键弹出<br>• 获消委会4.5星<br>• 无需另购推车</td>
+                        <td class="cons">• 价格较高<br>• 只能当提篮用</td>
+                        <td class="price">¥4,500 – 5,500</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Joie</span></td>
+                        <td>i-Spin 360 /<br>i-Spin XL</td>
+                        <td>0-4岁 /<br>0-12岁</td>
+                        <td class="pros">• 英国品牌，性价比高<br>• 360°旋转<br>• 部分消委会4星</td>
+                        <td class="cons">• 部分型号保护力较弱<br>• 最低3星评价</td>
+                        <td class="price">¥2,500 – 4,500</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Evenflo</span></td>
+                        <td>Revolve180 LiteMax NXT</td>
+                        <td>0-12个月</td>
+                        <td class="pros">• 全球首款旋转式提篮<br>• 声光安抚<br>• 获2025 Baby Safety Alliance“最佳”<br>• TIME 2025最佳发明</td>
+                        <td class="cons">• 国内渠道较少<br>• 功能较花哨</td>
+                        <td class="price">¥2,000 – 4,000</td>
+                    </tr>
+                    <tr>
+                        <td><span class="brand">Silver Cross</span></td>
+                        <td>Glide Plus 360 /<br>Approach Plus 360</td>
+                        <td>0-12个月 /<br>1-4岁</td>
+                        <td class="pros">• 英国皇室御用<br>• 红点设计奖<br>• Glide可完全平躺<br>• 设计高端</td>
+                        <td class="cons">• 国内渠道少<br>• 价格偏高</td>
+                        <td class="price">¥3,000 – 6,000+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footnote">
+            💡 <strong>选购建议：</strong> 新生儿提篮轻便选 Maxi-Cosi Coral 或 Nuna PIPA urbn；安全认证首选 Britax/Cybex/Nuna；0-12岁一椅到底选 Maxi-Cosi Emerald 或 Chicco Seat 4 Fix Air；提篮推车二合一选 Doona；平躺需求选 Maxi-Cosi Jade 或 Silver Cross Glide Plus 360。<br>
+            ⚠️ <strong>提醒：</strong> 优先选择 i-Size (R129) 认证；确认车内 ISOFIX 接口；尽量延长反向乘坐时间（至少到15个月）。
+        </div>
+    </div>
+
+    <div style="margin-top: 28px; border-top: 2px solid #ece6f0; padding-top: 18px; font-size: 14px; color: #6e5a7a; text-align: center;">
+        📌 以上价格区间为大致估算，实际售价因渠道/活动而异。请以购买时为准。
+    </div>
+</div>
+
+<script>
+    // 切换标签
+    const buttons = document.querySelectorAll('#tabNav button');
+    const categories = {
+        stroller: document.getElementById('tab-stroller'),
+        bed: document.getElementById('tab-bed'),
+        monitor: document.getElementById('tab-monitor'),
+        carseat: document.getElementById('tab-carseat')
+    };
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            buttons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.dataset.tab;
+            Object.keys(categories).forEach(key => {
+                categories[key].classList.toggle('active', key === target);
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSM 与 DID 方法讲解 · 因果推断</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f4f7fc;
+            color: #1a2a44;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 10, 30, 0.08);
+            padding: 32px 30px 40px;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 3px solid #e6edf4;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5b6f8c;
+            margin-left: auto;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #3a4c66;
+            margin-bottom: 28px;
+            background: #f0f5fe;
+            padding: 14px 20px;
+            border-radius: 16px;
+            border-left: 5px solid #3b6b9b;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 24px 0;
+        }
+        .card {
+            background: #f9fbff;
+            border-radius: 20px;
+            padding: 22px 24px;
+            border: 1px solid #e6edf4;
+            transition: box-shadow 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 6px 18px rgba(0, 20, 50, 0.06);
+        }
+        .card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h2 .badge {
+            font-size: 14px;
+            background: #dce5f0;
+            padding: 0 14px;
+            border-radius: 30px;
+            font-weight: 500;
+            color: #2d4a6b;
+        }
+        .card p {
+            line-height: 1.7;
+            color: #2c405a;
+            margin: 8px 0;
+        }
+        .card ul {
+            padding-left: 20px;
+            line-height: 1.7;
+            margin: 8px 0;
+        }
+        .highlight-box {
+            background: #eaf1fa;
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin: 12px 0;
+            border-left: 4px solid #3b6b9b;
+        }
+        .highlight-box strong {
+            color: #0f2b4a;
+        }
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            counter-increment: step;
+            padding: 6px 0 6px 40px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 28px;
+            height: 28px;
+            background: #dce5f0;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: 700;
+            color: #1a2a44;
+            font-size: 14px;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .comparison-table th {
+            background: #eaf1fa;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #cbd8e8;
+        }
+        .comparison-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e6edf4;
+            vertical-align: top;
+        }
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        .tag {
+            display: inline-block;
+            background: #dce5f0;
+            padding: 0 12px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #2d4a6b;
+            margin-right: 4px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 16px 0 12px;
+        }
+        .btn {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #e6edf4;
+            color: #1a2a44;
+            transition: 0.15s;
+        }
+        .btn.active {
+            background: #1a2a44;
+            color: #fff;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .detail-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .detail-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% { opacity: 0.4; transform: translateY(4px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .example-box {
+            background: #f0f5fe;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            border: 1px dashed #b8cde0;
+        }
+        .example-box .title {
+            font-weight: 700;
+            color: #0f2b4a;
+        }
+        .footnote {
+            margin-top: 30px;
+            border-top: 1px solid #e6edf4;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #5b6f8c;
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 18px 16px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            🔬 因果推断 · PSM 与 DID
+            <small>准实验方法对比</small>
+        </h1>
+        <div class="subtitle">
+            <strong>📌 两种主流方法</strong> —— 用于处理观察性数据中的选择偏差，评估政策、干预或处理的因果效应。
+        </div>
+
+        <!-- 快速导航切换 -->
+        <div class="btn-group">
+            <button class="btn active" data-target="psm-detail">📊 PSM 详解</button>
+            <button class="btn" data-target="did-detail">📈 DID 详解</button>
+            <button class="btn" data-target="compare-table">⚖️ 对比总览</button>
+        </div>
+
+        <!-- ========== PSM 详情 ========== -->
+        <div id="psm-detail" class="detail-content active">
+            <div class="card">
+                <h2>倾向得分匹配 (PSM) <span class="badge">Propensity Score Matching</span></h2>
+                <p><strong>核心思想</strong>：通过估计每个个体接受处理的概率（倾向得分），将处理组与对照组中倾向得分相近的个体进行匹配，从而模拟随机化实验，控制可观测的混淆变量。</p>
+                
+                <h3 style="margin-top:16px; font-size:18px;">适用场景</h3>
+                <ul>
+                    <li>处理分配依赖于<strong>可观测特征</strong>（如年龄、性别、收入等）</li>
+                    <li>希望评估某项干预（如培训、医疗方案）对结果的因果效应</li>
+                    <li>数据为横截面或重复横截面，且处理组与对照组存在系统性差异</li>
+                </ul>
+
+                <h3 style="margin-top:16px; font-size:18px;">操作步骤</h3>
+                <ol class="step-list">
+                    <li><strong>估计倾向得分</strong>：使用Logit/Probit模型，以处理变量为因变量，协变量为自变量，计算每个个体的倾向得分 <em>p(X)</em>。</li>
+                    <li><strong>选择匹配方法</strong>：常见方法有最近邻匹配、半径匹配、核匹配等，确定处理组与对照组的配对。</li>
+                    <li><strong>平衡性检验</strong>：检查匹配后协变量在两组间是否分布均衡（如标准化差异 &lt; 0.1）。</li>
+                    <li><strong>估计处理效应</strong>：比较匹配后处理组与对照组的平均结果差异，即平均处理效应（ATT）。</li>
+                </ol>
+
+                <div class="highlight-box">
+                    <strong>✅ 优点：</strong> 能有效控制可观测的混杂因素，方法直观，易于实现。<br>
+                    <strong>❌ 缺点：</strong> 要求共同支持假设（重叠区域）；无法控制不可观测的混杂；对样本量有一定要求。
+                </div>
+
+                <div class="example-box">
+                    <div class="title">📘 示例：</div>
+                    研究职业培训对工资的影响。使用PSM，将参与培训的员工与未参与但在年龄、教育、经验等特征上相似的员工匹配，比较两组工资差异。
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== DID 详情 ========== -->
+        <div id="did-detail" class="detail-content">
+            <div class="card">
+                <h2>双重差分 (DID) <span class="badge">Difference-in-Differences</span></h2>
+                <p><strong>核心思想</strong>：利用面板数据或重复截面数据，比较处理组和对照组在处理前后的变化差异，从而消除不随时间变化的不可观测混杂因素。</p>
+                
+                <h3 style="margin-top:16px; font-size:18px;">适用场景</h3>
+                <ul>
+                    <li>存在一个外部的政策或事件冲击，且冲击影响一部分群体（处理组），不影响另一部分（对照组）</li>
+                    <li>拥有至少两期数据（处理前/后）</li>
+                    <li>关注政策实施带来的平均因果效应</li>
+                </ul>
+
+                <h3 style="margin-top:16px; font-size:18px;">操作步骤</h3>
+                <ol class="step-list">
+                    <li><strong>设置组别与时期</strong>：定义处理组（受政策影响）和对照组（未受影响），明确处理前和处理后时期。</li>
+                    <li><strong>计算双重差分</strong>：估计方程 <em>Y = α + β·Treat + γ·Post + δ·(Treat×Post) + ε</em>，系数 δ 即为DID估计量。</li>
+                    <li><strong>检验平行趋势假设</strong>：验证处理组和对照组在政策前的变化趋势是否平行（必要前提）。</li>
+                    <li><strong>稳健性检验</strong>：如安慰剂检验、改变窗口期等。</li>
+                </ol>
+
+                <div class="highlight-box">
+                    <strong>✅ 优点：</strong> 能控制不随时间变化的不可观测混杂（如地区文化、个体能力）；可结合面板固定效应。<br>
+                    <strong>❌ 缺点：</strong> 严重依赖平行趋势假设；对时间周期和数据质量敏感；外推能力有限。
+                </div>
+
+                <div class="example-box">
+                    <div class="title">📘 示例：</div>
+                    某城市提高最低工资标准，以相邻城市为对照，比较两地在政策前后就业率的变化，差分结果即为政策效应。
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 对比表格 ========== -->
+        <div id="compare-table" class="detail-content">
+            <div class="card">
+                <h2>⚖️ PSM 与 DID 对比总览</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width:18%;">维度</th>
+                            <th style="width:41%;">PSM</th>
+                            <th style="width:41%;">DID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>核心假设</strong></td>
+                            <td>可忽略性（给定协变量，处理分配独立于潜在结果）</td>
+                            <td>平行趋势（处理组与对照组结果趋势在无处理时相同）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据类型</strong></td>
+                            <td>横截面 / 重复横截面</td>
+                            <td>面板数据 / 重复横截面（至少两期）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>控制偏差来源</strong></td>
+                            <td>可观测的混杂因素</td>
+                            <td>不随时间变化的不可观测混杂</td>
+                        </tr>
+                        <tr>
+                            <td><strong>主要优点</strong></td>
+                            <td>直观、易于实现，可处理高维协变量</td>
+                            <td>控制固定效应，允许不可观测的组间差异</td>
+                        </tr>
+                        <tr>
+                            <td><strong>主要缺点</strong></td>
+                            <td>不能处理不可观测混杂；依赖共同支持假设</td>
+                            <td>依赖平行趋势假设；对政策外生性要求高</td>
+                        </tr>
+                        <tr>
+                            <td><strong>常用扩展</strong></td>
+                            <td>核匹配、分层匹配、CEM（粗化精确匹配）</td>
+                            <td>多期DID、合成控制法、事件研究法</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight-box" style="margin-top:8px;">
+                    <strong>💡 选择建议：</strong> 若主要担忧可观测的选择偏差，且缺乏面板数据，PSM是好的选择；若政策冲击明确，拥有多期数据且担心不可观测固定效应，则DID更合适。两者可结合使用（如PSM-DID）以增强稳健性。
+                </div>
+            </div>
+        </div>
+
+        <!-- 额外：联合使用的说明 -->
+        <div style="margin-top:24px; background: #f0f5fe; border-radius: 16px; padding: 16px 20px; border: 1px solid #dce5f0;">
+            <p><strong>🔗 组合应用：PSM-DID</strong> —— 先用PSM为处理组匹配对照，再对匹配后的样本进行DID估计，可同时控制可观测与不随时间变化的不可观测混杂，提高因果推断的可信度。</p>
+        </div>
+
+        <div class="footnote">
+            📌 本讲解基于计量经济学常用方法，适用于政策评估、项目效果分析等领域。
+        </div>
+    </div>
+
+    <script>
+        // 切换显示
+        const btns = document.querySelectorAll('.btn');
+        const contents = {
+            'psm-detail': document.getElementById('psm-detail'),
+            'did-detail': document.getElementById('did-detail'),
+            'compare-table': document.getElementById('compare-table')
+        };
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 移除所有按钮active
+                btns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                // 隐藏所有内容
+                Object.values(contents).forEach(c => c.classList.remove('active'));
+                // 显示目标
+                const targetId = this.dataset.target;
+                if (contents[targetId]) {
+                    contents[targetId].classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

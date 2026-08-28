@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>积分换购 · 财务逻辑讲解</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f5f7fc;
+            color: #1e2a3e;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 10, 30, 0.08);
+            padding: 28px 30px 40px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #e6edf4;
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5b6f8c;
+            margin-left: auto;
+        }
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            background: #f0f4fa;
+            padding: 6px;
+            border-radius: 40px;
+        }
+        .tab-btn {
+            padding: 10px 28px;
+            border: none;
+            background: transparent;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #3a4c66;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1 0 auto;
+        }
+        .tab-btn:hover {
+            background: #e0e8f0;
+        }
+        .tab-btn.active {
+            background: #ffffff;
+            color: #1a2a44;
+            box-shadow: 0 4px 12px rgba(0, 20, 50, 0.08);
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% { opacity: 0.5; transform: translateY(4px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 20px 0;
+        }
+        .card {
+            background: #f8faff;
+            border-radius: 20px;
+            padding: 20px 22px;
+            border: 1px solid #e6edf4;
+            transition: 0.15s;
+        }
+        .card:hover {
+            border-color: #cbd8e8;
+        }
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1a2a44;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h3 .badge {
+            font-size: 13px;
+            background: #dce5f0;
+            padding: 0 14px;
+            border-radius: 30px;
+            font-weight: 500;
+            color: #2d4a6b;
+        }
+        .card ul, .card p {
+            line-height: 1.7;
+            color: #2c405a;
+            margin: 8px 0;
+        }
+        .card ul {
+            padding-left: 20px;
+        }
+        .highlight {
+            background: #edf3fa;
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin: 12px 0;
+            border-left: 4px solid #3b6b9b;
+        }
+        .highlight strong {
+            color: #0f2b4a;
+        }
+        .formula-box {
+            background: #ffffff;
+            border: 1px dashed #b8cde0;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            font-family: 'Menlo', 'Consolas', monospace;
+            font-size: 15px;
+            color: #1a2a44;
+            overflow-x: auto;
+        }
+        .calc-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 20px;
+            align-items: center;
+            margin: 14px 0;
+        }
+        .calc-row label {
+            font-weight: 500;
+            color: #2c405a;
+            min-width: 100px;
+        }
+        .calc-row input {
+            padding: 8px 12px;
+            border: 1px solid #cbd8e8;
+            border-radius: 12px;
+            font-size: 15px;
+            width: 120px;
+            background: #ffffff;
+            transition: 0.2s;
+        }
+        .calc-row input:focus {
+            border-color: #3b6b9b;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 107, 155, 0.12);
+        }
+        .calc-result {
+            background: #eaf1fa;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+        .calc-result .item {
+            text-align: center;
+            background: #ffffff;
+            padding: 10px 6px;
+            border-radius: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .calc-result .item .label {
+            font-size: 13px;
+            color: #5b6f8c;
+        }
+        .calc-result .item .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f2b4a;
+            margin-top: 4px;
+        }
+        .btn-reset {
+            background: #e6edf4;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #2c405a;
+            transition: 0.15s;
+        }
+        .btn-reset:hover {
+            background: #d0ddee;
+        }
+
+        .footnote {
+            margin-top: 30px;
+            border-top: 1px solid #e6edf4;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #5b6f8c;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .calc-result {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 18px 14px;
+            }
+            .tab-btn {
+                flex: 1 1 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            🧾 积分换购 · 财务逻辑
+            <small>收入递延 · 视同销售 · 计算示例</small>
+        </h1>
+
+        <!-- 标签切换 -->
+        <div class="tabs" id="tabHeaders">
+            <button class="tab-btn active" data-tab="accounting">📚 会计处理</button>
+            <button class="tab-btn" data-tab="tax">💰 税务处理</button>
+            <button class="tab-btn" data-tab="example">🧮 综合示例</button>
+        </div>
+
+        <!-- 会计处理 -->
+        <div id="tab-accounting" class="tab-content active">
+            <div class="card-grid">
+                <div class="card">
+                    <h3>📌 核心原则 <span class="badge">权责发生制</span></h3>
+                    <p>积分是企业的<strong>合同负债</strong>，需将交易价格分摊至商品和积分，积分对应的收入在兑换或失效时确认。</p>
+                    <div class="highlight">
+                        <strong>🔑 关键步骤：</strong><br>
+                        ① 发放积分 → 确认“合同负债”<br>
+                        ② 兑换积分 → 结转“合同负债”至收入<br>
+                        ③ 积分失效 → 释放“合同负债”至收入
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>📐 分摊方法 <span class="badge">相对公允价值</span></h3>
+                    <p>将总交易价格按商品与积分的公允价值比例分摊。</p>
+                    <div class="formula-box">
+                        积分公允价值 = 积分数量 × 每积分价值 × 预计兑换率<br>
+                        商品分摊收入 = 总价(不含税) × [商品公允 / (商品公允 + 积分公允)]
+                    </div>
+                    <p style="font-size:14px; color:#5b6f8c;">* 积分公允通常指可兑换商品的市场价值</p>
+                </div>
+            </div>
+            <div class="card" style="margin-top:8px;">
+                <h3>📝 会计分录示例</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div>
+                        <strong>① 销售时 (发放积分)</strong>
+                        <div class="highlight" style="margin-top:6px;">
+                            借：银行存款 &nbsp; 100<br>
+                            贷：主营业务收入 &nbsp; 81.2<br>
+                            贷：应交税费-销项税 &nbsp; 11.5<br>
+                            贷：合同负债 &nbsp; 7.3
+                        </div>
+                    </div>
+                    <div>
+                        <strong>② 兑换时 (使用积分)</strong>
+                        <div class="highlight" style="margin-top:6px;">
+                            借：合同负债 &nbsp; 7.3<br>
+                            贷：主营业务收入 &nbsp; 7.3
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:14px; color:#5b6f8c; margin-top:8px;">* 实际按兑换比例结转，此处简化展示</p>
+            </div>
+        </div>
+
+        <!-- 税务处理 -->
+        <div id="tab-tax" class="tab-content">
+            <div class="card-grid">
+                <div class="card">
+                    <h3>💸 增值税 <span class="badge">争议焦点</span></h3>
+                    <ul>
+                        <li><strong>主流观点：视同销售</strong> — 积分兑换商品按公允价值计缴增值税</li>
+                        <li><strong>另一种观点：非视同销售</strong> — 视为前期消费的延续，兑换环节不缴税</li>
+                    </ul>
+                    <div class="highlight" style="margin-top:10px;">
+                        ⚠️ 因各地执行口径不一，<strong>务必与当地税务机关确认</strong>，并建立清晰的积分台账备查。
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>📊 企业所得税 & 个税</h3>
+                    <ul>
+                        <li><strong>所得税</strong>：采用“递延”方式，兑换或失效时确认收入；成本可扣除。</li>
+                        <li><strong>个人所得税</strong>：对消费积分反馈礼品，<strong>不征收</strong>个人所得税。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📌 操作建议</h3>
+                <ul>
+                    <li>建立完善的积分发放、兑换、失效记录系统</li>
+                    <li>与主管税务机关沟通，明确增值税处理方式</li>
+                    <li>年终复核积分负债，调整递延收入</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 综合示例 + 计算器 -->
+        <div id="tab-example" class="tab-content">
+            <div class="card">
+                <h3>🧮 积分分摊计算器</h3>
+                <p style="color:#2c405a; margin-bottom:12px;">输入以下参数，自动计算交易分摊金额：</p>
+                <div class="calc-row">
+                    <label>含税消费总额 (元)</label>
+                    <input type="number" id="totalAmount" value="100" step="1" min="1">
+                </div>
+                <div class="calc-row">
+                    <label>获得积分 (个)</label>
+                    <input type="number" id="points" value="100" step="1" min="0">
+                </div>
+                <div class="calc-row">
+                    <label>每积分价值 (元)</label>
+                    <input type="number" id="pointValue" value="0.1" step="0.01" min="0.001">
+                </div>
+                <div class="calc-row">
+                    <label>预计兑换率 (%)</label>
+                    <input type="number" id="redeemRate" value="90" step="1" min="0" max="100">
+                    <button class="btn-reset" id="resetCalc">↺ 重置默认</button>
+                </div>
+
+                <div class="calc-result" id="calcResult">
+                    <div class="item">
+                        <div class="label">积分公允价值</div>
+                        <div class="value" id="fairValue">9.00</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">本次商品收入 (不含税)</div>
+                        <div class="value" id="productRevenue">81.20</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">合同负债 (递延)</div>
+                        <div class="value" id="deferredRevenue">7.30</div>
+                    </div>
+                </div>
+                <p style="font-size:14px; color:#5b6f8c; margin-top:8px;">* 增值税税率按 13% 计算，收入均为不含税金额。</p>
+            </div>
+
+            <div class="card" style="margin-top:16px;">
+                <h3>📋 完整推导过程</h3>
+                <div style="background:#f8faff; padding:16px 20px; border-radius:16px; line-height:1.8;">
+                    <p><strong>参数：</strong>消费100元（含税），获得100积分，每积分0.1元，预计兑换率90%。</p>
+                    <p><strong>步骤：</strong></p>
+                    <ul>
+                        <li>积分公允价值 = 100 × 0.1 × 90% = 9 元</li>
+                        <li>不含税总价 = 100 ÷ 1.13 ≈ 88.50 元</li>
+                        <li>商品公允价值占比 = 100 / (100+9) ≈ 91.74%</li>
+                        <li>积分公允价值占比 = 9 / (100+9) ≈ 8.26%</li>
+                        <li>分摊至本次商品收入 = 88.50 × 91.74% ≈ 81.20 元</li>
+                        <li>分摊至合同负债（积分） = 88.50 × 8.26% ≈ 7.30 元</li>
+                    </ul>
+                    <p><strong>分录：</strong> 借：银行存款 100；贷：主营业务收入 81.20；贷：应交税费 11.50；贷：合同负债 7.30</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footnote">
+            📌 本讲解基于企业会计准则及常见税务实践，具体业务请咨询专业顾问。
+        </div>
+    </div>
+
+    <script>
+        // 标签切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = {
+            accounting: document.getElementById('tab-accounting'),
+            tax: document.getElementById('tab-tax'),
+            example: document.getElementById('tab-example')
+        };
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const tabId = this.dataset.tab;
+                Object.keys(tabContents).forEach(key => {
+                    tabContents[key].classList.toggle('active', key === tabId);
+                });
+            });
+        });
+
+        // 计算器
+        const totalInput = document.getElementById('totalAmount');
+        const pointsInput = document.getElementById('points');
+        const pointValInput = document.getElementById('pointValue');
+        const rateInput = document.getElementById('redeemRate');
+        const fairDisplay = document.getElementById('fairValue');
+        const productDisplay = document.getElementById('productRevenue');
+        const deferredDisplay = document.getElementById('deferredRevenue');
+
+        function calc() {
+            const total = parseFloat(totalInput.value) || 0;
+            const pts = parseFloat(pointsInput.value) || 0;
+            const pVal = parseFloat(pointValInput.value) || 0;
+            const rate = parseFloat(rateInput.value) || 0;
+
+            if (total <= 0 || pts <= 0 || pVal <= 0 || rate <= 0) {
+                fairDisplay.textContent = '0.00';
+                productDisplay.textContent = '0.00';
+                deferredDisplay.textContent = '0.00';
+                return;
+            }
+
+            const fair = pts * pVal * (rate / 100);
+            const totalExcl = total / 1.13; // 假设13%税率
+            const ratioGoods = 100 / (100 + fair); // 简化：商品公允视为100
+            const ratioPoints = fair / (100 + fair);
+
+            const productRev = totalExcl * ratioGoods;
+            const deferredRev = totalExcl * ratioPoints;
+
+            fairDisplay.textContent = fair.toFixed(2);
+            productDisplay.textContent = productRev.toFixed(2);
+            deferredDisplay.textContent = deferredRev.toFixed(2);
+        }
+
+        totalInput.addEventListener('input', calc);
+        pointsInput.addEventListener('input', calc);
+        pointValInput.addEventListener('input', calc);
+        rateInput.addEventListener('input', calc);
+
+        document.getElementById('resetCalc').addEventListener('click', function() {
+            totalInput.value = '100';
+            pointsInput.value = '100';
+            pointValInput.value = '0.1';
+            rateInput.value = '90';
+            calc();
+        });
+
+        calc(); // 初始计算
+    </script>
+</body>
+</html>
