@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>营销分析 · AI工作流</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+            background: #f3f6fc;
+            color: #1a2a44;
+            padding: 30px 20px 50px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(0, 10, 30, 0.06);
+            padding: 32px 34px 40px;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: 800;
+            border-bottom: 3px solid #e6edf4;
+            padding-bottom: 16px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #5b6f8c;
+        }
+        .subhead {
+            color: #5b6f8c;
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+
+        /* 流程图 */
+        .flow {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 24px 0 32px;
+            flex-wrap: wrap;
+        }
+        .flow-step {
+            flex: 1;
+            min-width: 180px;
+            background: #f8faff;
+            border-radius: 16px;
+            padding: 16px 18px;
+            border: 1px solid #e6edf4;
+            text-align: center;
+            position: relative;
+        }
+        .flow-step .step-num {
+            display: inline-block;
+            background: #1a2a44;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 0 12px;
+            border-radius: 30px;
+            margin-bottom: 8px;
+        }
+        .flow-step .step-icon {
+            font-size: 32px;
+            display: block;
+            margin: 6px 0;
+        }
+        .flow-step .step-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1a2a44;
+        }
+        .flow-step .step-desc {
+            font-size: 13px;
+            color: #4a5a6e;
+            line-height: 1.5;
+            margin-top: 4px;
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            color: #b8c8d8;
+            flex-shrink: 0;
+        }
+
+        .section {
+            margin: 32px 0 24px;
+        }
+        .section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a2a44;
+            border-left: 5px solid #3b6b9b;
+            padding-left: 16px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .section h2 .badge {
+            font-size: 14px;
+            font-weight: 500;
+            background: #dce5f0;
+            padding: 0 14px;
+            border-radius: 30px;
+            color: #3a4c66;
+        }
+        .section h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1a2a44;
+            margin: 20px 0 10px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin: 12px 0;
+        }
+        .card {
+            background: #f8faff;
+            border-radius: 14px;
+            padding: 18px 20px;
+            border: 1px solid #e6edf4;
+            transition: box-shadow 0.15s;
+        }
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 10, 30, 0.04);
+        }
+        .card .card-icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .card .card-title {
+            font-weight: 700;
+            font-size: 17px;
+            color: #1a2a44;
+        }
+        .card .card-desc {
+            font-size: 14px;
+            color: #3a4c66;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+        .card .card-tag {
+            display: inline-block;
+            font-size: 12px;
+            background: #dce5f0;
+            padding: 0 12px;
+            border-radius: 30px;
+            color: #2d4a6a;
+            margin-top: 6px;
+        }
+
+        .skill-box {
+            background: #f0f5fe;
+            border-radius: 14px;
+            padding: 18px 22px;
+            border-left: 4px solid #3b6b9b;
+            margin: 16px 0;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #1a2a44;
+        }
+        .skill-box .code-block {
+            background: #1a2a44;
+            color: #dce5f0;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-family: 'Menlo', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin-top: 8px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .skill-box .code-block .comment {
+            color: #8a9aaa;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            background: #f8faff;
+            border-radius: 14px;
+            padding: 14px 20px;
+            border: 1px solid #e6edf4;
+            margin: 10px 0;
+        }
+        .flow-row .label {
+            font-weight: 600;
+            color: #1a2a44;
+            min-width: 80px;
+        }
+        .flow-row .items {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .flow-row .items span {
+            background: #e6edf4;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: #2d4a6a;
+        }
+        .flow-row .arrow {
+            color: #b8c8d8;
+            font-size: 18px;
+        }
+
+        .footnote {
+            margin-top: 36px;
+            border-top: 2px solid #e6edf4;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #6a7e96;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 20px 16px; }
+            h1 { font-size: 24px; }
+            .flow { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        📊 营销分析 · AI工作流
+        <small>MCP → Skill → AI 智能洞察</small>
+    </h1>
+    <div class="subhead">
+        从多平台数据接入，到标准化分析，再到自动化洞察输出 · 全链路可复用
+    </div>
+
+    <!-- ===== 流程图 ===== -->
+    <div class="flow">
+        <div class="flow-step">
+            <span class="step-num">1</span>
+            <span class="step-icon">🔌</span>
+            <div class="step-title">MCP 数据接入</div>
+            <div class="step-desc">连接 Google Ads、Meta、抖音、小红书等 350+ 数据源</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+            <span class="step-num">2</span>
+            <span class="step-icon">🧩</span>
+            <div class="step-title">Skill 分析模板</div>
+            <div class="step-desc">固化分析逻辑 · 周报 / 预算审计 / 竞品监控</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+            <span class="step-num">3</span>
+            <span class="step-icon">🤖</span>
+            <div class="step-title">AI 自动执行</div>
+            <div class="step-desc">按 Skill 规则自动计算 KPI、诊断异常、生成报告</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+            <span class="step-num">4</span>
+            <span class="step-icon">📄</span>
+            <div class="step-title">洞察输出</div>
+            <div class="step-desc">结构化报告 · 优化建议 · 一键分享</div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第一部分：MCP 数据接入 -->
+    <div class="section">
+        <h2>🔌 第一步：MCP 数据接入 <span class="badge">打通数据孤岛</span></h2>
+        <p style="font-size:14px; color:#3a4c66; margin-bottom:12px;">MCP（模型上下文协议）作为“通用数据插头”，让 AI 能实时访问各平台广告数据。</p>
+
+        <div class="card-grid">
+            <div class="card">
+                <span class="card-icon">📊</span>
+                <div class="card-title">营销聚合型 MCP</div>
+                <div class="card-desc">一次接入，连接 350+ 数据源，包括 Meta Ads、Google Ads、TikTok Ads、GA4 等。</div>
+                <span class="card-tag">Windsor MCP</span>
+                <span class="card-tag">CData Connect AI</span>
+            </div>
+            <div class="card">
+                <span class="card-icon">🔍</span>
+                <div class="card-title">关键词与竞品 MCP</div>
+                <div class="card-desc">提供搜索趋势、关键词研究、竞品流量洞察，辅助策略决策。</div>
+                <span class="card-tag">Similarweb MCP</span>
+                <span class="card-tag">DataForSEO MCP</span>
+            </div>
+            <div class="card">
+                <span class="card-icon">📱</span>
+                <div class="card-title">社媒内容 MCP</div>
+                <div class="card-desc">采集小红书、抖音等平台的社媒数据，分析内容趋势与用户反馈。</div>
+                <span class="card-tag">社媒虾 MediaClaw</span>
+                <span class="card-tag">Scavio</span>
+            </div>
+        </div>
+
+        <div class="flow-row">
+            <span class="label">典型数据源</span>
+            <div class="items">
+                <span>Google Ads</span>
+                <span>Meta Ads</span>
+                <span>TikTok Ads</span>
+                <span>抖音</span>
+                <span>小红书</span>
+                <span>GA4</span>
+                <span>Similarweb</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第二部分：Skill 分析模板 -->
+    <div class="section">
+        <h2>🧩 第二步：Skill 分析模板 <span class="badge">固化分析逻辑</span></h2>
+        <p style="font-size:14px; color:#3a4c66; margin-bottom:12px;">Skill 将分析经验固化为可复用的“分析蓝图”，告诉 AI 拿到数据后具体要算什么、怎么看。</p>
+
+        <div class="card-grid">
+            <div class="card">
+                <span class="card-icon">📈</span>
+                <div class="card-title">广告周报 Skill</div>
+                <div class="card-desc">自动拉取过去7天数据，计算 CPC、CTR、CPA、ROAS，生成周报。</div>
+                <span class="card-tag">预置场景</span>
+            </div>
+            <div class="card">
+                <span class="card-icon">💰</span>
+                <div class="card-title">预算审计 Skill</div>
+                <div class="card-desc">检查各渠道预算消耗进度，识别超支或浪费的 Campaign。</div>
+                <span class="card-tag">异常检测</span>
+            </div>
+            <div class="card">
+                <span class="card-icon">📋</span>
+                <div class="card-title">竞品监控 Skill</div>
+                <div class="card-desc">定期抓取竞品投放策略、素材方向、关键词变化。</div>
+                <span class="card-tag">Similarweb MCP</span>
+            </div>
+        </div>
+
+        <div class="skill-box">
+            <strong>📝 Skill 示例：广告周报分析 (SKILL.md)</strong>
+            <div class="code-block">
+<span class="comment">---</span>
+name: ad-weekly-report
+description: 分析本周广告表现，生成周报。触发词：周报、本周广告
+<span class="comment">---</span>
+
+<span class="comment">## 数据源 (通过MCP)</span>
+- Google Ads (Google Ads MCP)
+- Meta Ads (Meta Ads MCP)
+
+<span class="comment">## 分析流程</span>
+1. 通过 MCP 获取过去7天数据
+2. 计算核心 KPI：CPC, CTR, CPA, ROAS
+3. 对比上周数据，标注变化 &gt; 15% 的指标
+4. 标记 CPA 超标 Campaign
+
+<span class="comment">## 输出格式</span>
+- 核心指标总览（表格）
+- 渠道对比
+- 异常项清单
+- 下一步优化建议
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第三部分：AI 自动执行 -->
+    <div class="section">
+        <h2>🤖 第三步：AI 自动执行 <span class="badge">从指令到洞察</span></h2>
+        <p style="font-size:14px; color:#3a4c66; margin-bottom:12px;">用户只需一句话触发，AI 便按 Skill 规则自动完成数据拉取、计算、诊断和报告生成。</p>
+
+        <div class="flow-row">
+            <span class="label">触发方式</span>
+            <div class="items">
+                <span>“跑一下本周周报”</span>
+                <span>“帮我做预算审计”</span>
+                <span>“看看竞品最近在投什么”</span>
+            </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:10px;">
+            <div style="background:#f0f4fa; border-radius:12px; padding:14px 18px; border-left:4px solid #3b6b9b;">
+                <div style="font-weight:700; font-size:15px;">AI 自动执行任务</div>
+                <ul style="padding-left:18px; font-size:14px; color:#2d4a6a; line-height:1.7; margin-top:6px;">
+                    <li>通过 MCP 自动拉取多平台数据</li>
+                    <li>按 Skill 规则计算 KPI 与趋势</li>
+                    <li>自动标注异常（CPA 飙升、CTR 骤降）</li>
+                    <li>生成结构化报告 + 优化建议</li>
+                </ul>
+            </div>
+            <div style="background:#f0f4fa; border-radius:12px; padding:14px 18px; border-left:4px solid #6a3a8a;">
+                <div style="font-weight:700; font-size:15px;">可输出的洞察类型</div>
+                <ul style="padding-left:18px; font-size:14px; color:#2d4a6a; line-height:1.7; margin-top:6px;">
+                    <li>📊 渠道表现对比</li>
+                    <li>📉 异常波动预警</li>
+                    <li>🎯 高转化关键词推荐</li>
+                    <li>📝 素材优化方向</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第四部分：完整工作流一览 -->
+    <div class="section">
+        <h2>🧭 完整工作流一览 <span class="badge">端到端</span></h2>
+        <div style="background:#f8faff; border-radius:14px; padding:18px 22px; border:1px solid #e6edf4; font-size:14px; line-height:1.8; color:#1a2a44;">
+            <div style="display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center;">
+                <span style="background:#1a2a44; color:#fff; padding:2px 14px; border-radius:30px; font-weight:600;">用户</span>
+                <span>“生成本周广告周报”</span>
+                <span style="color:#b8c8d8;">→</span>
+                <span style="background:#3b6b9b; color:#fff; padding:2px 14px; border-radius:30px; font-weight:600;">AI</span>
+                <span>加载 <strong>ad-weekly-report</strong> Skill</span>
+                <span style="color:#b8c8d8;">→</span>
+                <span style="background:#6a3a8a; color:#fff; padding:2px 14px; border-radius:30px; font-weight:600;">MCP</span>
+                <span>拉取 Google Ads + Meta Ads 数据</span>
+                <span style="color:#b8c8d8;">→</span>
+                <span style="background:#d4886a; color:#fff; padding:2px 14px; border-radius:30px; font-weight:600;">分析</span>
+                <span>计算 KPI · 诊断异常 · 生成建议</span>
+                <span style="color:#b8c8d8;">→</span>
+                <span style="background:#1a7a4a; color:#fff; padding:2px 14px; border-radius:30px; font-weight:600;">输出</span>
+                <span>📄 结构化周报 + 下一步优化方案</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 第五部分：应用场景 -->
+    <div class="section">
+        <h2>🎯 典型应用场景 <span class="badge">落地</span></h2>
+        <div class="card-grid">
+            <div class="card">
+                <span class="card-icon">📈</span>
+                <div class="card-title">内容运营分析</div>
+                <div class="card-desc">通过社媒 MCP 采集爆款内容，AI 自动拆解“视频-片段-分镜”颗粒度，量化分析开场3秒、节奏、封面等关键要素，形成可复用的内容模板。</div>
+            </div>
+            <div class="card">
+                <span class="card-icon">🔑</span>
+                <div class="card-title">关键词智能挖掘</div>
+                <div class="card-desc">通过 DataForSEO MCP 获取搜索数据，AI 自动生成海量长尾关键词组合，预测用户购买意图，动态优化投放策略。</div>
+            </div>
+            <div class="card">
+                <span class="card-icon">⚡</span>
+                <div class="card-title">异常实时监控</div>
+                <div class="card-desc">AI 每日自动扫描各渠道数据，CTR 骤降、CPA 飙升时自动预警，并推送可能原因和优化动作。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footnote">
+        📌 本工作流基于 MCP 协议 + Skill 标准化分析 + AI 自动化执行构建 · 可复用于多业务场景
+    </div>
+</div>
+</body>
+</html>
