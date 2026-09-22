@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth & Value Creation Measurement Playbook v2.1</title>
+<style>
+:root{--navy:#12263a;--blue:#1f5f8b;--gold:#f4b400;--red:#d9281e;--green:#16856b;--ink:#1f2937;--muted:#64748b;--line:#dbe3ea;--paper:#f3f6f8;--white:#fff;--purple:#6d4aff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Segoe UI,PingFang SC,Microsoft YaHei,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.65}
+a{color:inherit}.top{position:fixed;left:0;right:0;top:0;height:56px;background:var(--navy);color:#fff;display:flex;align-items:center;z-index:20;padding:0 24px;box-shadow:0 2px 10px #0003}.brand{font-weight:800;letter-spacing:.2px}.version{margin-left:10px;font-size:12px;background:var(--gold);color:#222;padding:2px 8px;border-radius:99px}.top-actions{margin-left:auto;display:flex;gap:8px}.btn{border:1px solid #ffffff55;border-radius:6px;background:transparent;color:white;padding:7px 10px;cursor:pointer}.sidebar{position:fixed;left:0;top:56px;bottom:0;width:280px;background:#172f45;color:#d9e5ef;overflow:auto;padding:16px 12px;z-index:10}.sidebar .group{font-size:11px;text-transform:uppercase;letter-spacing:1.1px;color:#8fb0c8;margin:18px 10px 6px}.sidebar a{display:block;text-decoration:none;padding:8px 10px;border-radius:6px;font-size:14px}.sidebar a:hover,.sidebar a.active{background:#ffffff18;color:#fff}.main{margin-left:280px;padding:82px 32px 60px;max-width:1550px}.hero{background:linear-gradient(120deg,var(--navy),#245e83 65%,#3987a8);color:#fff;border-radius:18px;padding:42px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:360px;height:360px;border:70px solid #ffffff10;border-radius:50%;right:-80px;top:-155px}.hero h1{font-size:38px;line-height:1.15;margin:0 0 12px;max-width:930px}.hero p{max-width:900px;color:#dcebf5;font-size:17px}.pill{display:inline-block;background:#ffffff18;border:1px solid #ffffff2c;padding:5px 10px;border-radius:99px;margin:6px 6px 0 0;font-size:13px}.section{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:28px;margin-top:24px;box-shadow:0 5px 20px #14324a0b}.section h2{margin:0 0 8px;font-size:26px;color:var(--navy)}.lead{color:var(--muted);margin-top:0}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.c3{grid-column:span 3}.c4{grid-column:span 4}.c6{grid-column:span 6}.c8{grid-column:span 8}.c12{grid-column:span 12}.card{border:1px solid var(--line);border-radius:12px;padding:18px;background:#fff}.card h3{margin:0 0 8px;color:var(--navy)}.accent{border-top:5px solid var(--gold)}.blue{border-top-color:var(--blue)}.green{border-top-color:var(--green)}.red{border-top-color:var(--red)}.purple{border-top-color:var(--purple)}.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:99px;padding:3px 8px;background:#e8f0f6;color:var(--blue)}.tag.yoy{background:#e7f1fb;color:#155c91}.tag.pmix{background:#fff2cc;color:#7a5700}.tag.incremental{background:#e5f5ee;color:#0b735a}.tag.profit{background:#f2eaff;color:#6140c7}.formula{font-family:Consolas,Monaco,monospace;background:#f6f8fa;border-left:4px solid var(--blue);padding:14px 16px;margin:12px 0;white-space:pre-wrap;border-radius:4px}.callout{border-radius:10px;padding:14px 16px;background:#fff8df;border:1px solid #f2d787}.callout.danger{background:#fff0ef;border-color:#efb1ad}.callout.good{background:#eaf8f3;border-color:#aadfce}.tree{font-family:Consolas,monospace;background:#102538;color:#e7f4fb;border-radius:12px;padding:18px;white-space:pre-wrap;line-height:1.75;overflow:auto}.flow{display:flex;align-items:stretch;gap:8px;overflow:auto;padding:8px 0}.node{min-width:140px;flex:1;border:1px solid var(--line);border-radius:10px;padding:13px;background:#f8fafc;text-align:center}.arrow{align-self:center;font-weight:900;color:var(--blue);font-size:22px}.kpi{font-size:28px;font-weight:800;color:var(--navy)}.small{font-size:12px;color:var(--muted)}table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}th{background:var(--navy);color:white;text-align:left;padding:10px}td{border:1px solid var(--line);padding:10px;vertical-align:top}tr:nth-child(even) td{background:#f8fafc}.step{display:grid;grid-template-columns:58px 1fr;gap:14px;margin:14px 0}.step-no{width:44px;height:44px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:900;color:#222}.step-body{border-bottom:1px solid var(--line);padding-bottom:14px}.step-body h3{margin:0 0 4px}.checklist{list-style:none;padding:0}.checklist li{margin:7px 0;padding-left:26px;position:relative}.checklist li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.tabbtn{border:1px solid var(--line);background:#f7f9fb;padding:8px 12px;border-radius:8px;cursor:pointer}.tabbtn.active{background:var(--navy);color:white}.tab{display:none}.tab.active{display:block}.badge{font-weight:700;padding:2px 7px;border-radius:5px;background:#edf2f7}.foot{color:var(--muted);font-size:12px;text-align:center;margin:26px}.print-only{display:none}.step-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#edf2f7;color:var(--muted)}
+@media(max-width:1050px){.sidebar{display:none}.main{margin-left:0}.c3,.c4,.c6,.c8{grid-column:span 12}.hero h1{font-size:30px}.top{padding:0 12px}}
+@media print{.top,.sidebar,.top-actions{display:none}.main{margin:0;padding:0}.section,.hero{box-shadow:none;break-inside:avoid}.print-only{display:block}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand">Growth & Value Creation Measurement Playbook</div><span class="version">v2.1</span><div class="top-actions"><button class="btn" onclick="window.print()">打印 / 导出PDF</button></div></header>
+<nav class="sidebar">
+<div class="group">A · 框架基础</div><a href="#home">首页</a><a href="#architecture">A1. 指标架构</a><a href="#principles">A2. 计算原则</a><a href="#workflow">A3. 标准流程</a>
+<div class="group">B · 核心指标手册</div><a href="#sales">B1. Comp Sales</a><a href="#qam">B2. QAM</a><a href="#gp">B3. GP</a><a href="#ebitda">B4. EBITDA</a>
+<div class="group">C · 分析方法论</div><a href="#pmix">C1. PMIX 结构分析</a><a href="#ufa">C2. User × Freq × AC</a><a href="#incremental">C3. Incrementality</a><a href="#overlap">C4. 重叠归因</a>
+<div class="group">D · 应用与治理</div><a href="#digital">D1. Digital 专项</a><a href="#planning">D2. Target Planning</a><a href="#oc">D3. OC Review 模板</a><a href="#dictionary">D4. 指标字典与 QA</a>
+</nav>
+<main class="main">
+
+<!-- ============================================================ -->
+<!-- 首页 -->
+<!-- ============================================================ -->
+<section id="home" class="hero">
+<h1>增长与价值创造衡量体系<br>Growth & Value Creation Measurement Playbook</h1>
+<p>将 Comp Sales、QAM、GP、EBITDA 和 Digital Incrementality 放进同一套逻辑：<strong>指标之间有关联，计算方法各自统一，分析结果逐层对账。</strong></p>
+<span class="pill">Growth Build</span><span class="pill">Customer Build</span><span class="pill">Profit Build</span><span class="pill">Incremental Measurement</span><span class="pill">OC Review Standard</span>
+<div style="margin-top:24px; background:#ffffff12; border-radius:12px; padding:16px 20px; border:1px solid #ffffff20;">
+<div style="font-weight:700; margin-bottom:8px;">📖 本手册使用逻辑</div>
+<div style="font-size:14px; color:#c8dde9; line-height:1.8;">
+<strong>框架基础（A）</strong>告诉你指标之间的关系和统一规则；<br>
+<strong>核心指标手册（B）</strong>提供每个指标的标准定义、公式、拆解和应用；<br>
+<strong>分析方法论（C）</strong>回答不同管理问题该用什么方法、产出什么、不能替代什么；<br>
+<strong>应用与治理（D）</strong>把方法落到 Digital 专项、Target Planning、OC Review 和指标治理上。
+</div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- A · 框架基础 -->
+<!-- ============================================================ -->
+<section id="architecture" class="section">
+<h2>A1. 企业指标架构：从客户到利润</h2>
+<p class="lead">统一体系不是把所有指标混在一个公式里，而是让每个指标回答一个明确问题，并通过驱动关系连接。</p>
+
+<div class="flow">
+<div class="node"><div class="tag">Customer</div><div class="kpi">QAM</div><div class="small">活跃会员规模与质量</div></div>
+<div class="arrow">→</div>
+<div class="node"><div class="tag yoy">Growth</div><div class="kpi">Comp Sales</div><div class="small">可比口径销售增长</div></div>
+<div class="arrow">→</div>
+<div class="node"><div class="tag pmix">Economics</div><div class="kpi">GP</div><div class="small">销售转化为毛利</div></div>
+<div class="arrow">→</div>
+<div class="node"><div class="tag profit">Value</div><div class="kpi">EBITDA</div><div class="small">经营利润与价值创造</div></div>
+</div>
+
+<div class="callout"><b>关键解读：</b>QAM是客户资产视角，Comp Sales是增长结果视角，GP是单位经济性视角，EBITDA是企业价值视角。Digital、Menu、Delivery、Brand、Value、Pricing等是跨指标的业务杠杆。</div>
+
+<div class="tree">Enterprise KPI Tree
+├─ QAM: New / Reactive / Existing & activity quality
+├─ Comp Sales: User × Frequency × Average Check
+├─ GP: Sales − product cost − promotion/coupon cost ± mix impact
+└─ EBITDA: GP − controllable operating expenses
+
+Cross-KPI Levers
+├─ Menu: Chicken / Beef / Breakfast / Family / Value
+├─ Channel: APP / WD / Delivery / other channels
+├─ CRM: OMM / Points / AARR / Campaign
+├─ Pricing & PMIX
+└─ Operations: labor / occupancy / marketing / G&A</div>
+</section>
+
+<section id="principles" class="section">
+<h2>A2. 统一计算原则：先确认问题，再选方法</h2>
+<p class="lead">四个核心问题对应四类方法，不能混用，也不能互相替代。</p>
+
+<div class="grid">
+<div class="card accent c3"><h3>① 为什么变了？</h3><span class="tag yoy">YoY / Comp Build</span><p>用统一可比口径解释指标变化。</p></div>
+<div class="card accent blue c3"><h3>② 变化来自哪里？</h3><span class="tag pmix">PMIX / Mix</span><p>用结构占比变化定位业务、品类、渠道或人群。</p></div>
+<div class="card accent green c3"><h3>③ 是否由Lever创造？</h3><span class="tag incremental">vs Control</span><p>用实验或准实验估算净增量。</p></div>
+<div class="card accent purple c3"><h3>④ 是否创造价值？</h3><span class="tag profit">GP / EBITDA</span><p>将增量销售转化为增量利润。</p></div>
+</div>
+
+<table>
+<tr><th style="width:22%">管理问题</th><th style="width:22%">标准方法</th><th style="width:28%">必须产出</th><th style="width:28%">不能替代</th></tr>
+<tr><td>Comp Sales为什么增长/下降</td><td>TY vs LY同周期、同店、同口径</td><td>Sales lift、YoY、contribution pt</td><td>不能用Treatment sales代替</td></tr>
+<tr><td>Chicken、APP、Value等在哪里贡献</td><td>业务/品类/渠道PMIX与YoY Build</td><td>PMIX变化、Sales lift、贡献占比</td><td>PMIX不是增量</td></tr>
+<tr><td>增长如何发生</td><td>User × Frequency × AC；QAM用N/R/E</td><td>规模、频次、客单驱动</td><td>分解不等于因果</td></tr>
+<tr><td>Lever是否创造额外结果</td><td>A/B、Matched Control、PSM、DID</td><td>Incremental users/sales/GP、置信区间</td><td>不能直接用参与者YoY</td></tr>
+<tr><td>项目是否赚钱</td><td>Incremental GP与EBITDA bridge</td><td>利润、ROI、payback</td><td>Sales uplift不等于利润</td></tr>
+</table>
+</section>
+
+<section id="workflow" class="section">
+<h2>A3. End-to-End标准流程</h2>
+<p class="lead">每次Target、OC Review或项目复盘，都按同一顺序执行。</p>
+
+<div class="step"><div class="step-no">1</div><div class="step-body"><h3>锁定Scope与可比口径</h3><p>明确期间、同店范围、渠道、用户、交易定义、净额/含税口径、活动窗口、数据冻结日期。所有后续表共享同一Scope ID。</p></div></div>
+<div class="step"><div class="step-no">2</div><div class="step-body"><h3>建立Top-line KPI Base Table</h3><p>同时生成QAM、Comp Sales、GP、EBITDA的TY、LY、Target、YoY、绝对变化，避免各团队分别拉数。</p></div></div>
+<div class="step"><div class="step-no">3</div><div class="step-body"><h3>做Accounting Build</h3><p>按互斥且完备的维度拆解。Sales/GP/EBITDA Build必须与Top-line 100%对账；QAM按去重用户集合对账。</p></div></div>
+<div class="step"><div class="step-no">4</div><div class="step-body"><h3>做Mechanism Diagnostics</h3><p>Sales用User × Freq × AC，QAM用New/Reactive/Existing，GP用Volume/Price/Mix/Cost/Promo，EBITDA用GP/Opex。</p></div></div>
+<div class="step"><div class="step-no">5</div><div class="step-body"><h3>只对需要因果回答的Lever做Incremental</h3><p>优先随机实验；否则使用匹配、PSM或DID。先定义Treatment、Control、pre-period、outcome和污染规则。</p></div></div>
+<div class="step"><div class="step-no">6</div><div class="step-body"><h3>将Incremental Sales转为Incremental GP和EBITDA</h3><p>扣除产品成本、优惠成本、媒介/触达成本及增量运营成本，输出ROI。</p></div></div>
+<div class="step"><div class="step-no">7</div><div class="step-body"><h3>重叠归因与最终对账</h3><p>按用户×时间×订单建立曝光矩阵；采用联合实验、多臂模型或Shapley/优先级规则处理APP、OMM、Points、Campaign重叠。</p></div></div>
+<div class="step"><div class="step-no">8</div><div class="step-body"><h3>形成管理层Storyline</h3><p>先Top-line，再Driver，再Mechanism，再Incremental，最后Profit与Decision。不要在一页混用Gross lift和Incremental。</p></div></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- B · 核心指标手册 -->
+<!-- ============================================================ -->
+<section id="sales" class="section">
+<h2>B1. Comp Sales Playbook</h2>
+<p class="lead"><strong>回答：</strong>同一可比业务基础上，销售增长多少、由什么驱动。</p>
+
+<div class="grid">
+<div class="card c6"><h3>基础公式</h3>
+<div class="formula">Comp Sales YoY = TY Comp Sales / LY Comp Sales − 1
+Sales Lift ($) = TY Comp Sales − LY Comp Sales
+Contribution (pt) = Driver Sales Lift / LY Total Comp Sales
+Contribution Share = Driver Sales Lift / Total Sales Lift</div>
+</div>
+<div class="card c6"><h3>必须先统一</h3>
+<ul class="checklist">
+<li>同店定义与开闭店规则</li>
+<li>相同日历天、星期结构和节假日处理</li>
+<li>净销售、退款、取消单、税费口径</li>
+<li>渠道和订单去重规则</li>
+<li>业务Driver互斥映射与Residual</li>
+</ul>
+</div>
+</div>
+
+<h3>推荐拆解顺序</h3>
+<div class="tree">SW Comp Sales
+├─ External / Base: industry, calendar, competitive & estate effects
+└─ Internal Drivers
+   ├─ Menu: Chicken / Beef / Breakfast / Family
+   ├─ Delivery
+   ├─ Brand Marketing / Campaign
+   ├─ Affordability / Value
+   ├─ Digital / CRM
+   ├─ Pricing
+   └─ Residual / Interaction</div>
+
+<div class="callout danger"><b>禁止：</b>把APP销售、Points参与者销售或Campaign触达者销售直接称为Incremental。这里首先是Accounting/YoY Build。</div>
+</section>
+
+<section id="qam" class="section">
+<h2>B2. QAM Playbook</h2>
+<p class="lead"><strong>回答：</strong>活跃会员规模与质量发生了什么变化。QAM具体业务定义需以公司官方口径为准，此处提供通用计算框架。</p>
+
+<div class="grid">
+<div class="card c6"><h3>规模与增长</h3>
+<div class="formula">QAM YoY = TY QAM / LY QAM − 1
+QAM Penetration = QAM / Eligible Base
+QAM Penetration YoY (pt) = TY Pen% − LY Pen%</div>
+</div>
+<div class="card c6"><h3>N/R/E迁移</h3>
+<div class="formula">QAM = New + Reactive + Existing/Retained
+Net QAM Change = Acquisition + Reactivation − Lapse + Retention change</div>
+</div>
+</div>
+
+<table>
+<tr><th style="width:28%">问题</th><th style="width:32%">看什么</th><th style="width:40%">方法</th></tr>
+<tr><td>QAM为什么增长</td><td>N/R/E人数、Retention、Reactivation</td><td>YoY cohort build</td></tr>
+<tr><td>APP、WD等QAM占比如何</td><td>渠道QAM / 总QAM</td><td>Penetration与重叠矩阵</td></tr>
+<tr><td>OMM带来多少新增活跃</td><td>被触达用户相对Control的活跃差</td><td>Incremental QAM</td></tr>
+<tr><td>QAM是否转化销售</td><td>QAM × ordering rate × freq × AC</td><td>Funnel与cohort</td></tr>
+</table>
+
+<div class="callout"><b>去重规则：</b>APP、WD、Points等通常存在交叉，渠道QAM之和不应直接等于总QAM。建议同时展示“Any Digital QAM”和各业务非互斥渗透率。</div>
+</section>
+
+<section id="gp" class="section">
+<h2>B3. GP Playbook</h2>
+<p class="lead"><strong>回答：</strong>销售增长转化成多少毛利，价格、产品结构、成本和优惠分别影响多少。</p>
+
+<div class="formula">GP = Net Sales − Product/Food Cost − Variable Promo/Coupon Cost ± locally defined adjustments
+GP% = GP / Net Sales
+GP Lift = TY GP − LY GP</div>
+
+<div class="grid">
+<div class="card c4"><h3>Volume</h3><p>销量/交易量带来的GP变化。</p></div>
+<div class="card c4"><h3>Price</h3><p>净价格变化，需扣除折扣稀释。</p></div>
+<div class="card c4"><h3>PMIX</h3><p>高低毛利产品/渠道结构迁移。</p></div>
+<div class="card c4"><h3>Cost</h3><p>食品成本、包材、供应变化。</p></div>
+<div class="card c4"><h3>Promo</h3><p>Coupon、Points兑换、活动补贴。</p></div>
+<div class="card c4"><h3>Residual</h3><p>交互、映射误差、四舍五入。</p></div>
+</div>
+
+<div class="callout good"><b>项目评估：</b>Incremental GP = Incremental Sales × Incremental contribution margin − incremental coupon/product subsidy。若能订单级计算，则优先订单级汇总。</div>
+</section>
+
+<section id="ebitda" class="section">
+<h2>B4. EBITDA Playbook</h2>
+<p class="lead"><strong>回答：</strong>GP提升在扣除经营投入后，最终创造多少经营价值。</p>
+
+<div class="formula">EBITDA = GP − Labor − Occupancy − Marketing − G&A − other defined operating expenses
+Incremental EBITDA = Incremental GP − Incremental Opex
+ROI = Incremental EBITDA / Incremental Investment</div>
+
+<div class="flow">
+<div class="node">Incremental QAM</div><div class="arrow">→</div>
+<div class="node">Incremental Sales</div><div class="arrow">→</div>
+<div class="node">Incremental GP</div><div class="arrow">→</div>
+<div class="node">Incremental EBITDA</div>
+</div>
+
+<table>
+<tr><th style="width:28%">Cost类型</th><th style="width:28%">是否进入项目EBITDA</th><th style="width:44%">原则</th></tr>
+<tr><td>Coupon / Points subsidy</td><td>是</td><td>按实际增量核销或订单级成本</td></tr>
+<tr><td>Media / OMM触达</td><td>是</td><td>项目直接成本</td></tr>
+<tr><td>固定平台成本</td><td>视决策场景</td><td>短期评估可分开，长期Business Case应纳入</td></tr>
+<tr><td>Labor / fulfillment增量</td><td>是</td><td>只纳入因项目而新增的部分</td></tr>
+</table>
+</section>
+
+<!-- ============================================================ -->
+<!-- C · 分析方法论 -->
+<!-- ============================================================ -->
+<section id="pmix" class="section">
+<h2>C1. PMIX 结构分析</h2>
+<p class="lead"><strong>回答：</strong>结构变了什么。PMIX是结构分析，不是因果推断。</p>
+
+<div class="formula">PMIX_i = Sales_i / Total Sales
+PMIX Change (pt) = PMIX_i,TY − PMIX_i,LY
+Sales Contribution_i = Sales_i,TY − Sales_i,LY</div>
+
+<div class="tabs">
+<button class="tabbtn active" onclick="tab(event,'pm1')">Product</button>
+<button class="tabbtn" onclick="tab(event,'pm2')">Channel</button>
+<button class="tabbtn" onclick="tab(event,'pm3')">Customer</button>
+<button class="tabbtn" onclick="tab(event,'pm4')">Promotion</button>
+</div>
+<div id="pm1" class="tab active"><p><strong>Product：</strong>Chicken / Beef / Breakfast / Family / Value，向下钻至category、item、coupon。</p></div>
+<div id="pm2" class="tab"><p><strong>Channel：</strong>APP / WD / Delivery / FC等渠道销售占比与毛利占比。</p></div>
+<div id="pm3" class="tab"><p><strong>Customer：</strong>N/R/E、Heavy/Medium/Light、会员/非会员结构。</p></div>
+<div id="pm4" class="tab"><p><strong>Promotion：</strong>Regular / Deal / Coupon / Points redemption结构。</p></div>
+
+<div class="callout"><b>解读顺序：</b>先看Sales PMIX，再看GP PMIX。某品类Sales PMIX上升但GP PMIX下降，通常意味着折扣、成本或低毛利SKU结构需要进一步诊断。</div>
+</section>
+
+<section id="ufa" class="section">
+<h2>C2. User × Frequency × AC 增长分解</h2>
+<p class="lead"><strong>回答：</strong>增长如何发生——是更多人买、买得更频繁，还是每单买得更贵。</p>
+
+<div class="formula">Sales = Users × Orders per User × Sales per Order
+YoY multiplicative identity: (1+Sales g) = (1+User g) × (1+Freq g) × (1+AC g)</div>
+
+<p>管理展示可使用精确的对数/Shapley分配，确保三项贡献加总到Sales growth；<strong>不要直接把三个增长率相加后声称精确对账。</strong></p>
+
+<table>
+<tr><th style="width:18%">Driver</th><th style="width:42%">诊断维度</th><th style="width:40%">典型业务动作</th></tr>
+<tr><td>Users</td><td>N/R/E、QAM转化、渠道penetration</td><td>Acquisition、reactivation、retention</td></tr>
+<tr><td>Frequency</td><td>月频/季频、间隔天数、场景</td><td>Weekly destination、CRM、habit</td></tr>
+<tr><td>AC</td><td>件数、净价格、折扣、PMIX</td><td>Upsell、bundle、pricing、mix</td></tr>
+</table>
+</section>
+
+<section id="incremental" class="section">
+<h2>C3. Incrementality 因果推断</h2>
+<p class="lead"><strong>回答：</strong>如果没有这个Lever，会发生什么。只有当问题是因果问题时，才进入这套方法。</p>
+
+<div class="formula">Incremental outcome per user = E(Y | Treatment) − E(Y | comparable Control)
+Total Incremental = incremental per user × eligible treated population
+Incremental % = (Treatment outcome − Counterfactual outcome) / Counterfactual outcome</div>
+
+<table>
+<tr><th style="width:22%">场景</th><th style="width:22%">优先方法</th><th style="width:56%">关键条件</th></tr>
+<tr><td>可随机分流</td><td>A/B Test</td><td>随机、无污染、样本量充分</td></tr>
+<tr><td>无随机但有丰富pre特征</td><td>Matching / PSM</td><td>Common support、平衡检验、无未观测混杂假设</td></tr>
+<tr><td>有前后期且趋势可验证</td><td>DID</td><td>平行趋势、同期冲击可控</td></tr>
+<tr><td>人群异质性决策</td><td>Uplift / CATE</td><td>先有可靠因果设计，再做异质性</td></tr>
+</table>
+
+<h3>标准实施清单</h3>
+<ul class="checklist">
+<li>定义Eligibility后再分Treatment/Control</li>
+<li>固定pre-period与measurement window</li>
+<li>设置主Outcome：QAM、orders、sales、GP或EBITDA</li>
+<li>检验sample ratio、pre-balance、spillover、交叉触达</li>
+<li>同时报告absolute lift、relative lift、置信区间和样本量</li>
+<li>预先定义异常、退款、极端用户和winsorize规则</li>
+</ul>
+</section>
+
+<section id="overlap" class="section">
+<h2>C4. 重叠归因与对账</h2>
+<p class="lead"><strong>回答：</strong>APP、OMM、Points、Campaign经常作用于同一用户，单Lever结果直接相加会重复计算。</p>
+
+<div class="grid">
+<div class="card c6"><h3>Accounting Reconciliation</h3>
+<div class="formula">Σ mutually-exclusive business lift + Residual = Total KPI lift</div>
+<p>用于Comp Sales、GP、EBITDA，必须100%对账。</p>
+</div>
+<div class="card c6"><h3>Causal Reconciliation</h3>
+<div class="formula">Net Digital Incremental = Joint effect of all digital levers vs no/standard digital counterfactual</div>
+<p>单Lever incremental之和只有在互斥且无交互时才可直接相加。</p>
+</div>
+</div>
+
+<table>
+<tr><th style="width:24%">方案</th><th style="width:36%">适用场景</th><th style="width:40%">输出</th></tr>
+<tr><td>互斥实验Cell</td><td>可以设计APP/OMM/Points组合</td><td>Main effect + interaction</td></tr>
+<tr><td>联合Treatment vs Control</td><td>关注Digital整体净效果</td><td>Net Digital Incremental</td></tr>
+<tr><td>多值Treatment / Doubly Robust</td><td>历史多触点数据</td><td>校正后的lever贡献</td></tr>
+<tr><td>Shapley分配</td><td>已有可靠联合效果，需要管理分摊</td><td>可加总归因，但应标为allocation</td></tr>
+<tr><td>优先级规则</td><td>数据能力有限</td><td>可对账，但不是严格因果</td></tr>
+</table>
+</section>
+
+<!-- ============================================================ -->
+<!-- D · 应用与治理 -->
+<!-- ============================================================ -->
+<section id="digital" class="section">
+<h2>D1. Digital专项：双轨合一</h2>
+<p class="lead">Digital的衡量必须同时跑两条轨道：一条是Accounting Build，一条是Causal Incremental Build。</p>
+
+<div class="grid">
+<div class="card c6"><h3>Track A — Digital Comp Build (Accounting)</h3>
+<div class="tree" style="font-size:13px; margin-top:8px;">SW → Digital → APP / WD / Campaign / CRM → category / item / coupon
+Method: TY vs LY, PMIX, User × Freq × AC
+Rule: mutually exclusive mapping where totals must reconcile</div>
+</div>
+<div class="card c6"><h3>Track B — Digital Incremental Build (Causal)</h3>
+<div class="tree" style="font-size:13px; margin-top:8px;">Eligible population → Treatment / Control → QAM / Sales / GP / EBITDA lift
+Method: Experiment / Matching / PSM / DID
+Rule: deduplicate overlap and report uncertainty</div>
+</div>
+</div>
+
+<table>
+<tr><th style="width:14%">Lever</th><th style="width:28%">Comp/PMIX视角</th><th style="width:28%">Incremental视角</th><th style="width:30%">Profit视角</th></tr>
+<tr><td>APP</td><td>Sales、penetration、N/R/E、category PMIX</td><td>APP使用/迁移的counterfactual</td><td>增量GP减平台/激励成本</td></tr>
+<tr><td>WD</td><td>用户、频次、销售占比</td><td>符合资格但未进入WD的Control</td><td>增量GP减活动成本</td></tr>
+<tr><td>OMM</td><td>触达、打开、转化漏斗</td><td>Holdout / matched unexposed</td><td>增量GP减触达成本</td></tr>
+<tr><td>Points</td><td>参与人、核销、订单和PMIX</td><td>资格一致的未参与/holdout</td><td>增量GP减积分负债/补贴</td></tr>
+<tr><td>AARR</td><td>漏斗阶段规模与迁移</td><td>阶段动作的incremental conversion</td><td>增量长期价值与成本</td></tr>
+<tr><td>Campaign</td><td>品类/商品/coupon Sales Build</td><td>Geo/user/time control</td><td>增量GP减media与offer</td></tr>
+</table>
+</section>
+
+<section id="planning" class="section">
+<h2>D2. Target Planning：从Target到可验证假设</h2>
+<p class="lead">Target不是简单把各Lever相加。每个Lever需要“规模 × 作用率 × 单位价值 × 实现概率”，并显式处理重叠和风险。</p>
+
+<div class="formula">Lever Target Incremental Sales
+= Eligible Base × Expected Take-up × Incremental Effect per Participant × Realization Rate
+
+Lever Target Incremental GP
+= Target Incremental Sales × Incremental Margin − Incremental Subsidy
+
+Enterprise Target Bridge
+= Base / External Outlook + Internal Lever Net Impact + Interaction / Risk</div>
+
+<div class="callout">参考现有Target文件的结构，Menu、Delivery、Brand Marketing、Affordability、Digital/APP、Pricing等可作为Planning Driver；在正式版本中应以最终签字口径和明确的互斥映射为准。</div>
+
+<h3>Target Gate</h3>
+<table>
+<tr><th style="width:16%">Gate</th><th style="width:84%">必须回答</th></tr>
+<tr><td>Size</td><td>Eligible base和可触达规模是否现实？</td></tr>
+<tr><td>Effect</td><td>Lift来自历史实验、准实验还是假设？</td></tr>
+<tr><td>Economics</td><td>Sales lift能否转成GP/EBITDA？</td></tr>
+<tr><td>Overlap</td><td>是否与其他Lever重复覆盖？</td></tr>
+<tr><td>Risk</td><td>执行率、季节性、竞争和高基数如何进入情景？</td></tr>
+</table>
+</section>
+
+<section id="oc" class="section">
+<h2>D3. OC Review标准页面</h2>
+<p class="lead">每页只回答一个管理问题，标题直接写结论。Gross、Incremental、Allocation三种数字必须标注。</p>
+
+<ol style="padding-left:20px; line-height:2;">
+<li><b>Executive Summary：</b>QAM、Comp Sales、GP、EBITDA vs Target / LY。</li>
+<li><b>Comp Sales Build：</b>External/Base + Internal Drivers waterfall。</li>
+<li><b>QAM Build：</b>N/R/E、penetration、retention和渠道重叠。</li>
+<li><b>Business Driver：</b>Menu、Delivery、Brand、Value、Digital、Pricing。</li>
+<li><b>Mechanism：</b>User × Freq × AC + PMIX。</li>
+<li><b>Incremental：</b>只展示有合格Control或因果设计的项目。</li>
+<li><b>Profit Bridge：</b>Incremental Sales → GP → EBITDA。</li>
+<li><b>Decision：</b>Scale / Optimize / Stop，以及下一步Owner和时间。</li>
+</ol>
+
+<div class="callout good"><b>一页规则：</b>每页只回答一个管理问题；标题直接写结论；Gross、Incremental、Allocation三种数字必须标注；所有Waterfall带Residual。</div>
+</section>
+
+<section id="dictionary" class="section">
+<h2>D4. 指标字典、数据治理与QA</h2>
+
+<table>
+<tr><th style="width:22%">字段</th><th style="width:78%">必须记录</th></tr>
+<tr><td>Metric Name</td><td>业务名称、技术字段、单位</td></tr>
+<tr><td>Definition</td><td>分子、分母、去重层级、包含/排除</td></tr>
+<tr><td>Time</td><td>自然/财务期间、窗口、数据冻结日期</td></tr>
+<tr><td>Population</td><td>同店、渠道、资格用户、测试/控制</td></tr>
+<tr><td>Owner</td><td>业务Owner、数据Owner、审批人</td></tr>
+<tr><td>Quality</td><td>刷新频率、阈值、reconciliation status</td></tr>
+</table>
+
+<h3>发布前QA</h3>
+<ul class="checklist">
+<li>Top-line是否与Finance/官方Dashboard一致</li>
+<li>LY/TY日期、星期、节假日是否对齐</li>
+<li>业务Driver是否互斥且完备</li>
+<li>渠道用户是否正确去重</li>
+<li>PMIX分母是否一致</li>
+<li>Treatment/Control pre-period是否平衡</li>
+<li>Incremental是否给出不确定性</li>
+<li>Sales、GP、EBITDA是否使用一致的订单集合</li>
+<li>重叠调整和Residual是否透明</li>
+<li>数字是否标注Gross / Incremental / Allocation</li>
+</ul>
+
+<div class="callout danger"><b>治理底线：</b>任何无法对账、无定义、无时间窗口、无Control却称为Incremental的数字，不进入正式管理层结论。</div>
+</section>
+
+<div class="foot">Growth & Value Creation Measurement Playbook v2.1 · Single-file HTML · 可打印为PDF或上传至内部站点</div>
+</main>
+<script>
+function tab(e,id){const p=e.target.closest('.section');p.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));p.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');e.target.classList.add('active')}
+const sections=[...document.querySelectorAll('main section[id]')];const links=[...document.querySelectorAll('.sidebar a')];window.addEventListener('scroll',()=>{let id='home';sections.forEach(s=>{if(s.getBoundingClientRect().top<130)id=s.id});links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id))});
+</script>
+</body></html>
