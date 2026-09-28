@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈文熠 · 营销策划作品集与案例深度辅导</title>
+<style>
+:root{
+  --navy:#0f2c52;
+  --navy-2:#1e3a8a;
+  --blue:#2563eb;
+  --blue-light:#eff6ff;
+  --green:#059669;
+  --green-light:#ecfdf5;
+  --purple:#7c3aed;
+  --purple-light:#f5f3ff;
+  --red:#dc2626;
+  --red-light:#fef2f2;
+  --gold:#b8860b;
+  --gold-light:#fef9e7;
+  --ink:#1e293b;
+  --muted:#64748b;
+  --line:#e2e8f0;
+  --bg:#f1f5f9;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+  font-size:15px;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1100px;margin:0 auto;padding:0 20px 80px;}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#0f2c52 0%,#1e3a8a 55%,#2563eb 100%);
+  color:#fff;
+  border-radius:0 0 26px 26px;
+  padding:52px 44px 44px;
+  margin:0 -20px 34px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.06);}
+.hero::before{content:"";position:absolute;right:60px;bottom:-120px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.05);}
+.hero .eyebrow{
+  display:inline-block;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  padding:5px 14px;border-radius:999px;margin-bottom:18px;
+}
+.hero h1{margin:0 0 10px;font-size:28px;font-weight:800;letter-spacing:.5px;line-height:1.35;}
+.hero .sub{font-size:15px;color:rgba(255,255,255,.82);margin:0;}
+.hero .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;position:relative;z-index:2;}
+.hero .meta span{
+  font-size:13px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);
+  padding:6px 14px;border-radius:8px;backdrop-filter:blur(4px);
+}
+
+/* PRINT BTN */
+.print-btn{
+  position:fixed;right:24px;bottom:24px;background:var(--navy);color:#fff;border:none;
+  border-radius:999px;padding:13px 22px;font-size:14px;font-weight:600;cursor:pointer;
+  box-shadow:0 6px 20px rgba(15,44,82,.28);font-family:inherit;z-index:99;transition:.2s;
+}
+.print-btn:hover{background:var(--navy-2);transform:translateY(-2px);}
+
+/* SECTION */
+.section{
+  background:#fff;border-radius:18px;padding:32px 34px 34px;margin-bottom:28px;
+  box-shadow:0 1px 3px rgba(15,44,82,.07),0 8px 24px -12px rgba(15,44,82,.12);
+}
+.section-title{
+  display:flex;align-items:center;gap:14px;margin:0 0 6px;
+  font-size:21px;font-weight:800;color:var(--navy);letter-spacing:.3px;
+}
+.section-title .badge{
+  flex:none;font-size:12.5px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,#1e3a8a,#2563eb);
+  padding:5px 13px;border-radius:8px;letter-spacing:.5px;
+}
+.section-desc{
+  color:var(--muted);font-size:14px;margin:0 0 26px;
+  padding-left:12px;border-left:3px solid var(--blue-light);
+}
+
+/* CALLOUT */
+.callout{border-radius:12px;padding:14px 18px;font-size:14.2px;margin:14px 0;border-left:4px solid;line-height:1.75;}
+.callout.info{background:var(--blue-light);border-color:#3b82f6;color:#1e3a8a;}
+.callout.tip{background:var(--green-light);border-color:#10b981;color:#064e3b;}
+.callout.warn{background:#fffbeb;border-color:#f59e0b;color:#78350f;}
+.callout strong{color:inherit;}
+
+/* 案例块 */
+.case-block{
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:32px;background:#fff;
+  box-shadow:0 2px 10px -6px rgba(15,44,82,.1);
+}
+.case-block .case-head{
+  background:linear-gradient(135deg,#0f2c52,#1e3a8a);color:#fff;padding:20px 26px;
+}
+.case-block .case-head h3{margin:0 0 4px;font-size:19px;font-weight:800;}
+.case-block .case-head p{margin:0;font-size:13.5px;color:rgba(255,255,255,.78);}
+.case-block .case-body{padding:24px 26px 28px;}
+
+/* 框架行 */
+.framework-row{
+  display:flex;gap:16px;padding:13px 0;border-bottom:1px dashed #e2e8f0;font-size:14.3px;
+}
+.framework-row:last-child{border-bottom:none;}
+.framework-row .fw-label{
+  flex:none;width:96px;font-weight:800;color:var(--blue);font-size:13.8px;line-height:1.7;
+}
+.framework-row .fw-val{color:#334155;line-height:1.8;}
+.framework-row .fw-val strong{color:var(--navy);}
+.framework-row .fw-val ul{margin:6px 0 0;padding-left:18px;}
+.framework-row .fw-val li{margin-bottom:4px;}
+
+/* 数据可视化 */
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:18px 0;}
+.chart-box{
+  border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#f8fafc;
+}
+.chart-box h5{margin:0 0 12px;font-size:14px;color:var(--navy);font-weight:800;}
+
+/* 饼图（CSS conic-gradient） */
+.pie{
+  width:130px;height:130px;border-radius:50%;margin:0 auto 10px;
+  background:conic-gradient(
+    #2563eb 0% 39%,
+    #f59e0b 39% 73.1%,
+    #10b981 73.1% 85.3%,
+    #8b5cf6 85.3% 92.6%,
+    #94a3b8 92.6% 100%
+  );
+  position:relative;
+}
+.pie::after{
+  content:"";position:absolute;inset:28px;border-radius:50%;background:#f8fafc;
+}
+.pie-label{font-size:12px;color:var(--muted);text-align:center;line-height:1.6;}
+.pie-label span{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle;}
+
+/* 柱状图 */
+.bar-chart{display:flex;align-items:flex-end;gap:16px;height:120px;padding-top:10px;}
+.bar-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+.bar{
+  width:100%;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#3b82f6,#1e40af);
+  min-height:4px;transition:.3s;
+}
+.bar-label{font-size:11.5px;color:var(--muted);margin-top:6px;text-align:center;line-height:1.4;}
+.bar-value{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+
+/* 截图占位 */
+.shot{
+  margin:18px 0 0;border-radius:12px;overflow:hidden;border:2px dashed #cbd5e1;
+  background:#f8fafc;position:relative;
+}
+.shot-inner{
+  padding:36px 20px;text-align:center;
+}
+.shot-inner .icon{font-size:28px;display:block;margin-bottom:8px;}
+.shot-inner .title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.shot-inner .hint{font-size:12.5px;color:var(--muted);line-height:1.6;}
+.shot-inner .file-ref{
+  display:inline-block;margin-top:10px;font-size:12px;color:#1e40af;
+  background:#dbeafe;padding:4px 12px;border-radius:6px;
+}
+
+/* 表格 */
+.table-wrap{overflow-x:auto;margin:18px 0;}
+table{width:100%;border-collapse:collapse;font-size:13.8px;min-width:680px;}
+th{background:#f1f5f9;color:var(--navy);font-weight:700;text-align:left;padding:11px 12px;border-bottom:2px solid #cbd5e1;white-space:nowrap;}
+td{padding:11px 12px;border-bottom:1px solid #e2e8f0;vertical-align:top;color:#334155;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f8fafc;}
+
+/* 时间线 */
+.timeline{position:relative;padding-left:28px;margin:20px 0;}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:#dbe7f7;}
+.tl-item{position:relative;margin-bottom:22px;}
+.tl-item:last-child{margin-bottom:0;}
+.tl-item::before{
+  content:"";position:absolute;left:-24px;top:6px;width:10px;height:10px;border-radius:50%;
+  background:var(--blue);border:2px solid #fff;box-shadow:0 0 0 2px #dbe7f7;
+}
+.tl-item .tl-time{font-size:12.5px;font-weight:800;color:var(--blue);letter-spacing:.4px;margin-bottom:2px;}
+.tl-item h4{margin:0 0 4px;font-size:15px;color:var(--navy);font-weight:800;}
+.tl-item p{margin:0;font-size:13.8px;color:#475569;line-height:1.7;}
+
+/* FOOTER */
+.footer{text-align:center;color:#94a3b8;font-size:13px;padding:28px 0 0;border-top:1px solid #e2e8f0;margin-top:12px;}
+
+/* RESPONSIVE */
+@media (max-width:720px){
+  .page{padding:0 14px 60px;}
+  .hero{padding:38px 24px 34px;margin:0 -14px 26px;border-radius:0 0 20px 20px;}
+  .hero h1{font-size:22px;}
+  .section{padding:24px 20px 26px;border-radius:14px;}
+  .section-title{font-size:18px;flex-direction:column;align-items:flex-start;gap:8px;}
+  .framework-row{flex-direction:column;gap:4px;}
+  .framework-row .fw-label{width:auto;}
+  .chart-row{grid-template-columns:1fr;}
+  .print-btn{right:14px;bottom:14px;padding:11px 18px;font-size:13px;}
+}
+
+/* PRINT */
+@media print{
+  body{background:#fff;font-size:12.4px;line-height:1.65;}
+  .page{max-width:100%;padding:0;}
+  .hero{background:#0f2c52 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;border-radius:0;margin:0 0 16px;padding:24px 26px;}
+  .hero h1{font-size:21px;}
+  .hero .meta{display:none;}
+  .print-btn{display:none;}
+  .section{box-shadow:none;border:1px solid #dbe4f0;padding:18px 20px 20px;margin-bottom:14px;}
+  .case-block,.callout,.tl-item,.framework-row,.chart-box{page-break-inside:avoid;}
+  .case-block .case-head,.callout,.section-title .badge,.bar,.pie{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨 打印 / 导出 PDF</button>
+
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="eyebrow">Portfolio Coaching Plan · Deep Case Edition</span>
+    <h1>陈文熠 · 营销策划作品集与案例深度辅导</h1>
+    <p class="sub">材料分类 · 岗位匹配 · 作品集框架 · 必选案例深度结构化总结 · 一小时讲课大纲</p>
+    <div class="meta">
+      <span>🎯 市场营销 / 品牌推广 / 策划</span>
+      <span>📁 4 个必选案例 + 4 个可选补充</span>
+      <span>🖼 截图占位 + CSS 数据可视化</span>
+      <span>📍 上海 / 深圳优先</span>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       PART 1 作品材料分类
+  ============================================================= -->
+  <section class="section" id="materials">
+    <h2 class="section-title">
+      <span class="badge">Part 1</span>
+      作品材料分类
+    </h2>
+    <p class="section-desc">六大类材料，标注必选 / 可选、适合岗位、作品集呈现方式，并在文件名下附对应截图占位。</p>
+
+    <div class="callout info">
+      <strong>分类逻辑：</strong>以「营销策划岗位」真实工作链路为参照——消费者洞察 → 品牌策略 → 内容营销 → 达人/渠道运营 → 数据复盘。每一类材料对应作品集中的一个能力模块。
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>类型</th>
+            <th>材料</th>
+            <th>作品集角色</th>
+            <th>呈现方式</th>
+            <th>对应文件</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="4" style="background:#fef2f2;color:#b91c1c;font-weight:800;vertical-align:middle;">必选</td>
+            <td>百威昕蓝整合营销</td>
+            <td>主案例 · 全链路营销</td>
+            <td>3 页：背景/洞察/策略/执行/成果/复盘</td>
+            <td>营销规划.xlsx、KOL&amp;KOC分层策略.pdf、STP、4Ps、社媒日历</td>
+          </tr>
+          <tr>
+            <td>中国动漫集团 IP 营销</td>
+            <td>核心案例 · 内容运营</td>
+            <td>2 页：IP 内容矩阵、视频、推文、数据</td>
+            <td>动漫衍生品市场调研报告.docx、简历实习描述</td>
+          </tr>
+          <tr>
+            <td>“我的世界”模组研究</td>
+            <td>洞察案例 · 定性研究</td>
+            <td>1–2 页：访谈框架、洞察提炼、分析模型</td>
+            <td>简历项目描述、访谈纪要、汇报 PPT</td>
+          </tr>
+          <tr>
+            <td>B 站 / 快手内容创作</td>
+            <td>内容能力补充</td>
+            <td>1 页：作品链接、播放数据、脚本示例</td>
+            <td>B站/快手主页、脚本示例</td>
+          </tr>
+          <tr>
+            <td rowspan="4" style="background:#f1f5f9;color:#475569;font-weight:800;vertical-align:middle;">可选</td>
+            <td>节气营销成功案例分析</td>
+            <td>行业研究补充</td>
+            <td>1 页：案例拆解、策略对比、启示</td>
+            <td>近三年节气营销成功案例分析.docx</td>
+          </tr>
+          <tr>
+            <td>品牌研究（火影/龙珠/星战/漫威）</td>
+            <td>IP 研究补充</td>
+            <td>1 页：受众画像、营销策略、跨媒介衍生</td>
+            <td>品牌研究.docx</td>
+          </tr>
+          <tr>
+            <td>电商渠道优化方案</td>
+            <td>电商转化补充</td>
+            <td>1 页：页面优化、SEO、会员、大促 ROI</td>
+            <td>WK09_电商渠道优化方案.docx</td>
+          </tr>
+          <tr>
+            <td>动漫衍生品市场调研报告</td>
+            <td>行业趋势补充</td>
+            <td>1 页：市场规模、消费者偏好、渠道趋势</td>
+            <td>动漫衍生品市场调研报告.docx</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PART 2 岗位匹配
+  ============================================================= -->
+  <section class="section" id="jobs">
+    <h2 class="section-title">
+      <span class="badge">Part 2</span>
+      对应适合匹配的岗位
+    </h2>
+    <p class="section-desc">根据材料组合匹配目标岗位，标注投递优先级与所需作品集模块。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>目标岗位</th>
+            <th>匹配度</th>
+            <th>推荐材料组合</th>
+            <th>作品集呈现重点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>市场营销 / 品牌策划</strong></td>
+            <td>⭐⭐⭐⭐⭐</td>
+            <td>①百威全案 + ⑤节气营销/品牌研究 + ③消费者洞察</td>
+            <td>STP、4Ps、预算分配、KOL 分层、KPI 复盘</td>
+          </tr>
+          <tr>
+            <td><strong>内容营销 / 新媒体运营</strong></td>
+            <td>⭐⭐⭐⭐⭐</td>
+            <td>②中国动漫 + ④B站/快手 + ①社媒日历</td>
+            <td>内容矩阵、脚本策划、视频剪辑、平台数据</td>
+          </tr>
+          <tr>
+            <td><strong>品牌推广 / 策划</strong></td>
+            <td>⭐⭐⭐⭐</td>
+            <td>①百威 KOL 策略 + ⑤节气营销 + ②IP 营销</td>
+            <td>活动策划、达人合作、传播链路、UGC 运营</td>
+          </tr>
+          <tr>
+            <td><strong>电商营销 / 转化运营</strong></td>
+            <td>⭐⭐⭐⭐</td>
+            <td>⑥电商渠道优化 + ①4Ps 渠道策略</td>
+            <td>页面优化、SEO、会员体系、大促 ROI</td>
+          </tr>
+          <tr>
+            <td><strong>消费者洞察 / 市场研究</strong></td>
+            <td>⭐⭐⭐⭐</td>
+            <td>③我的世界研究 + ①消费者调研 + ⑤行业分析</td>
+            <td>定性深访、问卷设计、洞察提炼、分析框架</td>
+          </tr>
+          <tr>
+            <td><strong>战略 / 咨询（冲刺）</strong></td>
+            <td>⭐⭐⭐</td>
+            <td>⑤行业分析 + ③研究项目 + ②竞品分析</td>
+            <td>结构化思维、行业研究、竞品对比、逻辑表达</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <strong>投递建议：</strong>核心主投「市场营销 / 品牌策划」和「内容营销 / 新媒体运营」，次投「品牌推广 / 策划」和「电商营销」，冲刺「消费者洞察 / 市场研究」。战略咨询作为补充，需要额外补案例面试和语言成绩。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PART 3 作品框架与案例深度解析
+  ============================================================= -->
+  <section class="section" id="framework">
+    <h2 class="section-title">
+      <span class="badge">Part 3</span>
+      作品呈现框架与必选案例深度结构化总结
+    </h2>
+    <p class="section-desc">四个必选案例，全部按「背景—目标—职责—洞察—策略—执行—成果—复盘」框架写成可直接放进作品集的内容，并附数据可视化与截图占位。</p>
+
+    <!-- ========== 案例一：百威 ========== -->
+    <div class="case-block">
+      <div class="case-head">
+        <h3>案例一：百威昕蓝新品上市整合营销</h3>
+        <p>作品集主案例 · 全链路营销策划 · 建议 3 页</p>
+      </div>
+      <div class="case-body">
+
+        <div class="framework-row">
+          <span class="fw-label">项目背景</span>
+          <span class="fw-val">百威昕蓝是百威集团面向年轻消费者的低醇果味啤酒系列，定位“轻淡自在”。2026 年新品上市阶段，面临低醇啤酒赛道竞争加剧、年轻群体品牌忠诚度低、新品认知不足的挑战。品牌希望通过单月数字营销投入，快速建立产品认知与“轻社交酒饮”标签。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">核心目标</span>
+          <span class="fw-val">
+            <ul>
+              <li>提升品牌知名度、市场占有率与利润率；</li>
+              <li>单月 50 万元数字营销预算；</li>
+              <li>聚焦抖音 + 小红书双平台；</li>
+              <li>目标总曝光 5000 万+、总互动 250 万+、ROI 1:3–1:4。</li>
+            </ul>
+          </span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">本人职责</span>
+          <span class="fw-val">负责消费者调研（问卷设计+数据分析）、达人资源池搭建（300+ KOL/KOC）、预算分配方案、4 周内容日历制定、KPI 设定与方案汇报。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">洞察</span>
+          <span class="fw-val">
+            <p>通过 <strong>220+ 样本投放、200+ 份有效问卷</strong>发现：</p>
+            <ul>
+              <li>核心人群为 18–30 岁年轻女性（61.79%）、在校大学生、年轻上班族；</li>
+              <li>核心需求是“健康无负担、悦己、社交分享、高颜值出片”；</li>
+              <li>果味、低醇、小规格更受欢迎；</li>
+              <li>购买渠道以线下便利店为主，社交分享意愿高。</li>
+            </ul>
+          </span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">策略</span>
+          <span class="fw-val">
+            <p>基于 STP 与 4Ps，提出“<strong>轻淡自在</strong>”定位：</p>
+            <ul>
+              <li><strong>STP：</strong>核心市场为新一线/二三线城市 18–30 岁年轻女性，次级为 18–25 岁在校大学生，潜力为 26–30 岁年轻上班族；</li>
+              <li><strong>4Ps 产品：</strong>低醇（≤3%）、果味（白桃/荔枝/青柠）、小规格（330ml）、马卡龙色系包装；</li>
+              <li><strong>4Ps 价格：</strong>锚定 6–9 元价格带，单瓶 7.9 元，6 瓶分享装 42.9 元；</li>
+              <li><strong>4Ps 渠道：</strong>便利店（74.8%）、商超（53.66%）、电商、即时零售；</li>
+              <li><strong>4Ps 促销：</strong>抖音造势 + 小红书深耕，头部 KOL 制造声量、腰部 KOL 场景种草、KOC 真实口碑；</li>
+              <li><strong>预算分配：</strong>抖音 56%、小红书 34%、备用金 10%。</li>
+            </ul>
+          </span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">执行</span>
+          <span class="fw-val">
+            <ul>
+              <li>搭建 300+ KOL/KOC 资源池（含粉丝量、曝光中位数、互动中位数、报价、合作案例）；</li>
+              <li>完成 4 周投放排期（预热→引爆→发酵→长尾）；</li>
+              <li>输出头部/腰部/垂类 Brief、内容日历、预算明细表、KPI 看板；</li>
+              <li>设计分层达人组合与平台策略，如头部达人申申椰、显眼宝、大宝lulu等。</li>
+            </ul>
+          </span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">成果</span>
+          <span class="fw-val">方案目标：抖音总曝光 ≥3000 万、互动 ≥120 万；小红书总曝光 ≥1000 万、互动 ≥60 万；整体 ROI 1:3–1:4。形成可复用达人营销 SOP 与 PPT 模板，资源库可供后续复用。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">复盘</span>
+          <span class="fw-val">成功因素：调研驱动、策略完整、预算分层清晰、内容可落地。可优化：增加私域承接、即时零售渠道、本土 IP 联动；头部达人合作可提前锁定档期。</span>
+        </div>
+
+        <!-- 数据可视化 -->
+        <div class="chart-row">
+          <div class="chart-box">
+            <h5>预算分配</h5>
+            <div class="bar-chart">
+              <div class="bar-item">
+                <div class="bar-value">56%</div>
+                <div class="bar" style="height:80%;"></div>
+                <div class="bar-label">抖音</div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-value">34%</div>
+                <div class="bar" style="height:48%;"></div>
+                <div class="bar-label">小红书</div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-value">10%</div>
+                <div class="bar" style="height:14%;"></div>
+                <div class="bar-label">备用金</div>
+              </div>
+            </div>
+          </div>
+          <div class="chart-box">
+            <h5>KOL 分层占比</h5>
+            <div class="pie"></div>
+            <div class="pie-label">
+              <span style="background:#2563eb;"></span>头部 20%&nbsp;&nbsp;
+              <span style="background:#f59e0b;"></span>腰部 40%&nbsp;&nbsp;
+              <span style="background:#10b981;"></span>垂类 40%
+            </div>
+          </div>
+        </div>
+
+        <!-- 截图占位 -->
+        <div class="shot">
+          <div class="shot-inner">
+            <span class="icon">📊</span>
+            <div class="title">KOL/KOC 分层策略截图</div>
+            <div class="hint">头部 20%（6人/467.7w粉）｜腰部 40%（12人/288.8w粉）｜垂类 40%（12人/54.9w粉）</div>
+            <div class="file-ref">请替换为：KOL&amp;KOC分层策略.pdf 第2页截图</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========== 案例二：中国动漫 ========== -->
+    <div class="case-block">
+      <div class="case-head" style="background:linear-gradient(135deg,#047857,#10b981);">
+        <h3>案例二：中国动漫集团 IP 营销与内容运营</h3>
+        <p>核心案例 · 内容营销 / IP 运营 · 建议 2 页</p>
+      </div>
+      <div class="case-body">
+
+        <div class="framework-row">
+          <span class="fw-label">项目背景</span>
+          <span class="fw-val">中国动漫集团旗下拥有多个动漫 IP，需要提升 IP 在年轻群体中的认知度与内容影响力。实习生参与《雄狮少年 2》IP 营销及集团动漫 IP 的内容运营工作。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">核心目标</span>
+          <span class="fw-val">提升 IP 曝光与用户互动；搭建内容矩阵；完成行业研究与竞品分析；产出可发布的新媒体内容。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">本人职责</span>
+          <span class="fw-val">独立完成 6 份动漫行业研究报告（每份约 1 万字）；独立完成海外 IP 产业运作分析；参与《雄狮少年 2》IP 营销案头研究与内容矩阵搭建；完成 20+ 条视频剪辑并发布；独立完成 3 篇小红书推文；完成词条挖掘与混剪视频制作。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">洞察</span>
+          <span class="fw-val">
+            <p>通过用户访谈、问卷调查、案头研究发现：</p>
+            <ul>
+              <li>动漫行业受政策扶持与技术赋能，产业链延伸至 IP 多元化改编；</li>
+              <li>海外 IP（火影、龙珠、漫威、星战）通过周边、游戏联动、剧场版、跨媒介叙事实现长线运营；</li>
+              <li><strong>轻软型周边（吧唧、卡牌）占谷子经济 70%–80% 份额</strong>，女性消费者与年轻群体是核心受众。</li>
+            </ul>
+          </span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">策略</span>
+          <span class="fw-val">以 IP 内容生态为核心，搭建“<strong>行业研究→竞品分析→内容矩阵→平台分发→数据监测</strong>”的内容运营链路；围绕同款穿搭、打卡攻略、词条解读等方向生产内容；通过抖音、小红书、快手多平台分发。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">执行</span>
+          <span class="fw-val">完成 6 份行业研究报告与竞品分析报告；参与《雄狮少年 2》内容矩阵搭建；剪辑 20+ 条视频发布至抖音、小红书、快手；独立完成 3 篇小红书推文；产出 10+ 条动漫词条；完成混剪视频各渠道数据后台监测与初步分析。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">成果</span>
+          <span class="fw-val">产出 6 份行业研究报告、1 份海外 IP 竞品分析报告、20+ 条视频、3 篇小红书推文、10+ 条动漫词条；完成多平台数据监测与分析；为集团 IP 内容运营提供研究支持与内容素材。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">复盘</span>
+          <span class="fw-val">成功因素：研究与内容并行，既有行业深度又有落地产出。可优化：可增加 IP 粉丝社群运营、UGC 活动策划、跨平台数据打通与效果归因。</span>
+        </div>
+
+        <!-- 数据可视化 -->
+        <div class="chart-row">
+          <div class="chart-box">
+            <h5>轻软型周边品类销售占比</h5>
+            <div class="pie" style="background:conic-gradient(#2563eb 0% 39%,#f59e0b 39% 73.1%,#10b981 73.1% 85.3%,#8b5cf6 85.3% 92.6%,#94a3b8 92.6% 100%);"></div>
+            <div class="pie-label">
+              <span style="background:#2563eb;"></span>吧唧 39%&nbsp;&nbsp;
+              <span style="background:#f59e0b;"></span>卡牌 34.1%&nbsp;&nbsp;
+              <span style="background:#10b981;"></span>亚克力 12.2%<br>
+              <span style="background:#8b5cf6;"></span>毛绒 7.3%&nbsp;&nbsp;
+              <span style="background:#94a3b8;"></span>其他 7.3%
+            </div>
+          </div>
+          <div class="chart-box">
+            <h5>盲盒线上销售占比趋势</h5>
+            <div class="bar-chart">
+              <div class="bar-item">
+                <div class="bar-value">7%</div>
+                <div class="bar" style="height:14%;"></div>
+                <div class="bar-label">2015</div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-value">32.2%</div>
+                <div class="bar" style="height:64%;"></div>
+                <div class="bar-label">2022</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 截图占位 -->
+        <div class="shot">
+          <div class="shot-inner">
+            <span class="icon">📈</span>
+            <div class="title">盲盒市场规模与轻软型周边品类占比</div>
+            <div class="hint">吧唧39% / 卡牌34.1% / 亚克力12.2% / 毛绒玩具7.3%</div>
+            <div class="file-ref">请替换为：动漫衍生品市场调研报告.docx 中的饼图截图</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========== 案例三：我的世界 ========== -->
+    <div class="case-block">
+      <div class="case-head" style="background:linear-gradient(135deg,#6d28d9,#a78bfa);">
+        <h3>案例三：“我的世界”模组制作者劳动情况考察</h3>
+        <p>洞察案例 · 消费者/创作者研究 · 建议 1–2 页</p>
+      </div>
+      <div class="case-body">
+
+        <div class="framework-row">
+          <span class="fw-label">项目背景</span>
+          <span class="fw-val">“我的世界”模组创作者在商品化趋势下面临劳动异化与新型剥削问题。项目旨在通过定性研究，理解模组创作者的劳动处境与创作生态。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">核心目标</span>
+          <span class="fw-val">完成 15 场深度访谈；搭建分析框架；产出研究报告；获得导师 A 评分。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">本人职责</span>
+          <span class="fw-val">项目负责人，带领组员采用滚雪球抽样招募模组制作者；独立设计访谈提纲；对访谈全程进行转写并整理纪要；筛选有效内容汇总为访谈纪要；结合访谈与理论文献搭建分析框架；以线下汇报形式呈现研究结论。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">洞察</span>
+          <span class="fw-val">通过 15 场深度访谈（单场 1–2 小时）发现：模组创作者在商品化趋势下面临劳动异化与新型剥削；创作热情与商业变现之间存在张力；创作者对平台规则、收益分配、版权归属存在普遍焦虑。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">策略</span>
+          <span class="fw-val">采用<strong>滚雪球抽样</strong>招募受访者；设计半结构化访谈提纲；结合理论文献搭建“<strong>劳动异化—新型剥削—创作者处境</strong>”分析框架；通过访谈纪要与线下汇报呈现研究发现。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">执行</span>
+          <span class="fw-val">完成 15 场深度访谈；全程转写并整理纪要；筛选有效内容汇总；搭建分析框架；完成线下汇报。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">成果</span>
+          <span class="fw-val">完成研究报告与访谈纪要；线下汇报获导师 A 评分；为理解创作者生态与平台劳动提供一手洞察。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">复盘</span>
+          <span class="fw-val">成功因素：抽样方法科学、访谈深度足够、理论框架清晰。可优化：可增加量化数据补充、扩大样本量、增加平台侧访谈。</span>
+        </div>
+
+        <!-- 截图占位 -->
+        <div class="shot">
+          <div class="shot-inner">
+            <span class="icon">👥</span>
+            <div class="title">受众画像示例——火影忍者 2022 全球人气投票性别占比</div>
+            <div class="hint">男性58% / 女性39.5% / 未公开2.5%</div>
+            <div class="file-ref">请替换为：品牌研究.docx 中的受众画像饼图截图</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========== 案例四：B站/快手 ========== -->
+    <div class="case-block">
+      <div class="case-head" style="background:linear-gradient(135deg,#b45309,#f59e0b);">
+        <h3>案例四：B 站 &amp; 快手内容创作与运营</h3>
+        <p>内容能力补充 · 新媒体运营 · 建议 1 页</p>
+      </div>
+      <div class="case-body">
+
+        <div class="framework-row">
+          <span class="fw-label">项目背景</span>
+          <span class="fw-val">个人长期在 B 站与朋友合作音乐、长视频企划，负责歌词、脚本、策划；在快手为实习公司旗下儿童动画 IP 做推广。两个平台展示内容创作与运营能力。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">核心目标</span>
+          <span class="fw-val">B 站：产出高质量歌词/脚本/策划内容，累计播放 45 万+；快手：为儿童动画 IP 做推广，提升曝光与互动。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">本人职责</span>
+          <span class="fw-val">B 站：负责歌词、脚本、策划，与朋友合作完成音乐与长视频企划；快手：负责儿童动画 IP 的推广内容制作与发布。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">洞察</span>
+          <span class="fw-val">B 站用户偏好有创意、有情感共鸣的音乐与长视频内容；快手用户偏好轻松、接地气的儿童动画内容；平台调性决定内容形式与发布策略。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">策略</span>
+          <span class="fw-val">B 站：以歌词创作与脚本策划为核心，结合音乐与长视频形式，打造有传播力的内容；快手：以儿童动画 IP 为核心，制作适配平台调性的推广内容，持续发布与数据监测。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">执行</span>
+          <span class="fw-val">B 站：完成歌词、脚本、策划并发布，累计播放 45 万+；快手：完成儿童动画 IP 推广内容制作与发布。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">成果</span>
+          <span class="fw-val">B 站累计播放 45 万+；快手完成儿童动画 IP 推广内容发布；展示内容创意、脚本撰写、平台运营与数据监测能力。</span>
+        </div>
+
+        <div class="framework-row">
+          <span class="fw-label">复盘</span>
+          <span class="fw-val">成功因素：内容创意强、平台调性匹配、持续产出。可优化：可增加数据复盘与内容迭代、尝试更多内容形式与平台。</span>
+        </div>
+
+        <!-- 截图占位 -->
+        <div class="shot">
+          <div class="shot-inner">
+            <span class="icon">🎬</span>
+            <div class="title">B 站歌词 / 脚本策划作品截图</div>
+            <div class="hint">累计播放 45 万+</div>
+            <div class="file-ref">请替换为：B 站主页或作品截图（b23.tv/UAgn4GT）</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <strong>数据脱敏提醒：</strong>百威数据需脱敏，不泄露真实预算、KOL 报价、公司内部数据，用区间或百分比表达。面试时明确区分「方案目标」与「实际结果」，不虚构。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PART 4 必选与可选材料清单
+  ============================================================= -->
+  <section class="section" id="must-optional">
+    <h2 class="section-title">
+      <span class="badge">Part 4</span>
+      必选与可选材料清单
+    </h2>
+    <p class="section-desc">必选材料是作品集核心骨架，可选材料用于补充能力维度或针对特定岗位微调。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>类型</th>
+            <th>材料</th>
+            <th>作品集角色</th>
+            <th>呈现方式</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="4" style="background:#fef2f2;color:#b91c1c;font-weight:800;vertical-align:middle;">必选</td>
+            <td>百威昕蓝整合营销</td>
+            <td>主案例 · 全链路营销</td>
+            <td>3 页：背景/洞察/策略/执行/成果/复盘</td>
+          </tr>
+          <tr>
+            <td>中国动漫集团 IP 营销</td>
+            <td>核心案例 · 内容运营</td>
+            <td>2 页：IP 内容矩阵、视频、推文、数据</td>
+          </tr>
+          <tr>
+            <td>“我的世界”模组研究</td>
+            <td>洞察案例 · 定性研究</td>
+            <td>1–2 页：访谈框架、洞察提炼、分析模型</td>
+          </tr>
+          <tr>
+            <td>B 站 / 快手内容创作</td>
+            <td>内容能力补充</td>
+            <td>1 页：作品链接、播放数据、脚本示例</td>
+          </tr>
+          <tr>
+            <td rowspan="4" style="background:#f1f5f9;color:#475569;font-weight:800;vertical-align:middle;">可选</td>
+            <td>节气营销成功案例分析</td>
+            <td>行业研究补充</td>
+            <td>1 页：案例拆解、策略对比、启示</td>
+          </tr>
+          <tr>
+            <td>品牌研究（火影/龙珠/星战/漫威）</td>
+            <td>IP 研究补充</td>
+            <td>1 页：受众画像、营销策略、跨媒介衍生</td>
+          </tr>
+          <tr>
+            <td>电商渠道优化方案</td>
+            <td>电商转化补充</td>
+            <td>1 页：页面优化、SEO、会员、大促 ROI</td>
+          </tr>
+          <tr>
+            <td>动漫衍生品市场调研报告</td>
+            <td>行业趋势补充</td>
+            <td>1 页：市场规模、消费者偏好、渠道趋势</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PART 5 一小时讲课大纲
+  ============================================================= -->
+  <section class="section" id="lesson">
+    <h2 class="section-title">
+      <span class="badge">Part 5</span>
+      一小时讲课大纲
+    </h2>
+    <p class="section-desc">把材料分类、岗位匹配、作品框架、案例重构与面试口述整合进 60 分钟课程。</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">0–5 min</div>
+        <h4>目标对齐与作品集定位</h4>
+        <p>确认投递方向、作品集用途、叙事主线。建议定位：<strong>陈文熠 | 品牌营销策划 | 文化洞察 × 内容策略 × 数据复盘</strong>。</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">5–15 min</div>
+        <h4>材料分类与岗位匹配</h4>
+        <p>过一遍 Part 1 的六大类材料，对照 Part 2 的岗位匹配表，确定核心主投岗位与对应材料组合。</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15–25 min</div>
+        <h4>作品集整体框架搭建</h4>
+        <p>讲解封面、简介、能力地图、案例目录、案例模板、技能页、结尾，确定每个案例的页数分配。</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">25–45 min</div>
+        <h4>必选案例重构示范（以百威为主）</h4>
+        <p>用框架重构百威案例：背景 → 目标 → 职责 → 洞察 → 策略 → 执行 → 成果 → 复盘。示范如何把“执行”升维成“策略”。</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">45–55 min</div>
+        <h4>面试口述思路与追问应对</h4>
+        <p>每个案例准备 1 分钟 / 3 分钟口述。高频追问：为什么选这个策略？预算怎么分配？达人怎么选？效果不好怎么调？你个人贡献是什么？</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">55–60 min</div>
+        <h4>课后作业与下一步</h4>
+        <p>布置 3 个案例卡片、1 分钟口述录音、作品集目录一页纸。下次课逐字修改并模拟面试。</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <strong>面试口述通用框架：</strong><br>
+      <strong>1 分钟版本：</strong>背景 → 目标 → 我的角色 → 核心策略 → 成果。<br>
+      <strong>3 分钟版本：</strong>背景 → 目标 → 洞察 → 策略 → 执行 → 成果 → 复盘 → 难点。
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PART 6 附件/截图整理指南
+  ============================================================= -->
+  <section class="section" id="attachments">
+    <h2 class="section-title">
+      <span class="badge">Part 6</span>
+      附件 / 截图整理指南
+    </h2>
+    <p class="section-desc">以下为所有材料截图清单。由于我无法直接访问你的本地文件并截图嵌入，请在制作作品集时按此清单替换 HTML 中的截图占位区，或直接放入 PPT / PDF。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>案例</th>
+            <th>需要截图的内容</th>
+            <th>来源文件</th>
+            <th>建议截图位置</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>百威</td>
+            <td>KOL/KOC 金字塔模型</td>
+            <td>KOL&amp;KOC分层策略.pdf</td>
+            <td>第2页：头部20% / 腰部40% / 垂类40%</td>
+          </tr>
+          <tr>
+            <td>百威</td>
+            <td>预算分配表</td>
+            <td>营销规划.xlsx</td>
+            <td>预算分配逻辑说明区域</td>
+          </tr>
+          <tr>
+            <td>百威</td>
+            <td>4 周投放排期表</td>
+            <td>营销规划.xlsx</td>
+            <td>投放排期区域</td>
+          </tr>
+          <tr>
+            <td>百威</td>
+            <td>社媒内容日历</td>
+            <td>WK06_社媒内容日历.docx</td>
+            <td>3月排期表</td>
+          </tr>
+          <tr>
+            <td>中国动漫</td>
+            <td>轻软型周边品类占比饼图</td>
+            <td>动漫衍生品市场调研报告.docx</td>
+            <td>品类占比饼图</td>
+          </tr>
+          <tr>
+            <td>中国动漫</td>
+            <td>盲盒线上销售占比趋势</td>
+            <td>动漫衍生品市场调研报告.docx</td>
+            <td>2015–2022 趋势图</td>
+          </tr>
+          <tr>
+            <td>我的世界</td>
+            <td>受众画像饼图（火影）</td>
+            <td>品牌研究.docx</td>
+            <td>性别占比饼图</td>
+          </tr>
+          <tr>
+            <td>B站/快手</td>
+            <td>B 站主页或作品截图</td>
+            <td>B站主页</td>
+            <td>累计播放 45 万+ 截图</td>
+          </tr>
+          <tr>
+            <td>电商</td>
+            <td>电商关键指标监控表</td>
+            <td>WK09_电商渠道优化方案.docx</td>
+            <td>流量/转化/价值三层级表</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout info">
+      <strong>如何替换截图：</strong>在 HTML 中找到 <code>&lt;div class="shot"&gt;</code> 区块，把内部的 <code>&lt;div class="shot-inner"&gt;...&lt;/div&gt;</code> 替换为 <code>&lt;img src="你的截图路径.png" alt="描述"&gt;</code> 即可。建议截图宽度 800–1200px，保持清晰。
+    </div>
+
+    <div class="callout tip">
+      <strong>作品集制作建议：</strong>每个案例页配 2–3 张关键截图，不要全文粘贴。截图需清晰、带标注，能一眼看出你的贡献与策略。所有截图统一尺寸与风格，增强专业度。
+    </div>
+  </section>
+
+  <div class="footer">
+    陈文熠 · 营销策划作品集与案例深度辅导 ｜ 材料分类 · 岗位匹配 · 作品框架 · 案例深度总结 · 讲课大纲
+  </div>
+
+</div>
+
+</body>
+</html>
