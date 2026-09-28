@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>何文聪 · 求职辅导课程方案（两课时）</title>
+<style>
+:root{
+  --navy:#0f2c52;
+  --navy-2:#1e40af;
+  --blue:#2563eb;
+  --blue-light:#eff6ff;
+  --green:#059669;
+  --green-light:#ecfdf5;
+  --purple:#7c3aed;
+  --purple-light:#f5f3ff;
+  --amber:#d97706;
+  --amber-light:#fffbeb;
+  --ink:#1e293b;
+  --muted:#64748b;
+  --line:#e2e8f0;
+  --bg:#f1f5f9;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+  font-size:15px;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:980px;margin:0 auto;padding:0 20px 80px;}
+
+/* ---------- HERO ---------- */
+.hero{
+  background:linear-gradient(135deg,#0f2c52 0%,#1e40af 55%,#2563eb 100%);
+  color:#fff;
+  border-radius:0 0 26px 26px;
+  padding:52px 44px 44px;
+  margin:0 -20px 34px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  right:-80px;top:-80px;
+  width:320px;height:320px;
+  border-radius:50%;
+  background:rgba(255,255,255,.06);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  right:60px;bottom:-120px;
+  width:220px;height:220px;
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+}
+.hero .eyebrow{
+  display:inline-block;
+  font-size:12.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);
+  padding:5px 14px;
+  border-radius:999px;
+  margin-bottom:18px;
+}
+.hero h1{
+  margin:0 0 10px;
+  font-size:31px;
+  font-weight:800;
+  letter-spacing:.5px;
+  line-height:1.35;
+}
+.hero .sub{
+  font-size:15px;
+  color:rgba(255,255,255,.82);
+  margin:0;
+}
+.hero .meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:24px;
+  position:relative;
+  z-index:2;
+}
+.hero .meta span{
+  font-size:13px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.2);
+  padding:6px 14px;
+  border-radius:8px;
+  backdrop-filter:blur(4px);
+}
+
+/* ---------- PRINT BTN ---------- */
+.print-btn{
+  position:fixed;
+  right:24px;bottom:24px;
+  background:var(--navy);
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  padding:13px 22px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(15,44,82,.28);
+  font-family:inherit;
+  z-index:99;
+  transition:.2s;
+}
+.print-btn:hover{background:var(--navy-2);transform:translateY(-2px);}
+
+/* ---------- SECTION ---------- */
+.section{
+  background:#fff;
+  border-radius:18px;
+  padding:32px 34px 34px;
+  margin-bottom:28px;
+  box-shadow:0 1px 3px rgba(15,44,82,.07),0 8px 24px -12px rgba(15,44,82,.12);
+}
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin:0 0 6px;
+  font-size:21px;
+  font-weight:800;
+  color:var(--navy);
+  letter-spacing:.3px;
+}
+.section-title .badge{
+  flex:none;
+  font-size:12.5px;
+  font-weight:700;
+  color:#fff;
+  background:linear-gradient(135deg,#1e40af,#2563eb);
+  padding:5px 13px;
+  border-radius:8px;
+  letter-spacing:.5px;
+}
+.section-desc{
+  color:var(--muted);
+  font-size:14px;
+  margin:0 0 26px;
+  padding-left:2px;
+  border-left:3px solid var(--blue-light);
+  padding-left:12px;
+}
+
+/* ---------- STEP ---------- */
+.step{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px 26px 24px;
+  margin-bottom:16px;
+  transition:.2s;
+}
+.step:hover{border-color:#c7d7f0;}
+.step-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+.step-num{
+  flex:none;
+  width:30px;height:30px;
+  border-radius:50%;
+  background:var(--navy);
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13.5px;font-weight:700;
+}
+.step-head h3{
+  margin:0;
+  font-size:16.5px;
+  font-weight:700;
+  color:var(--navy);
+  flex:1;
+  min-width:180px;
+}
+.time-badge{
+  flex:none;
+  font-size:12px;
+  font-weight:700;
+  color:var(--blue);
+  background:var(--blue-light);
+  border:1px solid #dbeafe;
+  padding:4px 11px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+
+/* ---------- LIST ---------- */
+ul.clean{margin:0;padding-left:0;list-style:none;}
+ul.clean>li{
+  position:relative;
+  padding-left:20px;
+  margin-bottom:9px;
+}
+ul.clean>li::before{
+  content:"";
+  position:absolute;
+  left:4px;top:11px;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:#93b4e8;
+}
+ul.clean>li:last-child{margin-bottom:0;}
+ul.clean ul{margin:8px 0 0;padding-left:0;list-style:none;}
+ul.clean ul>li{
+  position:relative;
+  padding-left:18px;
+  margin-bottom:6px;
+  font-size:14.3px;
+  color:#475569;
+}
+ul.clean ul>li::before{
+  content:"";
+  position:absolute;
+  left:4px;top:10px;
+  width:5px;height:5px;
+  border:1.5px solid #b6c9e6;
+  border-radius:50%;
+  background:transparent;
+}
+p{margin:0 0 10px;}
+p:last-child{margin-bottom:0;}
+strong{font-weight:700;color:var(--navy);}
+
+/* ---------- CALLOUT ---------- */
+.callout{
+  border-radius:12px;
+  padding:14px 18px;
+  font-size:14.3px;
+  margin:14px 0;
+  border-left:4px solid;
+  line-height:1.75;
+}
+.callout.warn{background:var(--amber-light);border-color:#f59e0b;color:#78350f;}
+.callout.info{background:var(--blue-light);border-color:#3b82f6;color:#1e3a8a;}
+.callout.tip{background:var(--green-light);border-color:#10b981;color:#064e3b;}
+.callout strong{color:inherit;}
+.callout .label{
+  display:inline-block;
+  font-weight:800;
+  margin-right:6px;
+}
+
+/* ---------- DIRECTION CARD ---------- */
+.dir{
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:28px;
+  background:#fff;
+  box-shadow:0 2px 10px -4px rgba(15,44,82,.1);
+}
+.dir-bar{height:6px;width:100%;}
+.dir-head{
+  padding:20px 28px 0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.dir-head h3{
+  margin:0;
+  font-size:19px;
+  font-weight:800;
+  color:var(--navy);
+  letter-spacing:.3px;
+}
+.dir-tag{
+  font-size:12px;
+  font-weight:700;
+  padding:4px 12px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.dir-body{padding:16px 28px 26px;}
+
+.sub{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:15px;
+  font-weight:700;
+  color:var(--navy);
+  margin:22px 0 10px;
+}
+.sub::before{
+  content:"";
+  width:3px;
+  height:15px;
+  border-radius:2px;
+  background:var(--blue);
+  flex:none;
+}
+.sub:first-child{margin-top:6px;}
+
+.daily{
+  background:#f8fafc;
+  border-left:3px solid #3b82f6;
+  border-radius:0 10px 10px 0;
+  padding:16px 20px;
+  font-size:14.4px;
+  line-height:1.85;
+}
+.daily p{margin:0 0 11px;}
+.daily p:last-child{margin-bottom:0;}
+.daily strong{color:#1e3a8a;}
+
+.req-list li{font-size:14.4px;color:#334155;}
+
+.gap{
+  background:#fff7ed;
+  border:1px dashed #fdba74;
+  border-radius:12px;
+  padding:16px 20px;
+  font-size:14.3px;
+}
+.gap ul{margin:0;padding-left:0;list-style:none;}
+.gap li{
+  position:relative;
+  padding-left:24px;
+  margin-bottom:9px;
+  color:#7c2d12;
+}
+.gap li:last-child{margin-bottom:0;}
+.gap li::before{
+  content:"▲";
+  position:absolute;
+  left:2px;top:1px;
+  font-size:10px;
+  color:#f97316;
+}
+.gap strong{color:#9a3412;}
+
+/* ---------- TEMPLATE ---------- */
+.template{
+  border:1.5px dashed #c7d7f0;
+  background:linear-gradient(180deg,#fbfdff,#f5f9ff);
+  border-radius:14px;
+  padding:24px 28px;
+}
+.template .tpl-row{
+  padding:14px 0;
+  border-bottom:1px dashed #dbe7f7;
+}
+.template .tpl-row:last-child{border-bottom:none;padding-bottom:0;}
+.template .tpl-row:first-child{padding-top:0;}
+.tpl-label{
+  font-size:14.5px;
+  font-weight:800;
+  color:var(--navy);
+  margin-bottom:7px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.tpl-label .idx{
+  display:inline-flex;
+  align-items:center;justify-content:center;
+  width:22px;height:22px;
+  border-radius:6px;
+  background:var(--navy);
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  flex:none;
+}
+.tpl-content{font-size:14.3px;color:#334155;padding-left:30px;}
+
+/* ---------- OVERVIEW CARDS ---------- */
+.overview{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-bottom:28px;
+}
+.ov-card{
+  background:#fff;
+  border-radius:16px;
+  padding:24px 26px;
+  box-shadow:0 1px 3px rgba(15,44,82,.07);
+  border-top:4px solid var(--blue);
+}
+.ov-card:nth-child(2){border-top-color:var(--purple);}
+.ov-card .ov-no{
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.14em;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+.ov-card h3{
+  margin:6px 0 8px;
+  font-size:17px;
+  color:var(--navy);
+  font-weight:800;
+}
+.ov-card p{
+  font-size:13.8px;
+  color:var(--muted);
+  margin:0;
+  line-height:1.7;
+}
+.ov-card .ov-dur{
+  display:inline-block;
+  margin-top:12px;
+  font-size:12.5px;
+  font-weight:700;
+  color:#fff;
+  background:var(--blue);
+  padding:4px 12px;
+  border-radius:999px;
+}
+.ov-card:nth-child(2) .ov-dur{background:var(--purple);}
+
+/* ---------- FOOTER ---------- */
+.footer{
+  text-align:center;
+  color:#94a3b8;
+  font-size:13px;
+  padding:28px 0 0;
+  border-top:1px solid #e2e8f0;
+  margin-top:12px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:720px){
+  .page{padding:0 14px 60px;}
+  .hero{padding:38px 24px 34px;margin:0 -14px 26px;border-radius:0 0 20px 20px;}
+  .hero h1{font-size:23px;}
+  .section{padding:24px 20px 26px;border-radius:14px;}
+  .section-title{font-size:18px;flex-direction:column;align-items:flex-start;gap:8px;}
+  .step{padding:18px 18px 20px;}
+  .dir-head{padding:16px 18px 0;}
+  .dir-body{padding:12px 18px 20px;}
+  .overview{grid-template-columns:1fr;}
+  .template{padding:18px 18px;}
+  .tpl-content{padding-left:0;}
+  .print-btn{right:14px;bottom:14px;padding:11px 18px;font-size:13px;}
+}
+
+/* ---------- PRINT ---------- */
+@media print{
+  body{background:#fff;font-size:12.4px;line-height:1.65;}
+  .page{max-width:100%;padding:0;}
+  .hero{
+    background:#0f2c52 !important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+    border-radius:0;
+    margin:0 0 16px;
+    padding:24px 26px;
+  }
+  .hero h1{font-size:21px;}
+  .hero .meta{display:none;}
+  .print-btn{display:none;}
+  .section{
+    box-shadow:none;
+    border:1px solid #dbe4f0;
+    padding:18px 20px 20px;
+    page-break-inside:auto;
+    margin-bottom:14px;
+  }
+  .step,.dir,.template,.callout,.gap,.daily{
+    page-break-inside:avoid;
+  }
+  .dir{box-shadow:none;}
+  .callout,.daily,.gap,.dir-bar,.ov-card .ov-dur,.section-title .badge{
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .overview{grid-template-columns:1fr 1fr;}
+  h2.section-title{page-break-after:avoid;}
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨 打印 / 导出 PDF</button>
+
+<div class="page">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <span class="eyebrow">Career Coaching Plan</span>
+    <h1>何文聪 · 求职辅导课程方案</h1>
+    <p class="sub">两课时完整设计 ｜ 求职规划课 + 简历优化定稿课</p>
+    <div class="meta">
+      <span>🎯 第一志愿：市场策略 / 市场营销 / 战略 / 咨询</span>
+      <span>🎯 第二志愿：BD 商务拓展</span>
+      <span>📍 首选城市：上海 · 深圳</span>
+      <span>🎓 28 届毕业生（2027.09–12 毕业）</span>
+      <span>🚫 不看 MCN 类公司</span>
+    </div>
+  </header>
+
+  <!-- ================= OVERVIEW ================= -->
+  <div class="overview">
+    <div class="ov-card">
+      <div class="ov-no">Lesson 01</div>
+      <h3>求职规划课</h3>
+      <p>核实背景真实性 → 明确可落地岗位方向 → 拆解行业前景、校招现状、日常工作内容与能力缺口</p>
+      <span class="ov-dur">60 分钟</span>
+    </div>
+    <div class="ov-card">
+      <div class="ov-no">Lesson 02</div>
+      <h3>简历优化定稿课</h3>
+      <p>逐段梳理经历 → 调整顺序与措辞 → 挖掘补充内容 → 定稿一页纸标准中英文简历</p>
+      <span class="ov-dur">60 分钟</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       LESSON 1
+  ============================================================= -->
+  <section class="section" id="lesson1">
+    <h2 class="section-title">
+      <span class="badge">课时 1</span>
+      求职规划课
+    </h2>
+    <p class="section-desc">核心目标：用 20 分钟核实真实背景，用 40 分钟给出可落地的校招全职 offer 方向建议与行业拆解。</p>
+
+    <!-- ---------- PART 1 ---------- -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">壹</span>
+        <h3>开场破冰与背景信息核实</h3>
+        <span class="time-badge">约 20 分钟</span>
+      </div>
+      <p style="color:var(--muted);font-size:14.2px;margin-bottom:18px;">
+        <strong style="color:var(--navy);">目标：</strong>核实简历真实性，了解学生实际能力基线，为后续方向建议提供客观依据。
+      </p>
+
+      <!-- 1.1 -->
+      <div class="sub">1. 本硕课程与专业深度（约 5 分钟）</div>
+      <ul class="clean">
+        <li>本科和硕士分别就读什么专业？核心课程有哪些？</li>
+        <li>哪些课程学得比较扎实？有没有做过课程项目或论文？</li>
+        <li>硕士阶段的研究方向是什么？是否与市场营销 / 战略 / 咨询有交集？</li>
+      </ul>
+      <div class="callout info">
+        <span class="label">核实要点</span>了解专业背景是否与意向岗位方向匹配。若专业偏向传媒 / 传播类，品牌策划、内容营销方向匹配度较高；若涉及商科 / 管理类，战略咨询和 BD 方向可以进一步探讨。
+      </div>
+
+      <!-- 1.2 -->
+      <div class="sub">2. 实习经历核实（约 8 分钟）—— 本次沟通的重点核实环节</div>
+
+      <div class="callout warn">
+        <span class="label">⚠ 重点提示</span>以下三段经历需要逐一核对真实性、参与深度与可量化成果，直接决定后续简历能写到什么程度。
+      </div>
+
+      <ul class="clean" style="margin-top:14px;">
+        <li>
+          <strong>（1）广州绿葆实习（实际做过的实习）</strong>
+          <ul>
+            <li>具体在什么部门？汇报对象是谁？团队规模多大？</li>
+            <li>日常工作的具体内容是什么？请举 1–2 个实际参与的项目例子。</li>
+            <li>实习持续了多长时间？是全职还是兼职？</li>
+            <li>有没有可以量化的成果？（如活动覆盖人数、转化率、内容产出量等）</li>
+          </ul>
+        </li>
+        <li>
+          <strong>（2）南昌万豪实习（家里公司）</strong>
+          <ul>
+            <li>这段经历如果写入简历，面试时很可能被追问，需要确认学生是否真正参与过实际工作，还是仅为挂名。</li>
+            <li>如果确实有参与部分工作，需要明确具体做了什么、做了多久。</li>
+            <li><strong>如果实际参与度很低，建议简历中弱化处理或仅作为补充信息</strong>，避免面试中被追问时无法自圆其说。</li>
+          </ul>
+        </li>
+        <li>
+          <strong>（3）主播孵化项目经历</strong>
+          <ul>
+            <li>这是项目经历还是实习？是个人发起还是团队参与？</li>
+            <li>具体负责什么环节？孵化了几个主播？有没有数据成果（粉丝增长、GMV、直播场次等）？</li>
+            <li><strong>注意：</strong>学生明确不去 MCN 公司，但主播孵化经历本身可以提炼出内容运营、用户增长、数据分析等可迁移能力，在简历中应侧重这些方面而非" MCN "标签。</li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- 1.3 -->
+      <div class="sub">3. 职业技能掌握程度（约 4 分钟）</div>
+      <ul class="clean">
+        <li><strong>Office 工具：</strong>Excel 熟练程度如何？会不会数据透视表、VLOOKUP？PPT 能不能独立完成一份完整的方案？</li>
+        <li><strong>数据分析工具：</strong>有没有接触过 SQL、Python、Tableau？</li>
+        <li><strong>语言能力：</strong>雅思 6.0 的具体分数构成是什么？日常英文沟通和书面写作能力如何？</li>
+        <li><strong>其他工具：</strong>Canva、剪映、PS 等设计 / 剪辑工具的使用程度？</li>
+      </ul>
+
+      <!-- 1.4 -->
+      <div class="sub">4. 语言成绩的现实影响（约 3 分钟）</div>
+      <p>需要向学生明确说明：</p>
+      <ul class="clean">
+        <li><strong>雅思 6.0 在咨询行业校招中是一个明显短板。</strong>埃森哲、奥纬咨询等均明确要求流利的英语工作能力。</li>
+        <li>没有四六级成绩，部分国企和传统企业的网申系统可能无法通过语言筛选环节。</li>
+        <li><strong>但雅思 6.0 并非致命伤</strong>——市场营销类岗位和 BD 类岗位对语言成绩的硬性要求相对宽松，更看重实际沟通能力和业务 sense。</li>
+        <li><strong>建议：</strong>在英硕期间争取把雅思刷到 6.5–7.0，这对咨询方向的求职会有实质帮助。</li>
+      </ul>
+    </div>
+
+    <!-- ---------- PART 2 ---------- -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">贰</span>
+        <h3>岗位方向建议与行业分析</h3>
+        <span class="time-badge">约 40 分钟</span>
+      </div>
+      <p style="color:var(--muted);font-size:14.2px;margin-bottom:22px;">
+        <strong style="color:var(--navy);">目标：</strong>结合简历背景与意向，给出可落地的校招全职 offer 方向，并逐个拆解行业前景、校招现状、日常工作内容、岗位要求与能力缺口。
+      </p>
+
+      <!-- ===== 方向一 ===== -->
+      <div class="dir">
+        <div class="dir-bar" style="background:linear-gradient(90deg,#1e40af,#3b82f6);"></div>
+        <div class="dir-head">
+          <h3>方向一：市场营销 / 品牌策划</h3>
+          <span class="dir-tag" style="background:var(--blue-light);color:#1e40af;">核心主投方向</span>
+        </div>
+        <div class="dir-body">
+
+          <div class="sub">行业介绍与发展前景</div>
+          <p>市场营销岗位在各行各业都有需求，尤其是消费品、互联网、零售、科技行业。从管培生到品牌经理的成长路径清晰，典型路径为：<strong>品牌专员 → 品牌经理（1–2 年）→ 品牌总监（3–5 年）→ 品牌客户群总监（5–8 年）</strong>。积累 3–5 年经验后可以向品牌总监或市场负责人方向发展。上海是快消和互联网公司市场部的集中地，旺旺集团总部位于上海闵行区，达能中国总部也在上海。</p>
+
+          <div class="sub">校招需求现状</div>
+          <p>2026 届市场营销类校招岗位供给充足。以旺旺集团为例，PM 管培生岗位招聘 30 人，薪资 9000–11000 元 / 月，工作地点上海。快消、互联网、零售、科技公司均有大量管培生和专员岗位，典型岗位包括<strong>品牌管培生、营销管培生、市场策划专员、新媒体运营</strong>等。华硕电脑 2026 校招在上海开放营销策划专员岗位，面向数码产品营销方向。</p>
+
+          <div class="sub">日常工作具体内容（以旺旺 PM 管培生为例）</div>
+          <div class="daily">
+            <p><strong>产品卖点提炼</strong>——深度理解产品核心功能与技术优势，将其转化为用户听得懂、记得住、愿意买的传播语言。</p>
+            <p><strong>上市策略策划</strong>——参与制定新品上市全案，明确产品定位、目标人群及核心沟通策略。</p>
+            <p><strong>整合营销执行</strong>——统筹推进线上线下营销活动，包括社交媒体种草、KOL 合作、内容传播及线下推广等。</p>
+            <p><strong>传播内容把控</strong>——负责产品详情页、宣传视频、公关稿件、种草笔记等核心传播物料的内容策划与产出。</p>
+            <p><strong>市场数据复盘</strong>——追踪产品上市后的市场表现与用户反馈，持续输出营销优化建议及下一代产品迭代方向。</p>
+            <p><strong>日常协作事项</strong>——协助进行市场调研及潜在客户挖掘与分析；参与品牌市场活动、线上线下营销推广方案的策划与执行；协助新媒体平台运营（公众号、视频号等）、内容创意及用户社群维护；跟踪分析营销效果。</p>
+          </div>
+
+          <div class="sub">岗位要求</div>
+          <ul class="clean req-list">
+            <li>本科及以上学历，市场营销、广告学、传播学等相关专业优先。</li>
+            <li>具备敏锐的用户洞察力与扎实的市场 sense，创意策划与文案能力强。</li>
+            <li>具备较强的逻辑思维与沟通协调能力，能有效串联生产、设计、运营等团队资源。</li>
+            <li>熟练使用 Office 等办公软件，具备一定的数据分析能力。</li>
+            <li>有学生会、社团组织或相关行业营销活动实习经验者优先。</li>
+            <li>华硕营销策划岗位额外要求：出色的策划与内容创作能力，能结合热点产出有传播力的自媒体内容并独立完成有吸引力的营销方案。</li>
+          </ul>
+
+          <div class="sub">当前缺少且需补充的能力</div>
+          <div class="gap">
+            <ul>
+              <li><strong>数据分析能力：</strong>校招市场中，SQL 和 Python 已经成为市场营销岗位的重要加分项，钱江摩托等企业的营销岗明确要求"具备基础数据分析能力（Excel、SQL、PowerBI）"。建议在英硕期间至少掌握 Excel 高级功能和基础 SQL。</li>
+              <li><strong>量化成果的呈现能力：</strong>学生需要学会用数据讲清楚自己的实习和项目成果。</li>
+              <li><strong>英文商业写作能力：</strong>即使不走咨询方向，很多公司的市场部也有英文材料撰写需求。</li>
+              <li><strong>AI 工具的应用能力：</strong>安利等公司在校招中明确要求"熟练运用办公软件及 AI 创作工具"。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 方向二 ===== -->
+      <div class="dir">
+        <div class="dir-bar" style="background:linear-gradient(90deg,#047857,#10b981);"></div>
+        <div class="dir-head">
+          <h3>方向二：BD 商务拓展</h3>
+          <span class="dir-tag" style="background:var(--green-light);color:#065f46;">第二志愿 · 建议务实看待</span>
+        </div>
+        <div class="dir-body">
+
+          <div class="sub">行业介绍与发展前景</div>
+          <p>BD 岗位集中在互联网平台（抖音、美团、饿了么等）、企业服务 SaaS、消费品牌等领域。初级 BD 专员向 <strong>BD 经理 → 渠道总监</strong> 方向发展，优秀者可转向战略合作或商业分析方向。薪资结构中通常包含业绩提成，收入弹性较大。</p>
+
+          <div class="sub">校招需求现状</div>
+          <p>互联网平台的商家 BD、渠道 BD 岗位校招需求量大。以抖音生活服务为例，截至 2025 年底业务已覆盖 400+ 城市，超过 1500 万家动销门店，2026 届校园招聘的商家 BD 岗位面向本科及以上学历开放。</p>
+
+          <div class="sub">日常工作具体内容（以抖音生活服务商家 BD 为例）</div>
+          <div class="daily">
+            <p><strong>商圈开拓与商户签约</strong>——负责生活服务到店业务商圈开拓，与商户进行洽谈合作与签约，跟进上线流程。</p>
+            <p><strong>运营方案制定</strong>——根据商户需求制定合理的运营方案，提供促销活动、团单设计与运营支持，通过短视频及内容营销进行抖音平台分发，做好交易额提升优化。</p>
+            <p><strong>客情维护与问题处理</strong>——及时处理商户及用户问题与投诉，跟进问题解决，提高商家和消费者满意度；定期开展商户培训。</p>
+            <p><strong>行业研究与复盘</strong>——持续研究相关行业在抖音上的推广策略，定期复盘商户抖音企业号运营效果，输出内容营销优化建议。</p>
+            <p><strong>To B 方向补充</strong>——客户初步对接、挖掘真实需求；协助挖掘特定赛道的企业客户，和创始人、HR 负责人做初步沟通，了解业务需求并匹配合适的服务；全程参与客户拜访、需求深挖、商务洽谈、项目跟进全流程；协助完成市场信息调研、客户档案维护、销售方案撰写、业务数据整理。</p>
+          </div>
+
+          <div class="sub">岗位要求</div>
+          <ul class="clean req-list">
+            <li>热爱销售工作，具备良好的客户开拓和服务能力，以及建立良好客户群体关系的能力。</li>
+            <li>掌握商务谈判、沟通及表达交流技巧，具有一定的市场洞察力和执行力。</li>
+            <li>性格开朗，敢于面对挑战。</li>
+          </ul>
+
+          <div class="sub">当前缺少且需补充的能力</div>
+          <div class="gap">
+            <ul>
+              <li><strong>商务谈判和客户沟通的实战经验。</strong>建议在英硕期间参加学校的商业社团或校招相关的商务实践。</li>
+              <li><strong>对特定行业（如本地生活、电商、SaaS）的商业逻辑理解</strong>，需要提前做行业研究。</li>
+              <li><strong>数据整理与销售方案撰写能力。</strong>BD 岗位不仅需要"谈"，还需要把沟通成果转化为结构化的方案文档。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 方向三 ===== -->
+      <div class="dir">
+        <div class="dir-bar" style="background:linear-gradient(90deg,#6d28d9,#a78bfa);"></div>
+        <div class="dir-head">
+          <h3>方向三：战略 / 商业分析</h3>
+          <span class="dir-tag" style="background:var(--purple-light);color:#5b21b6;">冲刺方向 · 需补短板</span>
+        </div>
+        <div class="dir-body">
+
+          <div class="sub">行业介绍与发展前景</div>
+          <p>互联网公司的战略分析岗是重要的中台职能，参与业务方向判断和策略制定。以小红书战略部为例，作为核心职能部门之一，战略部在外部感知、战略研判、关键决策的落地迭代上发挥着重要作用。发展路径通常为：<strong>战略分析师 → 高级战略分析师 → 战略经理 → 战略总监</strong>，优秀者可转向业务线管理岗位。</p>
+
+          <div class="sub">校招需求现状</div>
+          <p>互联网大厂和咨询公司均有战略分析类校招岗位开放。小红书 2026 校招战略 BP 岗位要求具有战略 / 投资 / 商业分析 / 行业研究等相关实习经历，有商业化 / 广告产品向互联网公司经验者优先。火山引擎战略分析师岗位负责制定 AI 大模型领域的战略规划，追踪全球大模型 / AIGC 领域的前沿技术趋势。</p>
+
+          <div class="sub">日常工作具体内容（以小红书战略 BP 为例）</div>
+          <div class="daily">
+            <p><strong>战略规划</strong>——通过定量和定性的市场研究，形成对用户需求和竞争格局的洞察，辅助业务部门判断市场机会点，协助业务输出中长期策略规划，同时围绕日常运营动作提供敏捷研究支持。</p>
+            <p><strong>业务推动</strong>——深入业务现状，识别业务难点，主动提出可能的优化方向和解决方案，参与业务的大小项目中，协同各团队推进项目落地。</p>
+            <p><strong>机制管理</strong>——协助追踪业务目标和落地策略之间的关联度和完成情况，支持业务复盘与决策，帮助沉淀业务方法论和迭代机制。</p>
+            <p><strong>咨询公司分析师补充</strong>——根据项目需求从事战略规划、人力资源、企业文化、集团管控、流程再造、财务投资、品牌营销、供应链、信息化等方向的管理咨询服务；独立进行行业研究、案例分析和标杆研究；开展企业内部访谈、调研，参与咨询方案设计，撰写项目报告。灼识咨询校招分析师还涉及信息收集（主导行业专家访谈）、模型搭建（设计咨询方法论，搭建市场预测模型）、报告撰写（撰写全英文行业报告和招股书行业章节）。</p>
+          </div>
+
+          <div class="sub">岗位要求</div>
+          <ul class="clean req-list">
+            <li>具有优秀的结构化和辩证思维、逻辑归纳、定量分析能力。</li>
+            <li>具有极强的自驱力、学习能力、问题分析和解决能力，能够在纷繁的信息中找到问题关键，产出核心洞察。</li>
+            <li>具有一定的项目管理能力，能够推动跨部门项目的落地。</li>
+            <li>商业分析岗位普遍要求熟练掌握 Python / SQL 等数据分析能力，有咨询公司、投行或互联网商业分析相关实习经历者优先。</li>
+            <li>亚马逊商业分析实习岗位明确要求"具备流利的英语说、读、写能力"。</li>
+          </ul>
+
+          <div class="sub">当前缺少且需补充的能力</div>
+          <div class="gap">
+            <ul>
+              <li><strong>结构化分析框架的系统训练：</strong>建议系统练习案例面试，从秋招前 3 个月开始每周完成 2–3 个案例。</li>
+              <li><strong>数据分析工具的实际操作能力：</strong>SQL 和 Python 是硬门槛，建议在英硕期间通过在线课程完成基础学习并做 1–2 个实战项目。</li>
+              <li><strong>英文商业报告撰写能力：</strong>咨询公司的报告和演示文稿通常为全英文。</li>
+              <li><strong>一段战略 / 商业分析相关的实习经历：</strong>这是简历通过初筛的关键。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 方向四 ===== -->
+      <div class="dir">
+        <div class="dir-bar" style="background:linear-gradient(90deg,#b45309,#f59e0b);"></div>
+        <div class="dir-head">
+          <h3>方向四：咨询公司（助理顾问 / 分析员）</h3>
+          <span class="dir-tag" style="background:var(--amber-light);color:#92400e;">需重点补语言</span>
+        </div>
+        <div class="dir-body">
+          <div class="callout warn" style="margin-top:4px;">
+            <span class="label">现实评估</span>管理咨询公司的校招门槛较高，对语言能力、分析框架能力和实习经历深度的要求都较高。雅思 6.0 的水平在咨询面试中（尤其是全英文 Case Interview 环节）会面临较大挑战。
+          </div>
+          <div class="callout tip">
+            <span class="label">如果仍想尝试</span>建议将咨询方向作为冲刺目标，重点准备案例面试，同时将主投精力放在市场营销和甲方战略方向上，确保有保底 offer。
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ---------- 反馈模板 ---------- -->
+    <div class="step" style="margin-top:6px;">
+      <div class="step-head">
+        <span class="step-num">叁</span>
+        <h3>课后导师反馈模板</h3>
+      </div>
+      <div class="template">
+        <div class="tpl-row">
+          <div class="tpl-label"><span class="idx">1</span>结合个人背景经历和意向可考虑的目标求职方向</div>
+          <div class="tpl-content">
+            主投：市场营销 / 品牌策划（上海 / 深圳的消费品、互联网、零售公司）<br>
+            次投：BD 商务拓展（互联网平台、企业服务）<br>
+            冲刺：甲方战略分析 / 商业分析（需补实习和语言）<br>
+            谨慎尝试：管理咨询公司（语言短板明显）
+          </div>
+        </div>
+        <div class="tpl-row">
+          <div class="tpl-label"><span class="idx">2</span>核心主投</div>
+          <div class="tpl-content">市场营销 / 品牌方向管培生或专员岗</div>
+        </div>
+        <div class="tpl-row">
+          <div class="tpl-label"><span class="idx">3</span>其他方向</div>
+          <div class="tpl-content">BD 商务拓展、甲方战略分析</div>
+        </div>
+        <div class="tpl-row">
+          <div class="tpl-label"><span class="idx">4</span>主要考虑因素和其他信息补充</div>
+          <div class="tpl-content">
+            <ul class="clean" style="margin:0;">
+              <li>语言成绩（雅思 6.0、无四六级）对咨询方向限制较大，需在硕士期间提升。</li>
+              <li>南昌万豪实习经历需谨慎处理，避免面试中暴露经历真实性不足的问题。</li>
+              <li>学生 27 年 9–12 月毕业属于 28 届，英国一年制硕士的求职时间线非常紧凑，入学当年 9–11 月就是秋招黄金期，建议入学后立即启动秋招准备。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       LESSON 2
+  ============================================================= -->
+  <section class="section" id="lesson2">
+    <h2 class="section-title">
+      <span class="badge" style="background:linear-gradient(135deg,#6d28d9,#a78bfa);">课时 2</span>
+      简历优化定稿课
+    </h2>
+    <p class="section-desc">核心目标：逐段核实并优化简历内容，最终产出一份可定向投递的一页纸标准中英文简历。</p>
+
+    <!-- 2.1 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">壹</span>
+        <h3>带学生从上至下捋简历</h3>
+        <span class="time-badge">约 20 分钟</span>
+      </div>
+
+      <div class="sub">1. 教育背景部分</div>
+      <ul class="clean">
+        <li>确认学校名称、专业名称、学位、在读时间的中英文表述是否规范。</li>
+        <li>如果硕士专业与市场营销 / 战略相关，可以在教育背景下方加一行"核心课程"，简述与目标岗位相关的课程。</li>
+        <li>如果 GPA 有竞争力（3.5 / 4.0 以上），建议保留；如果 GPA 一般，可以省略不写。</li>
+      </ul>
+
+      <div class="sub">2. 实习经历逐段核实与优化</div>
+
+      <p style="margin-top:14px;"><strong>▸ 广州绿葆实习（重点保留和优化）</strong></p>
+      <p>按照"<strong>项目经历 + 贡献 + 项目结果</strong>"的公式重新组织表述：</p>
+      <ul class="clean">
+        <li><strong>调整前（假设现状）：</strong>"负责市场推广相关工作"</li>
+        <li><strong>调整思路：</strong>先确认学生具体做了什么——是线上推广还是线下活动？是内容创作还是渠道拓展？是用户运营还是数据分析？</li>
+        <li><strong>调整后（示例）：</strong>"参与 XX 项目的市场推广，通过 XX 渠道 / 方式，实现 XX 结果（如：活动触达 XX 人次、内容产出 XX 篇、转化率提升 XX%）"</li>
+      </ul>
+      <div class="callout info">
+        <span class="label">关键提示</span>如果学生能提供具体数据最好；如果实在没有数据，可以用"完成 XX 篇内容产出""参与 XX 场活动执行""对接 XX 家合作方"等可验证的定性描述代替。
+      </div>
+
+      <p style="margin-top:18px;"><strong>▸ 主播孵化项目经历</strong></p>
+      <ul class="clean">
+        <li>不要以"MCN"为标签，而是侧重提炼<strong>内容运营、用户增长、数据分析</strong>等能力。</li>
+        <li>例如："主导 / 参与 XX 个主播账号的内容策划与运营，通过 XX 策略实现账号粉丝从 X 增长至 X，单场直播最高观看人数 XX"。</li>
+      </ul>
+
+      <p style="margin-top:18px;"><strong>▸ 南昌万豪实习（建议弱化或调整表述）</strong></p>
+      <ul class="clean">
+        <li><strong>建议方案：</strong>如果学生实际参与度很低，建议不单独列为实习经历，而是在"其他经历"或"校园经历"板块以一两行简短提及，避免面试中被深入追问。</li>
+        <li><strong>如果学生确实参与过部分工作：</strong>明确写清楚具体做了什么、做了多久，用"协助"而非"负责"来表述，保持诚实。</li>
+      </ul>
+
+      <div class="sub">3. 项目经历</div>
+      <ul class="clean">
+        <li>确认项目的起止时间、团队规模、学生个人角色。</li>
+        <li>用 STAR 法则组织描述：情境（Situation）、任务（Task）、行动（Action）、结果（Result）。</li>
+        <li>如果项目经历单薄，可以补充英硕期间的课程项目或小组作业。</li>
+      </ul>
+    </div>
+
+    <!-- 2.2 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">贰</span>
+        <h3>识别可调整空间</h3>
+        <span class="time-badge">约 15 分钟</span>
+      </div>
+
+      <div class="sub">顺序调整</div>
+      <p>对于市场营销方向，简历板块顺序建议为：<strong>教育背景 → 实习经历 → 项目经历 → 技能 / 证书 → 其他</strong>。实习经历放在教育背景之后，突出实践能力。</p>
+
+      <div class="sub">措辞调整：准备 2–3 个版本，针对不同投递方向</div>
+      <ul class="clean">
+        <li><strong>市场 / 品牌版：</strong>侧重内容策划、活动执行、用户运营、数据分析相关表述。</li>
+        <li><strong>BD 版：</strong>侧重商户对接、合作洽谈、渠道拓展、商务沟通相关表述。</li>
+        <li><strong>战略 / 商分版：</strong>侧重行业研究、竞品分析、数据洞察、方案撰写相关表述。</li>
+      </ul>
+
+      <div class="sub">逻辑调整</div>
+      <p>每段经历的 bullet point 控制在 <strong>3–4 条</strong>，每条以动词开头，按重要性排序。避免流水账式的罗列。</p>
+    </div>
+
+    <!-- 2.3 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">叁</span>
+        <h3>互动挖掘补充内容</h3>
+        <span class="time-badge">约 15 分钟</span>
+      </div>
+
+      <div class="sub">可以补充的内容方向</div>
+      <ul class="clean">
+        <li>英硕期间的课程项目或小组作业（即使是课程作业，如果涉及市场调研、商业分析、品牌策划等内容，也可以提炼）。</li>
+        <li>本科期间的毕业论文或课程设计（如果与市场营销 / 战略相关）。</li>
+        <li>校园社团、学生会经历中的组织策划、外联合作等内容。</li>
+        <li>任何自由职业、自媒体运营、线上项目等经历。</li>
+      </ul>
+
+      <div class="sub">可以删减的内容方向</div>
+      <ul class="clean">
+        <li>与目标岗位方向无关的经历。</li>
+        <li>过于简略、无法展开的条目。</li>
+        <li>时间久远且与当前求职方向关联度低的经历。</li>
+      </ul>
+    </div>
+
+    <!-- 2.4 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">肆</span>
+        <h3>终稿定版</h3>
+        <span class="time-badge">约 10 分钟</span>
+      </div>
+
+      <div class="callout tip">
+        <span class="label">最终产出</span>一份标准一页纸中英文简历（英文版用于外企和咨询公司投递）。
+      </div>
+
+      <div class="sub">定稿原则</div>
+      <ul class="clean">
+        <li>所有经历描述真实可验证，经得起面试追问。</li>
+        <li>量化数据尽量具体，无法量化的用定性成果代替。</li>
+        <li>关键词与目标岗位 JD 对齐，提高网申通过率。</li>
+        <li>格式统一、排版整洁、无错别字。</li>
+        <li>英文版简历的语言表达需地道，建议请英文母语者或专业老师审校。</li>
+      </ul>
+
+      <div class="sub">投递建议</div>
+      <p>简历定稿后，建议学生根据目标公司的具体 JD 进行微调，不要用同一版简历投递所有岗位。每次投递前花 10 分钟对照 JD 调整关键词和侧重点，可以显著提高简历通过率。</p>
+    </div>
+
+  </section>
+
+  <div class="footer">
+    何文聪 · 求职辅导课程方案 ｜ 求职规划课 + 简历优化定稿课
+  </div>
+
+</div>
+
+</body>
+</html>
